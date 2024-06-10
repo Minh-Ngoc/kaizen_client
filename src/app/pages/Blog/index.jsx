@@ -5,7 +5,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LiaEditSolid } from "react-icons/lia";
 import { FaTrash } from "react-icons/fa";
@@ -55,140 +55,103 @@ function Blog() {
 		onOpenAddEdit();
 		setItemId("");
 	};
-	const columns = useMemo(
-		() => [
-			{
-				id: "select",
-				header: ({ table }) => (
-					<IndeterminateCheckbox
-						{...{
-							checked: table.getIsAllRowsSelected(),
-							indeterminate: table.getIsSomeRowsSelected(),
-							onChange: table.getToggleAllRowsSelectedHandler(),
-						}}
-					/>
-				),
-				cell: ({ row }) => (
-					<div className="px-1">
-						<IndeterminateCheckbox
-							{...{
-								checked: row.getIsSelected(),
-								disabled: !row.getCanSelect(),
-								indeterminate: row.getIsSomeSelected(),
-								onChange: row.getToggleSelectedHandler(),
-							}}
-						/>
-					</div>
-				),
-			},
-			{
-				accessorKey: "id",
-				header: "STT",
-				cell: (info) => (
-					<p className="text-white">{Number(info?.row?.id) + 1}</p>
-				),
-			},
-			{
-				accessorKey: "title",
-				header: "Tiêu đề",
-				cell: (info) => (
+
+	const columns = [
+		{ name: "Tiêu đề", _id: "title" },
+		{ name: "Ảnh", _id: "images" },
+		{ name: "Loại blog", _id: "type" },
+		{ name: "Mô tả", _id: "description" },
+		{ name: "Nội dung", _id: "content" },
+		{ name: "Trạng thái", _id: "status" },
+		{ name: "Người tạo", _id: "user" },
+		{ name: "Ngày tạo", _id: "createdAt" },
+		{ name: "Hành động", _id: "actions" },
+	];
+
+	const renderCell = useCallback((item, columnKey) => {
+		const cellValue = item[columnKey];
+
+		switch(columnKey) {
+			case "title":
+				return (
 					<p className="line-clamp-2 text-white">
-						{info?.getValue()}
+						{cellValue}
 					</p>
-				),
-			},
-			{
-				accessorKey: "images",
-				header: "Ảnh",
-				cell: (info) => (
+				);
+
+			case "images":
+				return (
 					<AvatarGroup isBordered max={5}>
-						{info?.getValue()?.map((item, index) => (
+						{cellValue?.map((item, index) => (
 							<Avatar key={index} src={`${URL_IMAGE}/${item}`} />
 						))}
 					</AvatarGroup>
-				),
-			},
-			{
-				accessorKey: "type",
-				header: "Loại blog",
-				cell: (info) => (
+				);
+
+			case "type": 
+				return (
 					<p className="text-nowrap text-white">
-						{typeBlog[info.getValue()]}
+						{typeBlog[cellValue]}
 					</p>
-				),
-			},
-			{
-				accessorKey: "description",
-				header: "Mô tả",
-				cell: (info) => (
+				);
+
+			case "description":
+				return (
 					<p
 						className="line-clamp-2 text-white"
-						dangerouslySetInnerHTML={{ __html: info.getValue() }}
+						dangerouslySetInnerHTML={{ __html: cellValue }}
 					/>
-				),
-			},
-			{
-				accessorKey: "content",
-				header: "Nội dung",
-				cell: (info) => (
+				);
+			
+			case "content":
+				return (
 					<p
 						className="line-clamp-2 text-white"
-						dangerouslySetInnerHTML={{ __html: info.getValue() }}
+						dangerouslySetInnerHTML={{ __html: cellValue }}
 					/>
-				),
-			},
-			{
-				accessorKey: "status",
-				header: "Trạng thái",
-				cell: (info) => (
+				);
+
+			case "status":
+				return (
 					<p className="text-white">
 						<Chip
 							color={
-								info.getValue() === "pending"
+								cellValue === "pending"
 									? "warning"
-									: info.getValue() === "approved"
+									: cellValue === "approved"
 									? "success"
 									: "danger"
 							}
 						>
-							{info.getValue() === "pending"
+							{cellValue === "pending"
 								? "Chờ duyệt"
-								: info.getValue() === "approved"
+								: cellValue === "approved"
 								? "Đã duyệt"
 								: "Từ chối"}
 						</Chip>
 					</p>
-				),
-			},
+				);
 
-			{
-				accessorKey: "user",
-				header: "Người tạo",
-				cell: (info) => (
-					<p className="text-white">{info.getValue()?.username}</p>
-				),
-			},
-
-			{
-				accessorKey: "createdAt",
-				header: "Ngày tạo",
-				cell: (info) => (
+			case "user":
+				return (
+					<p className="text-white">{cellValue}</p>
+				);
+			
+			case "createdAt":
+				return (
 					<p className="text-white">
-						{moment(info.getValue()).format("DD/MM/YYYY")}
+						{moment(cellValue).format("DD/MM/YYYY")}
 					</p>
-				),
-			},
+				);
 
-			{
-				accessorKey: "#",
-				header: "Hành động",
-				cell: ({ row }) => (
+			case "actions":
+				return (
 					<div className={"flex flex-row gap-1"}>
 						<Button
 							color="primary"
 							variant="solid"
 							className="min-w-7 h-7 rounded-full p-0"
-							onClick={() => handleEdit(row)}
+							onClick={() => handleEdit(item)}
 						>
 							<Tooltip
 								color={"primary"}
@@ -208,7 +171,7 @@ function Blog() {
 							className="min-w-7 h-7 rounded-full p-0"
 							onClick={() => {
 								setIsOpenModalDelete(true);
-								setListIdSelected([row?.original?._id]);
+								setListIdSelected([item?.original?._id]);
 							}}
 						>
 							<Tooltip
@@ -223,12 +186,184 @@ function Blog() {
 							</Tooltip>
 						</Button>
 					</div>
-				),
-			},
-		],
+				);
+		}
+	}, []);
 
-		[]
-	);
+	// const columns = useMemo(
+	// 	() => [
+	// 		{
+	// 			id: "select",
+	// 			header: ({ table }) => (
+	// 				<IndeterminateCheckbox
+	// 					{...{
+	// 						checked: table.getIsAllRowsSelected(),
+	// 						indeterminate: table.getIsSomeRowsSelected(),
+	// 						onChange: table.getToggleAllRowsSelectedHandler(),
+	// 					}}
+	// 				/>
+	// 			),
+	// 			cell: ({ row }) => (
+	// 				<div className="px-1">
+	// 					<IndeterminateCheckbox
+	// 						{...{
+	// 							checked: row.getIsSelected(),
+	// 							disabled: !row.getCanSelect(),
+	// 							indeterminate: row.getIsSomeSelected(),
+	// 							onChange: row.getToggleSelectedHandler(),
+	// 						}}
+	// 					/>
+	// 				</div>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "id",
+	// 			header: "STT",
+	// 			cell: (info) => (
+	// 				<p className="text-white">{Number(info?.row?.id) + 1}</p>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "title",
+	// 			header: "Tiêu đề",
+	// 			cell: (info) => (
+	// 				<p className="line-clamp-2 text-white">
+	// 					{info?.getValue()}
+	// 				</p>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "images",
+	// 			header: "Ảnh",
+	// 			cell: (info) => (
+	// 				<AvatarGroup isBordered max={5}>
+	// 					{info?.getValue()?.map((item, index) => (
+	// 						<Avatar key={index} src={`${URL_IMAGE}/${item}`} />
+	// 					))}
+	// 				</AvatarGroup>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "type",
+	// 			header: "Loại blog",
+	// 			cell: (info) => (
+	// 				<p className="text-nowrap text-white">
+	// 					{typeBlog[info.getValue()]}
+	// 				</p>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "description",
+	// 			header: "Mô tả",
+	// 			cell: (info) => (
+	// 				<p
+	// 					className="line-clamp-2 text-white"
+	// 					dangerouslySetInnerHTML={{ __html: info.getValue() }}
+	// 				/>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "content",
+	// 			header: "Nội dung",
+	// 			cell: (info) => (
+	// 				<p
+	// 					className="line-clamp-2 text-white"
+	// 					dangerouslySetInnerHTML={{ __html: info.getValue() }}
+	// 				/>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "status",
+	// 			header: "Trạng thái",
+	// 			cell: (info) => (
+	// 				<p className="text-white">
+	// 					<Chip
+	// 						color={
+	// 							info.getValue() === "pending"
+	// 								? "warning"
+	// 								: info.getValue() === "approved"
+	// 								? "success"
+	// 								: "danger"
+	// 						}
+	// 					>
+	// 						{info.getValue() === "pending"
+	// 							? "Chờ duyệt"
+	// 							: info.getValue() === "approved"
+	// 							? "Đã duyệt"
+	// 							: "Từ chối"}
+	// 					</Chip>
+	// 				</p>
+	// 			),
+	// 		},
+
+	// 		{
+	// 			accessorKey: "user",
+	// 			header: "Người tạo",
+	// 			cell: (info) => (
+	// 				<p className="text-white">{info.getValue()?.username}</p>
+	// 			),
+	// 		},
+
+	// 		{
+	// 			accessorKey: "createdAt",
+	// 			header: "Ngày tạo",
+	// 			cell: (info) => (
+	// 				<p className="text-white">
+	// 					{moment(info.getValue()).format("DD/MM/YYYY")}
+	// 				</p>
+	// 			),
+	// 		},
+
+	// 		{
+	// 			accessorKey: "#",
+	// 			header: "Hành động",
+	// 			cell: ({ row }) => (
+	// 				<div className={"flex flex-row gap-1"}>
+	// 					<Button
+	// 						color="primary"
+	// 						variant="solid"
+	// 						className="min-w-7 h-7 rounded-full p-0"
+	// 						onClick={() => handleEdit(row)}
+	// 					>
+	// 						<Tooltip
+	// 							color={"primary"}
+	// 							content={"Chỉnh sửa"}
+	// 							className="capitalize"
+	// 							disableAnimation={true}
+	// 						>
+	// 							<p>
+	// 								<LiaEditSolid />
+	// 							</p>
+	// 						</Tooltip>
+	// 					</Button>
+
+	// 					<Button
+	// 						color="danger"
+	// 						variant="solid"
+	// 						className="min-w-7 h-7 rounded-full p-0"
+	// 						onClick={() => {
+	// 							setIsOpenModalDelete(true);
+	// 							setListIdSelected([row?.original?._id]);
+	// 						}}
+	// 					>
+	// 						<Tooltip
+	// 							color={"danger"}
+	// 							content={"Xóa"}
+	// 							className="capitalize"
+	// 							disableAnimation={true}
+	// 						>
+	// 							<p>
+	// 								<FaTrash />
+	// 							</p>
+	// 						</Tooltip>
+	// 					</Button>
+	// 				</div>
+	// 			),
+	// 		},
+	// 	],
+
+	// 	[]
+	// );
 
 	const table = useReactTable({
 		data,
