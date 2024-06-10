@@ -37,14 +37,14 @@ const Header = ({
 			</div>
 			<div className="flex flex-row justify-center items-center gap-2">
 				<Input
-					size="lg"
+					size="md"
 					variant="bordered"
 					placeholder={placeholder}
 					classNames={{
 						inputWrapper:
 							"rounded-md py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
 						label: "hidden",
-						input: "text-sm text-task-title",
+						input: "text-sm text-task-title placeholder:text-default-300/70",
 					}}
 					onValueChange={setSearch}
 					onKeyDown={(e) => {
