@@ -24,6 +24,7 @@ import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
 import {FaTrash} from "react-icons/fa";
 import ModalBlog from "./ModalBlog";
 import {GetPagingBlog} from "../../../../_redux/slice/blogSlice";
+import {deletesBlog} from "../../../../services/api.service";
 
 // const PAGE_SIZE = 10;
 const typeBlog = {
@@ -125,7 +126,7 @@ function TableBlogList({
 				);
 
 			case "user":
-				return <p className="text-white">{cellValue}</p>;
+				return <p className="text-white">{cellValue?.username}</p>;
 
 			case "createdAt":
 				return (
@@ -242,7 +243,7 @@ function TableBlogList({
 				onComplete={handleOnDelete}
 				ids={listIdSelected?.join("-")}
 				headerMsg={`Xác nhận`}
-				funcDelete={deletesNew}
+				funcDelete={deletesBlog}
 				bodyMsg={
 					listIdSelected?.length !== 1
 						? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
