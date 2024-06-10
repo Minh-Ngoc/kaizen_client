@@ -7,13 +7,22 @@ import Kanbans from "../app/pages/Kanbans";
 import MyTasks from "../app/pages/MyTasks/MyTasks";
 import Profile from "../app/pages/Profile";
 import NotFound from "../app/pages/NotFound";
+import Root from "../app/pages/Root";
 
 const routes = createBrowserRouter([
 	{
 		element: <AdminLayout />,
 		children: [
+			{ 
+				path: "/", 
+				element: <Root />,
+			},
+			{ 
+				path: "/my-tasks", 
+				element: <MyTasks />,
+			},
 			{
-				path: "/",
+				path: "/dashboard",
 				element: <DashBoard />,
 			},
 			{
@@ -22,15 +31,11 @@ const routes = createBrowserRouter([
 			},
 			{ 
 				path: "/kanbans/:id", 
-				element: <Kanbans /> 
-			},
-			{ 
-				path: "/my-tasks", 
-				element: <MyTasks /> 
+				element: <Kanbans />,
 			},
 			{ 
 				path: "/profile", 
-				element: <Profile /> 
+				element: <Profile />,
 			},
 
 		],

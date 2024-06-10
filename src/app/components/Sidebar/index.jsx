@@ -79,6 +79,8 @@ const Sidebar = () => {
 
 		const Navigate = item?.child && item?.child?.length ? 'div' : Link;
 
+		const [key] = Object.keys(openedMenu);
+
 		return (
 			<li key={index}>
 				<Navigate
@@ -150,7 +152,7 @@ const Sidebar = () => {
 					{"child" in item && (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							className="h-5 w-5"
+							className={`h-5 w-5 translate-transform duration-100 ease-linear ${key === item.name ? 'rotate-90' : 'rotate-0'}`}
 							viewBox="0 0 20 20"
 							fill="currentColor"
 						>

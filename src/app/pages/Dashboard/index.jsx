@@ -54,7 +54,7 @@ function DashBoard() {
                 element: <TasksOfUsersColumnsChart />
             },
             tasksReported: {
-                title: "Số công việc đã báo cáo",
+                title: "Các công việc đã báo cáo",
                 element: <TasksOfUsersLineChart />
             },
         };
