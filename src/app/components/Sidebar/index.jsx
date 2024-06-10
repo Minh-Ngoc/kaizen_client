@@ -214,7 +214,7 @@ const Sidebar = () => {
 	}, [userData]);
 
 	return (
-		<nav role="navigation" className="bg-table shadow-wrapper rounded-md sticky top-2 overflow-hidden">
+		<nav role="navigation" className="bg-table shadow-wrapper rounded-md sticky top-2 overflow-hidden max-h-skeleton-sidebar h-full flex flex-col">
 			{/* Begin: Header */}
 			<div className="pt-6 pb-2 flex flex-col items-center">
 				<Link
@@ -276,7 +276,7 @@ const Sidebar = () => {
 			</div>
 			{/* End: Header */}
 			
-			<div className="list-none text-sm font-normal px-3 mb-10 p-0 overflow-y-scroll max-h-sidebar-list scrollbar-kanban">
+			<div className="list-none text-sm font-normal px-3 mb-10 p-0 overflow-y-scroll scrollbar-kanban">
 				{configRoutes?.map((item, index) =>
 					generateMenu(item, index)
 				)}
