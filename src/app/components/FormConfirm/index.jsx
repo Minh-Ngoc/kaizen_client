@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 
 const FormConfirm = ({
 	visible,
-    variant = 'flat',
 	value,
 	isLoading,
 	isDismissable = true,
@@ -42,7 +41,7 @@ const FormConfirm = ({
 	}, [visible]);
 
 	return (
-		<div className="flex flex-col gap-y-2" ref={isDismissable ? ref : null}>
+		<div className={`flex flex-col gap-y-2`} ref={isDismissable ? ref : null}>
 			{form ? (
 				form
 			) : (
@@ -66,7 +65,7 @@ const FormConfirm = ({
 			)}
 
 			{(openConfirm || openCancel) && (
-				<div className="flex flex-row gap-2 items-center justify-start">
+				<div className={`flex flex-row gap-2 items-center justify-start`}>
 					{openConfirm && (
 						<Button
 							color="primary"
@@ -84,7 +83,7 @@ const FormConfirm = ({
 							color="primary"
 							variant="solid"
 							onPress={onClose}
-							className="w-max p-1 min-w-0 min-h-0 rounded-md h-8 bg-transparent hover:bg-slate-200"
+							className="w-max p-1 mt-1 min-w-0 min-h-0 rounded-md h-8 bg-transparent hover:bg-slate-200"
 						>
 							{textCancel || (
 								<MdOutlineClose className="text-xl text-task-title" />

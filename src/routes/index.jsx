@@ -7,8 +7,9 @@ import Kanbans from "../app/pages/Kanbans";
 import MyTasks from "../app/pages/MyTasks/MyTasks";
 import Profile from "../app/pages/Profile";
 import NotFound from "../app/pages/NotFound";
-import TableTeamList from "../app/pages/Team/components/TableTeamList";
+import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
+import New from "../app/pages/New";
 
 const routes = createBrowserRouter([
 	{
@@ -16,6 +17,14 @@ const routes = createBrowserRouter([
 		children: [
 			{
 				path: "/",
+				element: <Root />,
+			},
+			{
+				path: "/my-tasks",
+				element: <MyTasks />,
+			},
+			{
+				path: "/dashboard",
 				element: <DashBoard />,
 			},
 			{
@@ -27,16 +36,16 @@ const routes = createBrowserRouter([
 				element: <Kanbans />,
 			},
 			{
-				path: "/my-tasks",
-				element: <MyTasks />,
-			},
-			{
 				path: "/profile",
 				element: <Profile />,
 			},
 			{
 				path: "/team-manage",
 				element: <Team />,
+			},
+			{
+				path: "/seo/new-manage",
+				element: <New />,
 			},
 		],
 	},

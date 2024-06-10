@@ -37,7 +37,7 @@ const Header = ({
 			</div>
 			<div className="flex flex-row justify-center items-center gap-2">
 				<Input
-					size="sm"
+					size="lg"
 					variant="bordered"
 					placeholder={placeholder}
 					classNames={{

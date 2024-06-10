@@ -52,6 +52,11 @@ export default {
       height: {
         "skeleton-sidebar": "calc(100vh - 16px)",
         "skeleton-content": "calc(100vh - 72px - 48px - 16px)"
+      },
+      maxHeight: {
+        "sidebar-list": "calc(100vh - 16px - 280px)",
+        "skeleton-sidebar": "calc(100vh - 16px)",
+        "skeleton-content": "calc(100vh - 72px - 48px - 16px)"
       }
     },
   },

@@ -1,11 +1,11 @@
 import {useDisclosure} from "@nextui-org/react";
-import TableTeamList from "./components/TableTeamList";
 import {useState} from "react";
-import Header from "../../components/Header/Header";
-import {GetPagingTeam} from "../../../_redux/slice/teamSlice";
 import {useDispatch} from "react-redux";
+import TableNewList from "./components/TableNewList";
+import Header from "../../components/Header/Header";
+import {GetPagingNew} from "../../../_redux/slice/newSlice";
 
-function Team() {
+function New() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
@@ -23,7 +23,7 @@ function Team() {
 	};
 	const handleGetPagination = ({pageIndex, pgSize}) => {
 		dispatch(
-			GetPagingTeam({
+			GetPagingNew({
 				pageIndex: pageIndex || 1,
 				pageSize: pgSize || 10,
 				search: "",
@@ -43,7 +43,7 @@ function Team() {
 					onSearch={setSearch}
 					placeholder="Tìm kiếm tên nhóm..."
 				/>
-				<TableTeamList
+				<TableNewList
 					isOpenAddEdit={isOpenAddEdit}
 					onOpenAddEdit={onOpenAddEdit}
 					onCloseAddEdit={onCloseAddEdit}
@@ -59,4 +59,4 @@ function Team() {
 	);
 }
 
-export default Team;
+export default New;

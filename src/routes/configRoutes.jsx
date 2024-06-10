@@ -1,23 +1,25 @@
-import { GoTasklist } from "react-icons/go";
+import {GoTasklist} from "react-icons/go";
 // import { FaRegRectangleList } from "react-icons/fa6";
-import { MdDashboard, MdOutlineSecurity } from "react-icons/md";
-import { GrUserManager } from "react-icons/gr";
-import { GiFlatPlatform } from "react-icons/gi";
-import { TbBrandAsana } from "react-icons/tb";
-import { MdOutlineStackedLineChart } from "react-icons/md";
-import { RiTeamLine } from "react-icons/ri";
-import { TbLocationSearch } from "react-icons/tb";
+import {MdDashboard, MdOutlineSecurity} from "react-icons/md";
+import {GrUserManager} from "react-icons/gr";
+import {GiFlatPlatform} from "react-icons/gi";
+import {TbBrandAsana} from "react-icons/tb";
+import {MdOutlineStackedLineChart} from "react-icons/md";
+import {RiTeamLine} from "react-icons/ri";
+import {TbLocationSearch} from "react-icons/tb";
 // import { GrDomain } from "react-icons/gr";
 // import { GrAssistListening } from "react-icons/gr";
 // import { PiTicketLight } from "react-icons/pi";
 
 const configRoutes = [
-    {
+	{
 		id: "dashboard",
 		title: "Dashboard",
 		name: "Dashboard",
 		parent: true,
-		icon: <MdDashboard color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<MdDashboard color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/",
 	},
 	{
@@ -26,16 +28,23 @@ const configRoutes = [
 		title: "Công việc của tôi",
 		name: "my-tasks",
 		parent: true,
-		icon: <GoTasklist color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<GoTasklist color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/my-tasks",
 	},
-    {
+	{
 		id: "project",
 		auth: "project",
 		title: "Quản lý dự án",
 		name: "project",
 		parent: true,
-		icon: <MdOutlineSecurity color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<MdOutlineSecurity
+				color="inherit"
+				className="min-w-max min-h-max text-lg"
+			/>
+		),
 		link: "/projects",
 	},
 	{
@@ -44,7 +53,9 @@ const configRoutes = [
 		title: "Quản lý người dùng",
 		name: "user",
 		parent: true,
-		icon: <GrUserManager color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<GrUserManager color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/user-manage",
 	},
 	{
@@ -53,7 +64,9 @@ const configRoutes = [
 		title: "Quản lý phòng ban",
 		name: "department",
 		parent: true,
-		icon: <GiFlatPlatform color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<GiFlatPlatform color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/department-manage",
 	},
 	{
@@ -62,7 +75,9 @@ const configRoutes = [
 		title: "Quản lý thương hiệu",
 		name: "brand",
 		parent: true,
-		icon: <TbBrandAsana color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<TbBrandAsana color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/brand-manage",
 	},
 	{
@@ -71,7 +86,12 @@ const configRoutes = [
 		title: "Quản lý KPI bonus",
 		name: "kpibonus",
 		parent: true,
-		icon: <MdOutlineStackedLineChart color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<MdOutlineStackedLineChart
+				color="inherit"
+				className="min-w-max min-h-max text-lg"
+			/>
+		),
 		link: "/kpi-bonus-manage",
 	},
 	{
@@ -80,16 +100,23 @@ const configRoutes = [
 		title: "Quản lý Team",
 		name: "team",
 		parent: true,
-		icon: <RiTeamLine color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<RiTeamLine color="inherit" className="min-w-max min-h-max text-lg" />
+		),
 		link: "/team-manage",
 	},
-    {
+	{
 		id: "seo",
 		auth: "project",
 		title: "Quản lý SEO",
 		name: "seo",
 		parent: true,
-		icon: <TbLocationSearch color="inherit" className="min-w-max min-h-max text-lg" />,
+		icon: (
+			<TbLocationSearch
+				color="inherit"
+				className="min-w-max min-h-max text-lg"
+			/>
+		),
 		child: [
 			{
 				id: "new",
@@ -128,6 +155,6 @@ const configRoutes = [
 			},
 		],
 	},
-]
+];
 
-export default configRoutes
+export default configRoutes;
