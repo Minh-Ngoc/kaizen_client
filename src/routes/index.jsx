@@ -10,6 +10,7 @@ import NotFound from "../app/pages/NotFound";
 import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
 import New from "../app/pages/New";
+import Blog from "../app/pages/Blog";
 
 const routes = createBrowserRouter([
 	{
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
 			{
 				path: "/seo/new-manage",
 				element: <New />,
+			},
+			{
+				path: "/seo/blog-manage",
+				element: <Blog />,
 			},
 		],
 	},
