@@ -42,7 +42,7 @@ function MyTasks() {
 
 	return (
 		<>
-			<div className="ml-3 mt-3 flex items-center relative gap-3 after:absolute after:-top-3 after:-bottom-14 after:-left-3 after:right-1/2 after:bg-table after:rounded-lg after:shadow-wrapper">
+			<div className="ml-3 mt-[13px] flex items-center relative gap-3 after:absolute after:-top-3 after:-bottom-14 after:-left-3 after:right-1/2 after:bg-table after:rounded-lg after:shadow-wrapper">
 				<FaRegRectangleList className="text-white text-2xl z-10" />
 
 				<h3 className="text-white text-lg uppercase font-bold z-10">

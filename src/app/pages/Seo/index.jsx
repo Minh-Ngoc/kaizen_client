@@ -5,7 +5,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LiaEditSolid } from "react-icons/lia";
 import { FaTrash } from "react-icons/fa";
@@ -49,78 +49,47 @@ function Seo() {
 		onOpenAddEdit();
 		setItemId("");
 	};
-	const columns = useMemo(
-		() => [
-			{
-				id: "select",
-				header: ({ table }) => (
-					<IndeterminateCheckbox
-						{...{
-							checked: table.getIsAllRowsSelected(),
-							indeterminate: table.getIsSomeRowsSelected(),
-							onChange: table.getToggleAllRowsSelectedHandler(),
-						}}
-					/>
-				),
-				cell: ({ row }) => (
-					<div className="px-1">
-						<IndeterminateCheckbox
-							{...{
-								checked: row.getIsSelected(),
-								disabled: !row.getCanSelect(),
-								indeterminate: row.getIsSomeSelected(),
-								onChange: row.getToggleSelectedHandler(),
-							}}
-						/>
-					</div>
-				),
-			},
-			{
-				accessorKey: "id",
-				header: "STT",
-				cell: (info) => (
-					<p className="text-white">{Number(info?.row?.id) + 1}</p>
-				),
-			},
-			{
-				accessorKey: "link",
-				header: "Link",
-				cell: (info) => (
-					<p className="text-white line-clamp-2">
-						{info?.getValue()}
-					</p>
-				),
-			},
-			{
-				accessorKey: "tags",
-				header: "thẻ",
-				cell: (info) => (
-					<p className="text-white line-clamp-2">
-						{info?.getValue()?.length}
-					</p>
-				),
-			},
 
-			{
-				accessorKey: "createdAt",
-				header: "Ngày tạo",
-				cell: (info) => (
+	const columns = [
+		{ name: "Link", _id: "link" },
+		{ name: "Thẻ", _id: "tags" },
+		{ name: "Ngày tạo", _id: "createdAt" },
+		{ name: "Hành động", _id: "actions" },
+	];
+
+	const renderCell = useCallback((item, columnKey) => {
+		const cellValue = item[columnKey];
+
+		switch(columnKey) {
+			case "link":
+				return (
+					<p className="line-clamp-2 text-white">
+						{cellValue}
+					</p>
+				);
+
+			case "tags":
+				return (
+					<p className="line-clamp-2 text-white">
+						{cellValue}
+					</p>
+				);
+			
+			case "createdAt":
+				return (
 					<p className="text-white">
-						{moment(info.getValue()).format("DD/MM/YYYY")}
+						{moment(cellValue).format("DD/MM/YYYY")}
 					</p>
-				),
-			},
+				);
 
-			{
-				accessorKey: "#",
-				header: "Hành động",
-				cell: ({ row }) => (
+			case "actions":
+				return (
 					<div className={"flex flex-row gap-1"}>
 						<Button
 							color="primary"
 							variant="solid"
 							className="min-w-7 h-7 rounded-full p-0"
-							onClick={() => handleEdit(row)}
+							onClick={() => handleEdit(item)}
 						>
 							<Tooltip
 								color={"primary"}
@@ -140,7 +109,7 @@ function Seo() {
 							className="min-w-7 h-7 rounded-full p-0"
 							onClick={() => {
 								setIsOpenModalDelete(true);
-								setListIdSelected([row?.original?._id]);
+								setListIdSelected([item?.original?._id]);
 							}}
 						>
 							<Tooltip
@@ -155,12 +124,122 @@ function Seo() {
 							</Tooltip>
 						</Button>
 					</div>
-				),
-			},
-		],
+				);
+		}
+	}, []);
 
-		[]
-	);
+	// const columns = useMemo(
+	// 	() => [
+	// 		{
+	// 			id: "select",
+	// 			header: ({ table }) => (
+	// 				<IndeterminateCheckbox
+	// 					{...{
+	// 						checked: table.getIsAllRowsSelected(),
+	// 						indeterminate: table.getIsSomeRowsSelected(),
+	// 						onChange: table.getToggleAllRowsSelectedHandler(),
+	// 					}}
+	// 				/>
+	// 			),
+	// 			cell: ({ row }) => (
+	// 				<div className="px-1">
+	// 					<IndeterminateCheckbox
+	// 						{...{
+	// 							checked: row.getIsSelected(),
+	// 							disabled: !row.getCanSelect(),
+	// 							indeterminate: row.getIsSomeSelected(),
+	// 							onChange: row.getToggleSelectedHandler(),
+	// 						}}
+	// 					/>
+	// 				</div>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "id",
+	// 			header: "STT",
+	// 			cell: (info) => (
+	// 				<p className="text-white">{Number(info?.row?.id) + 1}</p>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "link",
+	// 			header: "Link",
+	// 			cell: (info) => (
+	// 				<p className="text-white line-clamp-2">
+	// 					{info?.getValue()}
+	// 				</p>
+	// 			),
+	// 		},
+	// 		{
+	// 			accessorKey: "tags",
+	// 			header: "thẻ",
+	// 			cell: (info) => (
+	// 				<p className="text-white line-clamp-2">
+	// 					{info?.getValue()?.length}
+	// 				</p>
+	// 			),
+	// 		},
+
+	// 		{
+	// 			accessorKey: "createdAt",
+	// 			header: "Ngày tạo",
+	// 			cell: (info) => (
+	// 				<p className="text-white">
+	// 					{moment(info.getValue()).format("DD/MM/YYYY")}
+	// 				</p>
+	// 			),
+	// 		},
+
+	// 		{
+	// 			accessorKey: "#",
+	// 			header: "Hành động",
+	// 			cell: ({ row }) => (
+	// 				<div className={"flex flex-row gap-1"}>
+	// 					<Button
+	// 						color="primary"
+	// 						variant="solid"
+	// 						className="min-w-7 h-7 rounded-full p-0"
+	// 						onClick={() => handleEdit(row)}
+	// 					>
+	// 						<Tooltip
+	// 							color={"primary"}
+	// 							content={"Chỉnh sửa"}
+	// 							className="capitalize"
+	// 							disableAnimation={true}
+	// 						>
+	// 							<p>
+	// 								<LiaEditSolid />
+	// 							</p>
+	// 						</Tooltip>
+	// 					</Button>
+
+	// 					<Button
+	// 						color="danger"
+	// 						variant="solid"
+	// 						className="min-w-7 h-7 rounded-full p-0"
+	// 						onClick={() => {
+	// 							setIsOpenModalDelete(true);
+	// 							setListIdSelected([row?.original?._id]);
+	// 						}}
+	// 					>
+	// 						<Tooltip
+	// 							color={"danger"}
+	// 							content={"Xóa"}
+	// 							className="capitalize"
+	// 							disableAnimation={true}
+	// 						>
+	// 							<p>
+	// 								<FaTrash />
+	// 							</p>
+	// 						</Tooltip>
+	// 					</Button>
+	// 				</div>
+	// 			),
+	// 		},
+	// 	],
+
+	// 	[]
+	// );
 
 	const table = useReactTable({
 		data,

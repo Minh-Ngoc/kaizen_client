@@ -11,12 +11,12 @@ function AdminLayout() {
 	}
 
 	return (
-		<div className="p-2 bg-admin">
-			<div className="grid grid-cols-12">
-				<div className="col-span-2">
+		<div className="p-2 bg-admin h-screen">
+			<div className="h-full grid grid-cols-12">
+				<div className="col-span-2 h-full">
 					<Sidebar />
 				</div>
-				<div className="col-span-10 px-4 relative">
+				<div className="h-full col-span-10 px-4 relative overflow-auto">
 					<Navbar />
 					<Outlet />
 				</div>

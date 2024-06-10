@@ -82,8 +82,8 @@ function Blog() {
 			case "images":
 				return (
 					<AvatarGroup isBordered max={5}>
-						{cellValue?.map((item, index) => (
-							<Avatar key={index} src={`${URL_IMAGE}/${item}`} />
+						{cellValue?.map((avt, index) => (
+							<Avatar key={index} src={`${URL_IMAGE}/${avt}`} />
 						))}
 					</AvatarGroup>
 				);
@@ -113,7 +113,7 @@ function Blog() {
 
 			case "status":
 				return (
-					<p className="text-white">
+					<div className="flex items-center justify-center">
 						<Chip
 							color={
 								cellValue === "pending"
@@ -129,7 +129,7 @@ function Blog() {
 								? "Đã duyệt"
 								: "Từ chối"}
 						</Chip>
-					</p>
+					</div>
 				);
 
 			case "user":
