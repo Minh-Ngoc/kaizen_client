@@ -87,8 +87,8 @@ function ColumnContainer({ column, tasks }) {
 				classNames={{
 					base: "w-full px-2 rounded-xl bg-card-kanban",
 					header: "py-2",
-					body: "pb-2 pt-1 px-1 gap-y-2",
-					footer: "py-2 px-0 flex-col justify-start",
+					body: "pb-4 pt-1 px-1 gap-y-2",
+					footer: "py-3 px-0 flex-col justify-start",
 				}}
 			>
 				<CardHeader className="justify-center">
@@ -99,7 +99,7 @@ function ColumnContainer({ column, tasks }) {
 
 				{/* Sortable Content Wrapper */}
 				{(!!tasks?.length || visible) && (
-					<CardBody className="max-h-[700px]">
+					<CardBody className="max-h-[74vh]">
 						<SortableContext
 							items={tasksIds}
 							strategy={verticalListSortingStrategy}
@@ -114,6 +114,7 @@ function ColumnContainer({ column, tasks }) {
 							<FormConfirm
 								visible={visible}
 								value={taskName}
+								sticky
 								onChange={handleChangeTaskName}
 								onConfirm={handleCreateNewTask}
 								onClose={handleClickBtnAddCard}

@@ -214,78 +214,72 @@ const Sidebar = () => {
 	}, [userData]);
 
 	return (
-		<nav role="navigation" className="bg-table shadow-wrapper rounded-md sticky top-2">
-			<div className="relative h-skeleton-sidebar overflow-hidden">
-				<div className="text-slate-500">
-                    {/* Begin: Header */}
-					<div className="pt-6 pb-2 flex flex-col items-center overflow-x-hidden">
-						<Link
-							to={"/"}
-							className="text-center flex flex-col items-center justify-center"
-						>
-							<div className="relative rounded-full duration-300 h-20 w-20 flex items-center justify-center">
-								<Avatar
-									src={avatar}
-									className="w-12 h-12"
-								/>
-                                {[
-                                    "copper",
-                                    "platinum",
-                                    "master",
-                                    "gold",
-                                    "diamond",
-                                ].includes(userData?.rank) && (
-                                    <div className="block absolute -top-4 w-[122px]">
-                                        <img
-                                            src={`/rank/${userData?.rank}.png`}
-                                            alt="Hạng người dùng"
-                                            className="w-full h-full"
-                                        />
-                                    </div>
-                                )}
-							</div>
-							<div className="text-lg uppercase font-semibold text-white mt-6 truncate duration-300">
-								{renderNameProfile}
-							</div>
-                            <div className="flex flex-row gap-1 justify-between items-end mb-1">
-                                <p className="text-base text-slate-400 font-medium">
-                                    {rankData?.rankText}
-                                </p>
-                            </div>
-						</Link>
-						<div className="flex flex-col w-full px-4 h-12 justify-items-end items-end">
-							<div className="rounded w-full relative">
-								<div className="w-full h-full flex justify-center items-center z-20 absolute">
-									<p className="text-xs text-gray-600 font-bold">
-										{rankData?.text}
-									</p>
-								</div>
-								<Progress
-									aria-label="Loading..."
-									radius="sm"
-									classNames={{
-										base: "max-w-md",
-										track: "drop-shadow-md border border-default h-5",
-										indicator:
-											"bg-gradient-to-r from-pink-500 to-yellow-500",
-										label: "tracking-wider font-medium text-default-600",
-										value: "text-foreground/60",
-									}}
-									value={rankData?.percent}
+		<nav role="navigation" className="bg-table shadow-wrapper rounded-md sticky top-2 overflow-hidden">
+			{/* Begin: Header */}
+			<div className="pt-6 pb-2 flex flex-col items-center">
+				<Link
+					to={"/"}
+					className="text-center flex flex-col items-center justify-center"
+				>
+					<div className="relative rounded-full duration-300 h-20 w-20 flex items-center justify-center">
+						<Avatar
+							src={avatar}
+							className="w-12 h-12"
+						/>
+						{[
+							"copper",
+							"platinum",
+							"master",
+							"gold",
+							"diamond",
+						].includes(userData?.rank) && (
+							<div className="block absolute -top-4 w-[122px]">
+								<img
+									src={`/rank/${userData?.rank}.png`}
+									alt="Hạng người dùng"
+									className="w-full h-full"
 								/>
 							</div>
-						</div>
+						)}
 					</div>
-                    {/* End: Header */}
-                    
-					<div className="mb-10 p-0">
-						<ul className="list-none text-sm font-normal px-3">
-							{configRoutes?.map((item, index) =>
-								generateMenu(item, index)
-							)}
-						</ul>
+					<div className="text-lg uppercase font-semibold text-white mt-6 truncate duration-300">
+						{renderNameProfile}
+					</div>
+					<div className="flex flex-row gap-1 justify-between items-end mb-1">
+						<p className="text-base text-slate-400 font-medium">
+							{rankData?.rankText}
+						</p>
+					</div>
+				</Link>
+				<div className="flex flex-col w-full px-4 h-12 justify-items-end items-end">
+					<div className="rounded w-full relative">
+						<div className="w-full h-full flex justify-center items-center z-20 absolute">
+							<p className="text-xs text-gray-600 font-bold">
+								{rankData?.text}
+							</p>
+						</div>
+						<Progress
+							aria-label="Loading..."
+							radius="sm"
+							classNames={{
+								base: "max-w-md",
+								track: "drop-shadow-md border border-default h-5",
+								indicator:
+									"bg-gradient-to-r from-pink-500 to-yellow-500",
+								label: "tracking-wider font-medium text-default-600",
+								value: "text-foreground/60",
+							}}
+							value={rankData?.percent}
+						/>
 					</div>
 				</div>
+			</div>
+			{/* End: Header */}
+			
+			<div className="list-none text-sm font-normal px-3 mb-10 p-0 overflow-y-scroll max-h-sidebar-list scrollbar-kanban">
+				{configRoutes?.map((item, index) =>
+					generateMenu(item, index)
+				)}
 			</div>
 		</nav>
 	);
