@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import DashBoard from "../app/pages/Dashboard";
 import AdminLayout from "../layouts/Admin";
 import Login from "../app/pages/Login";
@@ -11,57 +11,62 @@ import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
 import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
+import UserManager from "../app/pages/User";
 
 const routes = createBrowserRouter([
-	{
-		element: <AdminLayout />,
-		children: [
-			{
-				path: "/",
-				element: <Root />,
-			},
-			{
-				path: "/my-tasks",
-				element: <MyTasks />,
-			},
-			{
-				path: "/dashboard",
-				element: <DashBoard />,
-			},
-			{
-				path: "/projects",
-				element: <Projects />,
-			},
-			{
-				path: "/kanbans/:id",
-				element: <Kanbans />,
-			},
-			{
-				path: "/profile",
-				element: <Profile />,
-			},
-			{
-				path: "/team-manage",
-				element: <Team />,
-			},
-			{
-				path: "/seo/new-manage",
-				element: <New />,
-			},
-			{
-				path: "/seo/blog-manage",
-				element: <Blog />,
-			},
-		],
-	},
-	{
-		path: "/login",
-		element: <Login />,
-	},
-	{
-		path: "*",
-		element: <NotFound />,
-	},
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Root />,
+      },
+      {
+        path: "/my-tasks",
+        element: <MyTasks />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "/projects",
+        element: <Projects />,
+      },
+      {
+        path: "/kanbans/:id",
+        element: <Kanbans />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/team-manage",
+        element: <Team />,
+      },
+      {
+        path: "/seo/new-manage",
+        element: <New />,
+      },
+      {
+        path: "/seo/blog-manage",
+        element: <Blog />,
+      },
+      {
+        path: "/user-manage",
+        element: <UserManager />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default routes;
