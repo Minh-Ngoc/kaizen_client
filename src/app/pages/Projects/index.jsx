@@ -1,28 +1,27 @@
-
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Pagination } from "@nextui-org/react";
-import { TbFolderPlus } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {Button, Pagination} from "@nextui-org/react";
+import {TbFolderPlus} from "react-icons/tb";
+import {useDispatch, useSelector} from "react-redux";
 import CardProject from "app/components/CardProject";
 import FiltersWrapper from "./components/FiltersWrapper";
 import FormNewProject from "./components/FormNewProject";
-import { navigates } from "_constants";
-import { setModal } from "_redux/slice/modalSlice";
-import { GetPagingProject } from "_redux/slice/projectSlice";
-import { MdOutlineBrowserNotSupported } from "react-icons/md";
-import { BsTable } from "react-icons/bs";
-import { TfiLayoutGrid2 } from "react-icons/tfi";
+import {navigates} from "_constants";
+import {setModal} from "_redux/slice/modalSlice";
+import {GetPagingProject} from "_redux/slice/projectSlice";
+import {MdOutlineBrowserNotSupported} from "react-icons/md";
+import {BsTable} from "react-icons/bs";
+import {TfiLayoutGrid2} from "react-icons/tfi";
 import TableProjectsList from "./components/TableProjectsList";
-import { setApi } from "_redux/slice/taskSlice";
+import {setApi} from "_redux/slice/taskSlice";
 
 const PAGE_SIZE = 10;
 
 function Projects() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { projects: projectList, total } = useSelector(state => state.projects);
-	const [typeShow, setTypeShow] = useState('grid');
+	const {projects: projectList, total} = useSelector((state) => state.projects);
+	const [typeShow, setTypeShow] = useState("grid");
 	const [pageIndex, setPageIndex] = useState(1);
 
 	const handleCreateNewProject = async () => {
@@ -35,38 +34,38 @@ function Projects() {
 				openConfirm: false,
 				openCancel: false,
 				bg: "bg-white",
-				header: '',
+				header: "",
 				hideCloseButton: false,
-				classNames: '',
-				backdrop: 'opaque',
-				motionProps: ""
+				classNames: "",
+				backdrop: "opaque",
+				motionProps: "",
 			})
 		);
 	};
 
 	const navigateToProjectDetail = (id) => {
-		dispatch(setApi('tasks'));
+		dispatch(setApi("tasks"));
 		navigate(`${navigates.kanbans}/${id}`);
 	};
 
 	useEffect(() => {
-		dispatch(GetPagingProject({ pageSize: PAGE_SIZE, pageIndex }));
+		dispatch(GetPagingProject({pageSize: PAGE_SIZE, pageIndex}));
 	}, []);
 
 	const handleChangeTypeShow = () => {
-		if(typeShow === 'grid') {
-			setTypeShow('table');
+		if (typeShow === "grid") {
+			setTypeShow("table");
 			setPageIndex(1);
 		} else {
-			setTypeShow('grid')
-			dispatch(GetPagingProject({ pageSize: PAGE_SIZE, pageIndex }));
+			setTypeShow("grid");
+			dispatch(GetPagingProject({pageSize: PAGE_SIZE, pageIndex}));
 		}
 	};
 
 	const handleChangePaging = (value) => {
 		setPageIndex(value);
 
-		dispatch(GetPagingProject({ pageSize: PAGE_SIZE, pageIndex: value }));
+		dispatch(GetPagingProject({pageSize: PAGE_SIZE, pageIndex: value}));
 	};
 
 	return (
@@ -83,13 +82,14 @@ function Projects() {
 							className="rounded-md bg-transparent min-w-0 p-2 w-max h-full shadow-card-project data-[hover=true]:opacity-50 data-[hover=true]:bg-card-project-hover"
 							onClick={handleChangeTypeShow}
 						>
-							{typeShow === 'grid' ? (
+							{typeShow === "grid" ? (
 								<BsTable className="text-white text-lg" />
-
-							) : <TfiLayoutGrid2 className="text-white text-lg" />}
+							) : (
+								<TfiLayoutGrid2 className="text-white text-lg" />
+							)}
 						</Button>
 
-						{typeShow === 'table' && (
+						{typeShow === "table" && (
 							<Button
 								variant="light"
 								onClick={handleCreateNewProject}
@@ -101,7 +101,7 @@ function Projects() {
 						)}
 					</div>
 
-					{typeShow === 'grid' && (
+					{typeShow === "grid" && (
 						<Pagination
 							classNames={{
 								base: "shadow-sm",
@@ -122,7 +122,7 @@ function Projects() {
 				</div>
 			</div>
 
-			{typeShow === 'grid' ? (
+			{typeShow === "grid" ? (
 				<div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-7">
 					{/* Container Cards */}
 					<div className="w-full min-h-[275px] h-full bg-card-project rounded-2xl shadow-card-project">
@@ -158,7 +158,9 @@ function Projects() {
 							>
 								<div className="flex flex-col justify-center items-center text-white">
 									<MdOutlineBrowserNotSupported className="w-5 h-5 text-white" />
-								<p className="text-lg text-white font-bold">Không tìm thấy dự án nào</p>
+									<p className="text-lg text-white font-bold">
+										Không tìm thấy dự án nào
+									</p>
 								</div>
 							</Button>
 						</div>
