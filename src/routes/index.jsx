@@ -11,6 +11,8 @@ import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
 import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
+import Activity from "../app/pages/Activity";
+import SeoProject from "../app/pages/SeoProject";
 
 const routes = createBrowserRouter([
 	{
@@ -51,6 +53,18 @@ const routes = createBrowserRouter([
 			{
 				path: "/seo/blog-manage",
 				element: <Blog />,
+			},
+			{
+				path: "/seo/activity-manage",
+				element: <Activity />,
+			},
+			{
+				path: "/seo/project-manage",
+				element: <SeoProject />,
+			},
+			{
+				path: "/seo/seo-manage",
+				element: <SeoProject />,
 			},
 		],
 	},

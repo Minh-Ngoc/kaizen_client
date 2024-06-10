@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import TableBlogList from "./components/TableBlogList";
 import {GetPagingBlog} from "../../../_redux/slice/blogSlice";
 
-function New() {
+function Blog() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
@@ -59,4 +59,4 @@ function New() {
 	);
 }
 
-export default New;
+export default Blog;
