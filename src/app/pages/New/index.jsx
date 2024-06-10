@@ -33,7 +33,7 @@ function New() {
 
 	return (
 		<>
-			<div className="flex flex-col pt-[120px] md:pt-[75px]">
+			<div className="flex flex-col mt-24">
 				<Header
 					onOpenAddEdit={handleOpenAddEdit}
 					onOpenDelete={() => {
