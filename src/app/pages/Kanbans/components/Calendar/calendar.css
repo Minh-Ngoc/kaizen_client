@@ -1,0 +1,9 @@
+.fc-event {
+  margin: 5px;
+}
+
+.fc-daygrid-event {
+  padding: 3px; /* Khoảng cách xung quanh nội dung item trong chế độ xem ngày lưới */
+  /* background: none; */
+  border: 1px solid white;
+}

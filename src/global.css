@@ -1,0 +1,333 @@
+@import url(../node_modules/@syncfusion/ej2-base/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-buttons/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-calendars/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-dropdowns/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-gantt/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-grids/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-inputs/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-layouts/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-lists/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-navigations/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-popups/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css);
+@import url(../node_modules/@syncfusion/ej2-treegrid/styles/material.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.e-grid,
+.e-grid .e-headercell,
+.e-grid .e-gridheader,
+.e-grid .e-table,
+.e-grid .e-table .e-detailheadercell,
+.e-grid .e-gridcontent,
+.e-grid .e-gridcontent .e-content,
+.e-grid .e-gridcontent .e-content .e-table td,
+.e-grid .e-gridcontent .e-content .e-detailrowcollapse .e-icons,
+.e-grid .e-gridcontent .e-content .e-detailrowexpand .e-icons {
+	background-color: transparent;
+	color: white;
+}
+.e-grid .e-gridcontent .e-content .e-table .e-detailindentcell,
+.e-grid .e-gridcontent .e-content .e-table .e-detailcell,
+.e-grid .e-gridcontent .e-content .e-table .e-detailcell > .e-control {
+	border: none;
+}
+
+.e-grid .e-gridcontent .e-content .e-table tr:hover > td {
+	background-color: #c7c7c746 !important;
+	color: #ffffff !important;
+}
+
+.e-grid .e-headercelldiv {
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#TooltipTemplate .e-grid,
+#TooltipTemplate .e-grid .e-headercell,
+#TooltipTemplate .e-grid .e-gridheader,
+#TooltipTemplate .e-grid .e-table,
+#TooltipTemplate .e-grid .e-table .e-detailheadercell,
+#TooltipTemplate .e-grid .e-gridcontent,
+#TooltipTemplate .e-grid .e-gridcontent .e-content,
+#TooltipTemplate .e-grid .e-gridcontent .e-content .e-table td,
+#TooltipTemplate
+	.e-grid
+	.e-gridcontent
+	.e-content
+	.e-detailrowcollapse
+	.e-icons,
+#TooltipTemplate .e-grid .e-gridcontent .e-content .e-detailrowexpand .e-icons {
+	background-color: white;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+#TooltipTemplate .e-grid .e-headercelldiv {
+	font-size: 14px;
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.54);
+}
+
+#TooltipTemplate .e-grid .e-gridcontent .e-content .e-table tr:hover > td {
+	background-color: #c7c7c746 !important;
+	color: rgba(0, 0, 0, 0.877) !important;
+}
+
+#grid-template-container .e-headercontent .e-table tr > th {
+	background-color: #758beb;
+}
+
+#grid-template-tasks .e-headercontent .e-table tr > th {
+	background-color: #626fe6;
+}
+
+#grid-template-checklist .e-headercontent .e-table tr > th {
+	background-color: #8f7beb;
+}
+
+#grid-template-checklist-items .e-headercontent .e-table tr > th {
+	background-color: #677ba9;
+}
+
+.e-treegrid .e-rowcell:not(.e-gridclip) .e-treecolumn-container {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+	align-items: center;
+}
+
+#treegridcontrol .e-headercontent .e-table tr > th {
+	background-color: #0389e9;
+}
+
+#treegridcontrol .e-gridcontent .e-content .e-treegridexpand,
+#treegridcontrol .e-gridcontent .e-content .e-treegridcollapse {
+	background-color: transparent;
+	color: white;
+}
+
+#treegridcontrol .e-gridcontent .e-content .e-table tr[aria-expanded="true"] {
+	background-color: #677ba9;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#treegridcontrol_gridcontrol,
+#treegridcontrol .e-grid .e-gridcontent .e-content .e-table,
+#treegridcontrol .e-grid .e-gridcontent .e-content .e-table tr > td {
+	border-color: #d4d4d852;
+}
+
+#treegridcontrol
+	.e-gridcontent
+	.e-content
+	.e-table
+	tr[aria-expanded="true"]
+	.e-icon-rowdragicon::before,
+#treegridcontrol
+	.e-gridcontent
+	.e-content
+	.e-table
+	tr:has(.add-task)
+	.e-icon-rowdragicon::before {
+	display: none;
+}
+
+#treegridcontrol
+	.e-gridcontent
+	.e-content
+	.e-table
+	tr[aria-expanded="true"]
+	.e-rowdragdropcell,
+#treegridcontrol
+	.e-gridcontent
+	.e-content
+	.e-table
+	tr:has(.add-task)
+	.e-rowdragdropcell {
+	cursor: no-drop !important;
+}
+
+/* #treegridgantt .e-gridcontent .e-content .e-table tr[aria-expanded="false"], */
+#treegridgantt .e-gridcontent .e-content .e-table tr[aria-expanded="true"] {
+	background-color: #d2d4db;
+}
+
+#treegridgantt .e-gridcontent .e-content .e-treegridexpand,
+#treegridgantt .e-gridcontent .e-content .e-treegridcollapse {
+	background-color: transparent;
+	color: black;
+}
+
+#treegridgantt .e-grid,
+#treegridgantt .e-grid .e-headercell,
+#treegridgantt .e-grid .e-gridheader,
+#treegridgantt .e-grid .e-table,
+#treegridgantt .e-grid .e-table .e-detailheadercell,
+#treegridgantt .e-grid .e-gridcontent,
+#treegridgantt .e-grid .e-gridcontent .e-content,
+#treegridgantt .e-grid .e-gridcontent .e-content .e-table td,
+#treegridgantt .e-grid .e-gridcontent .e-content .e-detailrowcollapse .e-icons,
+#treegridgantt .e-grid .e-gridcontent .e-content .e-detailrowexpand .e-icons {
+	color: rgba(0, 0, 0, 0.877);
+}
+
+#treegridgantt .e-grid .e-headercelldiv {
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, 0.877);
+}
+
+#treegridgantt .e-grid .e-gridcontent .e-content .e-table tr:hover > td {
+	background-color: #c7c7c746 !important;
+	color: rgba(0, 0, 0, 0.877) !important;
+}
+
+#treegridgantt .e-headercontent .e-table tr > th {
+	height: 60px;
+}
+
+#treegridgantt .e-grid .e-gridcontent .e-content .e-table tr > td {
+	min-height: 37px;
+}
+
+/* End: Gantt chart @syncfusion/ej2-react-gantt */
+
+iframe#webpack-dev-server-client-overlay {
+	display: none !important;
+}
+
+:root {
+	background-color: transparent;
+}
+
+body {
+	font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.ripple-container {
+	position: relative;
+	overflow: hidden;
+}
+
+.ripple-effect {
+	position: absolute;
+	border-radius: 50%;
+	transform: scale(0);
+	animation: ripple-animation 0.6s linear;
+	background-color: rgba(255, 255, 255, 0.354);
+}
+
+@keyframes ripple-animation {
+	to {
+		transform: scale(4);
+		opacity: 0;
+	}
+}
+.animation-date-ranger-picker {
+	transition: height 300ms cubic-bezier(0.78, 0.25, 0.27, 1.55),
+		width 300ms cubic-bezier(0.78, 0.25, 0.27, 1.55);
+}
+
+.animation-underline-input {
+	transition: left 500ms cubic-bezier(0.78, -0.25, 0.37, 1.35);
+}
+
+.text-area-input {
+	height: auto !important;
+}
+
+.scrollbar-kanban {
+	scrollbar-color: #fff #00000000;
+}
+.select-modal::-webkit-scrollbar {
+	width: 0; /* Ẩn thanh cuộn trên Chrome, Safari */
+	background-color: transparent;
+}
+.hide-sroll-bar {
+	overflow-y: scroll;
+}
+.hide-sroll-bar::-webkit-scrollbar {
+	display: none;
+}
+
+.hide-sroll-bar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.dpl-image {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999999;
+	justify-content: center;
+	align-items: center;
+}
+.dpl-image .img-center {
+	width: 35%;
+	height: 70%;
+}
+
+.close-btn {
+	cursor: pointer;
+	color: #1a1a1a;
+	transform: translate(30%, -30%);
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: #e6e6e6;
+	border-radius: 5px;
+}
+.bg-permission {
+	background: linear-gradient(
+		127.09deg,
+		rgba(6, 11, 40, 0.94) 19.41%,
+		rgba(49, 56, 90, 0.49) 76.65%
+	);
+	backdrop-filter: blur(120px);
+}
+
+#line-chart .apexcharts-tooltip {
+	max-height: 500px;
+	height: max-content;
+	overflow: auto;
+	overscroll-behavior: contain;
+	pointer-events: auto;
+	white-space: pre-wrap !important;
+}
+
+.apexcharts-tooltip:hover {
+	opacity: 1 !important;
+}
+
+/* #line-chart .apexcharts-legend {
+	display: none;
+} */
+
+#nextui-date-range-picker div {
+	color: #ffffff !important;
+}
+
+.my-hidden-header .e-gridheader .e-table {
+	display: none !important;
+}
+
+.e-grid .e-row .e-icon-rowdragicon::before {
+	color: #ffffff;
+	visibility: hidden; /* Initially hidden */
+	opacity: 0; /* Initially fully transparent */
+	transition: visibility 0s 0.1s, opacity 0.1s; /* Smooth transition */
+}
+
+.e-grid .e-row .e-rowdragdropcell:hover .e-icon-rowdragicon::before {
+	visibility: visible; /* Visible on hover */
+	opacity: 1; /* Fully opaque on hover */
+	transition-delay: 0s; /* No delay */
+}
