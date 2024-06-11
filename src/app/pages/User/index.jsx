@@ -15,10 +15,10 @@ import ButtonExportExcel from "./components/exportExcel";
 import ModalUser from "./components/modaUser";
 import { deleteUsers } from "services/api.service";
 import ModalDeleteMutiOrOne from "../../components/Modal/ModalDelete";
+import ModalUserDetail from "./components/ModalUserDetail";
 function UserManager() {
   const dispatch = useDispatch();
   const counts = useSelector((state) => state.user.counts);
-  console.log("counts: ", counts);
   const listUser = useSelector((state) => state.user.listUser);
   const isLoading = useSelector((state) => state.user.isLoading);
   const listRole = useSelector((state) => state.role.listRole);
@@ -32,9 +32,17 @@ function UserManager() {
   const [userData, setUserDate] = useState({});
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(new Set(["10"]));
-  const [listIdSelected, setListIdSelected] = useState([]);
-  const [listSelected, setListSelected] = useState(new Set([]));
-  const [rowSelection, setRowSelection] = useState({});
+  const [listIdSelected, setListIdSelected] = useState(new Set([]));
+  const [listId, setListId] = useState([]);
+  const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
+  useEffect(() => {
+    if (typeof listIdSelected === "string") {
+      setListId(listUser?.map((user) => user._id)?.join("-"));
+    } else {
+      const myIdArr = [...listIdSelected];
+      setListId(myIdArr?.join("-"));
+    }
+  }, [listIdSelected]);
   useEffect(() => {
     dispatch(userAction.getPagination({}));
     dispatch(roleAction.getAllRoles());
@@ -96,7 +104,10 @@ function UserManager() {
                 radius="full"
                 color="warning"
                 className="min-w-0 w-8 p-1 h-auto"
-                // onClick={() => navigateToProjectDetail(item?._id)}
+                onClick={() => {
+                  setIsOpenModalDetail(!isOpenModalDetail);
+                  setUserDate(item);
+                }}
               >
                 <FaRegEye className="min-w-max text-base w-4 h-4 text-white" />
               </Button>
@@ -138,7 +149,6 @@ function UserManager() {
                 className="min-w-0 w-8 p-2 h-auto"
                 onClick={() => {
                   setIsOpenModalDelete(true);
-                  setRowSelection({ [item?.id]: true });
                   setListIdSelected([item?._id]);
                 }}
               >
@@ -206,7 +216,6 @@ function UserManager() {
         team: teamSelected,
       })
     );
-    setRowSelection({});
     setListIdSelected([]);
     setPageIndex(tempPageIndex);
   };
@@ -241,7 +250,7 @@ function UserManager() {
                 onClick={() => {
                   setIsOpenModalDelete(!isOpenModalDelete);
                 }}
-                // isDisabled={listIdSelected?.length === 0}
+                isDisabled={listId?.length === 0}
               >
                 Xóa
               </Button>
@@ -370,9 +379,9 @@ function UserManager() {
       </div>
       <div className="bg-card-project shadow-wrapper p-5 pb-10 rounded-xl">
         <TableNextUI
-          selectionMode={"mutiple"}
-          selectedKeys={listSelected}
-          onSelectedChange={setListSelected}
+          selectionMode={"multiple"}
+          selectedKeys={listIdSelected}
+          onSelectedChange={setListIdSelected}
           columns={columns}
           renderCell={renderCell}
           data={listUser}
@@ -402,11 +411,10 @@ function UserManager() {
         isOpen={isOpenModalDelete}
         onClose={() => {
           setListIdSelected([]);
-          setRowSelection({});
           setIsOpenModalDelete(false);
         }}
         onComplete={handleOnDelete}
-        ids={listIdSelected?.join("-")}
+        ids={listId}
         headerMsg={`Xác nhận`}
         funcDelete={deleteUsers}
         bodyMsg={
@@ -414,6 +422,13 @@ function UserManager() {
             ? "Bạn có chắc chắn muốn xóa các người dùng đã chọn?"
             : "Bạn có chắc chắn muốn xóa người dùng này?"
         }
+      />
+      <ModalUserDetail
+        isOpen={isOpenModalDetail}
+        onClose={() => {
+          setIsOpenModalDetail(!isOpenModalDetail);
+        }}
+        userDate={userData}
       />
     </>
   );
