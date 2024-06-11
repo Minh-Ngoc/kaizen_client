@@ -32,7 +32,7 @@ function Brand() {
 					}}
 					listIds={listIds}
 					onSearch={setSearch}
-					placeholder="Tìm kiếm tên nhóm..."
+					placeholder="Tìm kiếm tên ..."
 				/>
 				<TableBrandList
 					isOpenAddEdit={isOpenAddEdit}

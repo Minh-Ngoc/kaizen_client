@@ -33,7 +33,7 @@ function KpiBonus() {
 					}}
 					listIds={listIds}
 					onSearch={setSearch}
-					placeholder="Tìm kiếm tên nhóm..."
+					placeholder="Tìm kiếm tên ..."
 				/>
 				<TableKpiBonusList
 					isOpenAddEdit={isOpenAddEdit}
