@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { yourticketAction } from "_redux/slice/yourTicketSlice";
 import moment from "moment";
-import { Button, Chip, Select, SelectItem } from "@nextui-org/react";
+import { Button, Chip, DateRangePicker, Select, SelectItem } from "@nextui-org/react";
 import TableNextUI from "app/components/TableNextUI";
 import {
   getPriorityText,
@@ -18,15 +17,10 @@ import { Tooltip } from "@nextui-org/react";
 import { FaRegEye } from "react-icons/fa";
 import { BiPlus } from "react-icons/bi";
 import ModalTicket from "./components/modalTicket";
-import DateRangerPicker from "app/components/DateRangerPicker";
+// import DateRangerPicker from "app/components/DateRangerPicker";
 import ModalDetailTicket from "./components/modalDetailTicket";
-function dateToUtcTime(date) {
-  if (!date) return "";
-  const userTimeZoneOffset = date?.getTimezoneOffset();
-  const utcOffsetInHours = -userTimeZoneOffset / 60;
-  const utcTime = new Date(date.getTime() + utcOffsetInHours * 60 * 60 * 1000);
-  return utcTime;
-}
+import { IoIosClose } from "react-icons/io";
+
 export default function Ticket() {
   const dispatch = useDispatch();
   const counts = useSelector((state) => state.yourTicket.counts);
@@ -38,15 +32,17 @@ export default function Ticket() {
   const [isOpenModalTicket, setIsOpenModalTicket] = useState(false);
   const [isOpenModalDetailTicket, setIsOpenModalDetailTicket] = useState(false);
   const [ticket, setTicket] = useState({});
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+	const [time, setTime] = useState(null);
+
   useEffect(() => {
     dispatch(yourticketAction.getAllYourTicketPaging({}));
   }, []);
+
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(new Set(["10"]));
   const [listIdSelected, setListIdSelected] = useState(new Set([]));
   const [listId, setListId] = useState([]);
+
   useEffect(() => {
     if (typeof listIdSelected === "string") {
       setListId(listTicket?.map((department) => department._id)?.join("-"));
@@ -55,6 +51,7 @@ export default function Ticket() {
       setListId(myIdArr?.join("-"));
     }
   }, [listIdSelected]);
+
   const columns = [
     { name: "Tiêu đề", _id: "title" },
     { name: "Độ ưu tiên", _id: "priority" },
@@ -131,6 +128,15 @@ export default function Ticket() {
   const handlePageChange = (nextPage, nextPageSize) => {
     nextPageSize && setPageSize(nextPageSize);
     setPageIndex(nextPage);
+
+    const startDate = moment(time?.start?.toDate())
+      ?.startOf("day")
+      ?.toISOString();
+      
+    const endDate = moment(time?.end?.toDate())
+      ?.endOf("day")
+      ?.toISOString();
+
     dispatch(
       yourticketAction.getAllYourTicketPaging({
         pageIndex: nextPage,
@@ -140,12 +146,26 @@ export default function Ticket() {
         priority,
         project,
         responseStatus,
-        startDate: dateToUtcTime(startDate),
-        endDate: dateToUtcTime(endDate),
+        startDate,
+        endDate,
       })
     );
   };
+  
   const handleonComplete = () => {
+    let startDate = null;
+    let endDate = null;
+
+    if(time) {
+      startDate = moment(time?.start?.toDate())
+        ?.startOf("day")
+        ?.toISOString();
+  
+      endDate = moment(time?.end?.toDate())
+        ?.endOf("day")
+        ?.toISOString();
+    }
+
     dispatch(
       yourticketAction.getAllYourTicketPaging({
         pageIndex: pageIndex,
@@ -153,12 +173,25 @@ export default function Ticket() {
         priority,
         project,
         responseStatus,
-        startDate: dateToUtcTime(startDate),
-        endDate: dateToUtcTime(endDate),
+        startDate,
+        endDate,
       })
     );
   };
-  const handleSearh = () => {
+  const handleSearh = useCallback(() => {
+    let startDate = null;
+    let endDate = null;
+
+    if(time) {
+      startDate = moment(time?.start?.toDate())
+        ?.startOf("day")
+        ?.toISOString();
+  
+      endDate = moment(time?.end?.toDate())
+        ?.endOf("day")
+        ?.toISOString();
+    }
+
     setPageIndex(1);
     dispatch(
       yourticketAction.getAllYourTicketPaging({
@@ -167,11 +200,11 @@ export default function Ticket() {
         priority,
         project,
         responseStatus,
-        startDate: dateToUtcTime(startDate),
-        endDate: dateToUtcTime(endDate),
+        startDate,
+        endDate,
       })
     );
-  };
+  }, [dispatch, pageSize, priority, project, responseStatus, time]);
   const popoverProps = {
     classNames: {
       content: "rounded-md",
@@ -202,16 +235,21 @@ export default function Ticket() {
       },
     },
   };
+
+  const handleRemoveDate = () => {
+		setTime(null);
+	};
+
   return (
     <>
-      <div className="mt-24 flex flex-col z-50">
-        <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper z-50">
-          <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full z-50">
-            <div className="max-w-[220px] flex items-center gap-2 z-50">
+      <div className="mt-24 flex flex-col">
+        <div className="mb-4 flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table rounded-lg">
+          <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full">
+            <div className="max-w-[220px] flex items-center gap-2">
               <Button
                 variant="solid"
                 color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs"
+                className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
                   <BiPlus className="text-white min-w-max min-h-max" />
                 }
@@ -222,17 +260,48 @@ export default function Ticket() {
                 Tạo ticket
               </Button>
             </div>
-            <div className="flex flex-row justify-center items-center gap-2 z-50">
-              <DateRangerPicker
-                startDate={startDate}
-                endDate={endDate}
-                setStartDate={(day) => {
-                  setStartDate(day);
+            <div className="flex flex-row justify-center items-center gap-2">
+              <DateRangePicker
+                popoverProps={{
+                  className: "min-w-[300px] w-[300px]",
                 }}
-                setEndDate={(day) => {
-                  setEndDate(day);
+                calendarProps={{
+                  className: "!w-full !max-w-full",
+                  content: "!w-full !max-w-full",
                 }}
+                id="nextui-date-range-picker"
+                radius="sm"
+                variant={"bordered"}
+                placeholder="Thời gian thực hiện"
+                className="max-w-xs"
+                disableAnimation
+                startContent={
+                  time && (
+                    <Button
+                      className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny rounded-full px-0 !gap-0 !transition-none bg-transparent data-[hover=true]:bg-default/40 min-w-8 w-8 h-8 -mr-2 text-inherit"
+                      variant="solid"
+                      color="danger"
+                      onPress={handleRemoveDate}
+                    >
+                      <IoIosClose className="text-xl min-w-max" />
+                    </Button>
+                  )
+                }
+                value={time}
+                onChange={setTime}
               />
+              {/* 
+                <DateRangerPicker
+                  startDate={startDate}
+                  endDate={endDate}
+                  setStartDate={(day) => {
+                    setStartDate(day);
+                  }}
+                  setEndDate={(day) => {
+                    setEndDate(day);
+                  }}
+                />
+              */}
               <Select
                 variant={"bordered"}
                 placeholder={"Độ ưu tiên"}
