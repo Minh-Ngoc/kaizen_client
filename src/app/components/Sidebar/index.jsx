@@ -14,8 +14,6 @@ const Sidebar = () => {
 		[permissions]
 	);
 
-	console.log('roles: ', roles);
-
 	const location = useLocation();
 	const [openedMenu, setOpenedMenu] = useState({});
 	const [activeName, setActiveName] = useState("");
@@ -231,7 +229,7 @@ const Sidebar = () => {
 			{/* Begin: Header */}
 			<div className="pt-6 pb-2 flex flex-col items-center">
 				<Link
-					to={"/"}
+					to={"/dashboard"}
 					className="text-center flex flex-col items-center justify-center"
 				>
 					<div className="relative rounded-full duration-300 h-20 w-20 flex items-center justify-center">

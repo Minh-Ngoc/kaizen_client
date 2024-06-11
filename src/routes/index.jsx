@@ -12,6 +12,7 @@ import Team from "../app/pages/Team";
 import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
 import UserManager from "../app/pages/User";
+import ManagerPermission from "../app/pages/Manager-Permission";
 
 const routes = createBrowserRouter([
 	{
@@ -35,7 +36,7 @@ const routes = createBrowserRouter([
 			},
 			{
 				path: "/permission-manage",
-				element: <Projects />,
+				element: <ManagerPermission />,
 			},
 			{
 				path: "/kanbans/:id",

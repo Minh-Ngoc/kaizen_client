@@ -1,11 +1,6 @@
-import { MdEdit } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import { FaUserShield } from "react-icons/fa6";
-import { HiDotsVertical } from "react-icons/hi";
-import { useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React, { useState, useEffect } from "react";
-import PopUp from "app/components/PopUp/popUp";
+import { useState } from "react";
 import ModalDeletePermission from "./ModalDelete";
 import ModalDetailPermission from "./ModalDetail";
 import ModalEditPermission from "./ModalEdit";
@@ -13,15 +8,14 @@ import { BsShieldPlus } from "react-icons/bs";
 import PropTypes from "prop-types";
 import { LiaEditSolid } from "react-icons/lia";
 import { FaTrash } from "react-icons/fa";
-import { Button, Stack, Icon } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { Tooltip } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
+
 function CardPermission({ role, isAdd }) {
-  const userRole = useSelector((state) => state.auth.role);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
   const [isOpenModalEdit, setIsOpenModalEdit] = useState(false);
   const [isAddRole, setIsAddRole] = useState(false);
+
   return (
     <>
       {isAdd ? (
@@ -48,79 +42,66 @@ function CardPermission({ role, isAdd }) {
               <p className="text-sm text-white">
                 Tổng số {role?.name.toLowerCase()} là {role?.count}
               </p>
-              <Stack gap={1} direction={"row"}>
-                <Tooltip
-                  color={"primary"}
-                  content={"Xem chi tiết"}
-                  className="capitalize"
-                  disableAnimation={true}
+              <div className="flex flex-row gap-1">
+                {/* Detail */}
+                <Button
+                  variant={"solid"}
+                  color="primary"
+                  className="min-w-7 h-7 text-white p-0"
+                  onClick={() => {
+                    setIsOpenModalDetail(!isOpenModalDetail);
+                  }}
                 >
-                  <Button
-                    p={0}
-                    minW={"30px"}
-                    h={"30px"}
-                    borderRadius={"full"}
-                    color={"white"}
-                    _hover={{
-                      bg: "blue.400",
-                    }}
-                    bg={"#0389e9"}
-                    onClick={() => {
-                      setIsOpenModalDetail(!isOpenModalDetail);
-                    }}
+                  <Tooltip
+                    color={"primary"}
+                    content={"Xem chi tiết"}
+                    className="capitalize"
+                    disableAnimation={true}
                   >
-                    <Icon as={FaRegEye} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  color={"warning"}
-                  content={"Chỉnh sửa"}
-                  className="capitalize"
-                  disableAnimation={true}
+                    <p><FaRegEye /></p>
+                  </Tooltip>
+                </Button>
+
+                {/* Edit */}
+                <Button
+                  variant={"solid"}
+                  color="warning"
+                  className="min-w-7 h-7 text-white p-0"
+                  isDisabled={role?._id === "6401aa0bf5537e9b6acc5806"}
+                  onClick={() => {
+                    setIsOpenModalEdit(!isOpenModalEdit);
+                  }}
                 >
-                  <Button
-                    disabled={role?._id === "6401aa0bf5537e9b6acc5806"}
-                    p={0}
-                    minW={"30px"}
-                    h={"30px"}
-                    borderRadius={"full"}
-                    color={"white"}
-                    _hover={{
-                      bg: "orange.400",
-                    }}
-                    bg={"#e9bf03"}
-                    onClick={() => {
-                      setIsOpenModalEdit(!isOpenModalEdit);
-                    }}
+                  <Tooltip
+                    color={"warning"}
+                    content={"Chỉnh sửa"}
+                    className="capitalize"
+                    disableAnimation={true}
                   >
-                    <Icon as={LiaEditSolid} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  color={"danger"}
-                  content={"Xóa"}
-                  className="capitalize"
-                  disableAnimation={true}
+                    <p><LiaEditSolid /></p>
+                  </Tooltip>
+                </Button>
+
+                {/* Delete */}
+                <Button
+                  variant={"solid"}
+                  color="danger"
+                  className="min-w-7 h-7 text-white p-0"
+                  isDisabled={role?._id === "6401aa0bf5537e9b6acc5806"}
+                  onClick={() => {
+                    setIsOpenModalDelete(!isOpenModalDelete);
+                  }}
                 >
-                  <Button
-                    disabled={role?._id === "6401aa0bf5537e9b6acc5806"}
-                    p={0}
-                    minW={"30px"}
-                    h={"30px"}
-                    borderRadius={"full"}
-                    color={"white"}
-                    _hover={{
-                      bg: "red.400",
-                    }}
-                    bg={"red.500"}
-                    onClick={() => {
-                      setIsOpenModalDelete(!isOpenModalDelete);
-                    }}
+                  <Tooltip
+                    color={"danger"}
+                    content={"Xóa"}
+                    className="capitalize"
+                    disableAnimation={true}
                   >
-                    <Icon as={FaTrash} />
-                  </Button>
-                </Tooltip>
-              </Stack>
+                    <p><FaTrash /></p>
+                  </Tooltip>
+                </Button>
+              </div>
               {/* <PopUp
                 children={
                   <>

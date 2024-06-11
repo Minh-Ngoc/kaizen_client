@@ -20,7 +20,7 @@ const configRoutes = [
 		icon: (
 			<MdDashboard color="inherit" className="min-w-max min-h-max text-lg" />
 		),
-		link: "/",
+		link: "/dashboard",
 	},
 	{
 		id: "my-tasks",
