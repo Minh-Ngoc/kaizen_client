@@ -130,7 +130,7 @@ export default function Ticket() {
     setPageIndex(nextPage);
 
     const startDate = moment(time?.start?.toDate())
-      ?.startOf("day")
+      ?.endOf("day")
       ?.toISOString();
       
     const endDate = moment(time?.end?.toDate())
@@ -158,7 +158,7 @@ export default function Ticket() {
 
     if(time) {
       startDate = moment(time?.start?.toDate())
-        ?.startOf("day")
+        ?.endOf("day")
         ?.toISOString();
   
       endDate = moment(time?.end?.toDate())
@@ -184,7 +184,7 @@ export default function Ticket() {
 
     if(time) {
       startDate = moment(time?.start?.toDate())
-        ?.startOf("day")
+        ?.endOf("day")
         ?.toISOString();
   
       endDate = moment(time?.end?.toDate())
