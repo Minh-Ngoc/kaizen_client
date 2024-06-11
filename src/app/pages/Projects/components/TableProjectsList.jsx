@@ -278,7 +278,7 @@ function TableProjectsList() {
 	};
 
 	return (
-		<div className="bg-card-project shadow-wrapper p-5 pb-10 rounded-xl">
+		<div className="bg-card-project shadow-wrapper p-5 rounded-xl">
 			<TableNextUI
 				columns={columns}
 				renderCell={renderCell}
