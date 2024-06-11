@@ -8,10 +8,9 @@ import {
 } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import * as yup from "yup";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
 import Select from "react-select";
 import { createTicket } from "services/api.service";
 import NotifyMessage from "_utils/notify";
@@ -35,13 +34,9 @@ function ModalTicket({ isOpen, onClose, onComplete }) {
     onClose();
   };
   const {
-    register,
     handleSubmit,
     reset,
-    setError,
     watch,
-    getValues,
-    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -56,9 +51,11 @@ function ModalTicket({ isOpen, onClose, onComplete }) {
     },
     resolver: yupResolver(departmentSchema),
   });
+  
   useEffect(() => {
     reset();
   }, [isOpen]);
+
   const onSubmit = handleSubmit(async (values) => {
     try {
       await createTicket(values);
