@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
-import { FaTrash } from "react-icons/fa6";
+import {FaTrash} from "react-icons/fa6";
 
 import {
 	ColumnDirective,
@@ -11,34 +11,34 @@ import {
 	Selection,
 } from "@syncfusion/ej2-react-treegrid";
 
-import { Button, Tooltip } from "@nextui-org/react";
+import {Button, Tooltip} from "@nextui-org/react";
 
-import { useMemo } from "react";
-import { getTaskById } from "services/api.service";
-import { LiaEditSolid } from "react-icons/lia";
+import {useMemo} from "react";
+import {getTaskById} from "services/api.service";
+import {LiaEditSolid} from "react-icons/lia";
 
-import { setTask, addTask, addTopTask } from "_redux/slice/taskSlice";
+import {setTask, addTask, addTopTask} from "_redux/slice/taskSlice";
 
-import { FaPlus, FaProjectDiagram } from "react-icons/fa";
-import { LuClock2 } from "react-icons/lu";
+import {FaPlus, FaProjectDiagram} from "react-icons/fa";
+import {LuClock2} from "react-icons/lu";
 
-import { useRef } from "react";
+import {useRef} from "react";
 
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
-import { updatePositionTasks } from "services/api.service";
+import {updatePositionTasks} from "services/api.service";
 import TaskName from "../TaskName";
 import Project from "../Project";
 import DueDate from "../DueDate";
 import InputComp from "../Input";
-import { IoIosListBox } from "react-icons/io";
-import { RiToolsFill } from "react-icons/ri";
-import { setModal } from "_redux/slice/modalSlice";
+import {IoIosListBox} from "react-icons/io";
+import {RiToolsFill} from "react-icons/ri";
+import {setModal} from "_redux/slice/modalSlice";
 import Header from "app/pages/Kanbans/components/TaskDetail/components/Header";
 import TaskDetail from "app/pages/Kanbans/components/TaskDetail";
-import { isValidObjectId } from "_utils";
+import {isValidObjectId} from "_utils";
 
-const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
+const TreeList = ({data, onOpenEdit, onOpenDelete, setSelectedTask}) => {
 	const [newData, setNewData] = useState([]);
 	const [newData2, setNewData2] = useState([]);
 	const [statusId, setStatusId] = useState("");
@@ -46,7 +46,7 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 	const handleUpdateTasks = async (item) => {
 		const tasks = data?.filter((it) => isValidObjectId(it?.taskId));
 		const newTasks = [
-			{ ...item, taskName: item?.name, taskId: item?._id },
+			{...item, taskName: item?.name, taskId: item?._id},
 			...tasks,
 		];
 		const newPosition = newTasks?.map((it, index) => {
@@ -101,10 +101,10 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 				header: <Header task={task} />,
 				body: <TaskDetail task={task} />,
 				motionProps: {
-					initial: { x: "100%" },
-					animate: { x: "0%" },
-					exit: { x: "100%" },
-					transition: { duration: 0.5 },
+					initial: {x: "100%"},
+					animate: {x: "0%"},
+					exit: {x: "100%"},
+					transition: {duration: 0.5},
 				},
 			})
 		);
@@ -137,10 +137,7 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 									className={`${
 										args?.type === "add" && "cursor-pointer"
 									}  flex items-center h-10`}
-									onClick={() =>
-										args?.type === "add" &&
-										handleAddTask(args)
-									}
+									onClick={() => args?.type === "add" && handleAddTask(args)}
 								>
 									{args?.taskName}
 								</div>
@@ -210,27 +207,23 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 						<div className="flex items-center gap-2 ">
 							<LuClock2 size={20} />
 
-							<b className="e-header uppercase">
-								Thời gian thực hiện
-							</b>
+							<b className="e-header uppercase">Thời gian thực hiện</b>
 						</div>
 					);
 				},
 				template: (args) => {
 					return (
 						<>
-							{args?.level === 1 &&
-								args?.type !== "add" &&
-								args?.taskId && (
-									<DueDate
-										dateStart={args.dateStart}
-										dateEnd={args.dateEnd}
-										index={args?.index}
-										taskId={args?.taskId}
-										project={args?.project}
-										statusId={args?.statusId}
-									/>
-								)}
+							{args?.level === 1 && args?.type !== "add" && args?.taskId && (
+								<DueDate
+									dateStart={args.dateStart}
+									dateEnd={args.dateEnd}
+									index={args?.index}
+									taskId={args?.taskId}
+									project={args?.project}
+									statusId={args?.statusId}
+								/>
+							)}
 						</>
 					);
 				},
@@ -290,9 +283,7 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 								>
 									<div
 										className="w-[30px] h-[30px] rounded-full text-white bg-[#0389e9] flex items-center justify-center cursor-pointer"
-										onClick={() =>
-											handleEditTask(args?.taskId)
-										}
+										onClick={() => handleEditTask(args?.taskId)}
 									>
 										<LiaEditSolid size={16} />
 									</div>
@@ -431,8 +422,7 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 		)?.[1];
 		syncfusionA?.forEach((item) => {
 			if (
-				item.innerText.toLowerCase() ===
-				"Claim your free account".toLowerCase()
+				item.innerText.toLowerCase() === "Claim your free account".toLowerCase()
 			) {
 				item.parentElement.style.display = "none";
 				console.log(item.style);
@@ -465,55 +455,51 @@ const TreeList = ({ data, onOpenEdit, onOpenDelete, setSelectedTask }) => {
 		}
 	};
 	return (
-		<div className="mt-5">
+		<div className="mt-5 bg-table p-4 shadow-wrapper rounded-lg">
 			<Button
 				color="success"
-				className="text-white bg-[#4573d2]"
-				size="sm"
+				className="text-white bg-green-500 mb-5 rounded"
+				size="md"
 				startContent={<FaPlus />}
-				onClick={() =>
-					handleAddTopTask({ statusId: data[0]?.statusId })
-				}
+				onClick={() => handleAddTopTask({statusId: data[0]?.statusId})}
 			>
-				Add Task
+				Thêm công việc
 			</Button>
-			<div className="mt-5 bg-table p-4 shadow-wrapper rounded-lg">
-				<TreeGridComponent
-					id="treegridcontrol"
-					allowRowDragAndDrop={true}
-					ref={treegridInstance}
-					dataSource={data || []}
-					treeColumnIndex={0}
-					childMapping="subtasks"
-					height="auto"
-					rowHeight="35"
-					columns={colsDirective}
-					gridLines="Both"
-					selectionSettings={{ type: "Multiple" }}
-					rowDrop={rowDrop}
-					rowDragStartHelper={rowDragStartHelper}
-					idMapping="taskId"
-					parentIdMapping="parentID"
-					loadChildOnDemand={true}
-				>
-					<ColumnsDirective>
-						{colsDirective?.map((item, index) => (
-							<ColumnDirective
-								key={index}
-								field={item.field}
-								headerText={item.headerText}
-								headerTemplate={item?.headerTemplate}
-								width={item.width}
-								edit={item.edit}
-								template={item.template}
-								textAlign={item.textAlign}
-								className="cursor-pointer "
-							/>
-						))}
-					</ColumnsDirective>
-					<Inject services={[RowDD, Selection]} />
-				</TreeGridComponent>
-			</div>
+			<TreeGridComponent
+				id="treegridcontrol"
+				allowRowDragAndDrop={true}
+				ref={treegridInstance}
+				dataSource={data || []}
+				treeColumnIndex={0}
+				childMapping="subtasks"
+				height="auto"
+				rowHeight="35"
+				columns={colsDirective}
+				gridLines="Both"
+				selectionSettings={{type: "Multiple"}}
+				rowDrop={rowDrop}
+				rowDragStartHelper={rowDragStartHelper}
+				idMapping="taskId"
+				parentIdMapping="parentID"
+				loadChildOnDemand={true}
+			>
+				<ColumnsDirective>
+					{colsDirective?.map((item, index) => (
+						<ColumnDirective
+							key={index}
+							field={item.field}
+							headerText={item.headerText}
+							headerTemplate={item?.headerTemplate}
+							width={item.width}
+							edit={item.edit}
+							template={item.template}
+							textAlign={item.textAlign}
+							className="cursor-pointer "
+						/>
+					))}
+				</ColumnsDirective>
+				<Inject services={[RowDD, Selection]} />
+			</TreeGridComponent>
 		</div>
 	);
 };

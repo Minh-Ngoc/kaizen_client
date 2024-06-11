@@ -9,7 +9,7 @@ function New() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
-
+	const [listIds, setListIds] = useState([]);
 	const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
 	const {
 		isOpen: isOpenAddEdit,
@@ -53,6 +53,9 @@ function New() {
 					setIsOpenModalDelete={setIsOpenModalDelete}
 					itemId={itemId}
 					setItemId={setItemId}
+					search={search}
+					setListIds={setListIds}
+					listIds={listIds}
 				/>
 			</div>
 		</>

@@ -11,9 +11,10 @@ import {getSeoById} from "services/api.service";
 import {v4 as uuidv4} from "uuid";
 import {FaRegTrashAlt} from "react-icons/fa";
 import {Button} from "@nextui-org/react";
-import {AddIcon} from "@chakra-ui/icons";
+
 import MyInput from "app/components/MyInput/MyInput";
 import {generateSchema} from "_utils/validation";
+import {BiPlus} from "react-icons/bi";
 
 const ModalSeo = ({isOpen, onClose, itemId, onOpenChange, onGetPaging}) => {
 	const [numTags, setNumTags] = useState(() => {
@@ -175,7 +176,7 @@ const ModalSeo = ({isOpen, onClose, itemId, onOpenChange, onGetPaging}) => {
 					<Button
 						color="primary"
 						variant="bordered"
-						startContent={<AddIcon />}
+						startContent={<BiPlus />}
 						onClick={handleAddInput}
 						type="button"
 						className="w-fit"

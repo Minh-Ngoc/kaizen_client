@@ -1,10 +1,11 @@
 import {useDisclosure} from "@nextui-org/react";
 
 import Header from "../../components/Header/Header";
-import TableBrandList from "./components/TableBrandList";
-import {useState} from "react";
 
-function Brand() {
+import {useState} from "react";
+import TableKpiBonusList from "./components/TableKpiBonusList";
+
+function KpiBonus() {
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
 
@@ -34,7 +35,7 @@ function Brand() {
 					onSearch={setSearch}
 					placeholder="Tìm kiếm tên nhóm..."
 				/>
-				<TableBrandList
+				<TableKpiBonusList
 					isOpenAddEdit={isOpenAddEdit}
 					onOpenAddEdit={onOpenAddEdit}
 					onCloseAddEdit={onCloseAddEdit}
@@ -52,4 +53,4 @@ function Brand() {
 	);
 }
 
-export default Brand;
+export default KpiBonus;

@@ -1,14 +1,15 @@
 import {useDisclosure} from "@nextui-org/react";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import Header from "../../components/Header/Header";
-import TableBlogList from "./components/TableBlogList";
-import {GetPagingBlog} from "../../../_redux/slice/blogSlice";
 
-function New() {
-	const dispatch = useDispatch();
+import Header from "../../components/Header/Header";
+
+import {useState} from "react";
+import TableBlogList from "./components/TableBlogList";
+
+function Blog() {
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
+
+	const [listIds, setListIds] = useState([]);
 
 	const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
 	const {
@@ -21,15 +22,6 @@ function New() {
 		onOpenAddEdit();
 		setItemId("");
 	};
-	const handleGetPagination = ({pageIndex, pgSize}) => {
-		dispatch(
-			GetPagingBlog({
-				pageIndex: pageIndex || 1,
-				pageSize: pgSize || 10,
-				search: "",
-			})
-		);
-	};
 
 	return (
 		<>
@@ -39,7 +31,7 @@ function New() {
 					onOpenDelete={() => {
 						setIsOpenModalDelete(!isOpenModalDelete);
 					}}
-					listIds={[]}
+					listIds={listIds}
 					onSearch={setSearch}
 					placeholder="Tìm kiếm tên nhóm..."
 				/>
@@ -48,15 +40,17 @@ function New() {
 					onOpenAddEdit={onOpenAddEdit}
 					onCloseAddEdit={onCloseAddEdit}
 					onOpenChangeAddEdit={onOpenChangeAddEdit}
-					onGetPaging={handleGetPagination}
 					isOpenModalDelete={isOpenModalDelete}
 					setIsOpenModalDelete={setIsOpenModalDelete}
 					itemId={itemId}
 					setItemId={setItemId}
+					search={search}
+					setListIds={setListIds}
+					listIds={listIds}
 				/>
 			</div>
 		</>
 	);
 }
 
-export default New;
+export default Blog;
