@@ -150,7 +150,7 @@ function Checklist() {
 				onChange={setTime}
 				isInvalid={Boolean(error.time)}
 				errorMessage={error.time}
-				onFocusChange={onFocusChange}
+				onOpenChange={onFocusChange}
 			/>
 
 			<div className="flex justify-end mt-2">

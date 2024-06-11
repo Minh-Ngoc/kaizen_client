@@ -28,7 +28,7 @@ export default {
         "card-kanban": "rgb(241, 242, 244)",
         "btn-detail": "rgba(228, 230, 234, 0.6)",
         "btn-detail-hover": "#091e4224",
-        success: "#1f845a",
+        success: "#2bb52b",
         table: "#060c2478",
         "card-project": "#060c2478",
       },

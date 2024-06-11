@@ -98,14 +98,18 @@ function TableNextUI({
 					>
 						{(item) => <SelectItem key={item.value}>{item.label}</SelectItem>}
 					</Select>
-					<span className="text-small text-default-400">
-						{selectionMode === "single"
-							? ""
-							: selectedKeys === "all"
-							? "Đã chọn tất cả"
-							: `${selectedKeys?.size} trên ${total} được chọn`}
-					</span>
+
+					{/*
+						<span className="text-small text-default-400">
+							{selectionMode === "single"
+								? ""
+								: selectedKeys === "all"
+								? "Đã chọn tất cả"
+								: `${selectedKeys?.size} trên ${total} được chọn`}
+						</span>
+					 */}
 				</div>
+				
 				<Pagination
 					showControls
 					color="primary"
@@ -113,18 +117,20 @@ function TableNextUI({
 					total={totalPages || 1}
 					variant="light"
 					onChange={onPageChange}
+					classNames={{
+						item: "text-white font-medium [&[data-hover=true]:not([data-active=true])]:bg-default-300/40",
+						prev: "text-white [&[data-hover=true]:not([data-active=true])]:bg-default-300/40",
+						next: "text-white [&[data-hover=true]:not([data-active=true])]:bg-default-300/40",
+					}}
 				/>
 			</div>
 		);
-	}, [
-		total,
-		pageSize,
-		page,
-		onPageChange,
-		onPageSizeChange,
-		selectionMode,
-		selectedKeys,
-	]);
+	}, [total, pageSize, page, onPageChange, onPageSizeChange]);
+
+	// Handler that is called when a user performs an action on the cell.
+	// (key: react.Key) => void
+	// eslint-disable-next-line no-unused-vars
+	const onCellAction = (key) => {};
 
 	return (
 		<Table
@@ -134,7 +140,8 @@ function TableNextUI({
 			classNames={{
 				base: "",
 				wrapper: "max-h-[65vh] min-h-[200px] bg-transparent shadow-wrapper",
-				th: "uppercase text-center bg-primary text-white text-base font-medium",
+				table: "overflow-auto",
+				th: "uppercase text-left bg-primary text-white text-base font-medium",
 				td: "py-4 group-aria-[selected=false]:group-data-[hover=true]:before:bg-gray-500/60",
 			}}
 			isHeaderSticky
@@ -146,7 +153,8 @@ function TableNextUI({
 			selectionMode={selectionMode}
 			selectedKeys={selectedKeys}
 			onSelectionChange={onSelectedChange}
-			// onCellAction={onCellAction}
+			isLoading={isLoading}
+			onCellAction={onCellAction}
 		>
 			<TableHeader columns={columns}>
 				{(column) => (

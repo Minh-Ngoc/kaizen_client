@@ -277,7 +277,7 @@ const FormNewProject = () => {
 										}
 										isInvalid={Boolean(form[key]?.errorMessage)}
 										errorMessage={form[key]?.errorMessage}
-										onFocusChange={onFocusChange}
+										onOpenChange={onFocusChange}
 									/>
 								</I18nProvider>
 							</div>

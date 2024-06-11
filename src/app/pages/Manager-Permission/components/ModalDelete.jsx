@@ -8,17 +8,25 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { deleteUser } from "../../../../services/api.service";
+import { deletePermissionByRole } from "../../../../services/api.service";
 import NotifyMessage from "_utils/notify";
-function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
+import { useDispatch } from "react-redux";
+import { removeRoleById } from "_redux/slice/roleSlice";
+
+function ModalDeletePermission({
+  isOpen,
+  onClose,
+  permissionData,
+}) {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const handleOnDelete = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await deleteUser(userData?._id);
-      NotifyMessage("Xóa người dùng thành công", "success");
-      onComplete();
+      await deletePermissionByRole(permissionData?._id);
+      NotifyMessage("Xóa quyền hạn thành công", "success");
+      dispatch(removeRoleById(permissionData?._id));
       onClose();
     } catch (error) {
       NotifyMessage("Lỗi vui lòng thử lại sau", "error");
@@ -55,9 +63,9 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
         classNames={{
           backdrop: "z-[51]",
           wrapper: "z-[52] w-full",
-          base: `] !shadow-card-project min-w-[40%] `,
+          base: `!shadow-card-project min-w-[40%] `,
           closeButton: "right-5 z-10 text-lg",
-          body: "overflow-auto",
+          body: "overflow-auto max-h-[80vh]",
         }}
       >
         <ModalContent>
@@ -69,7 +77,7 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
                 </ModalHeader>
                 <ModalBody>
                   <div className="flex flex-col justify-start items-start w-full gap-2 max-h-[90vh]">
-                    <p>Xác nhận xóa người dùng này?</p>
+                    <p>Xác nhận xóa phân quyền này?</p>
                   </div>
                 </ModalBody>
                 <ModalFooter>
@@ -101,10 +109,10 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
     </>
   );
 }
-ModalDeleteUser.propTypes = {
+ModalDeletePermission.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.any.isRequired,
   onComplete: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired,
+  departmentData: PropTypes.object.isRequired,
 };
-export default ModalDeleteUser;
+export default ModalDeletePermission;

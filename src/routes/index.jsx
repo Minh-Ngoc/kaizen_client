@@ -11,12 +11,17 @@ import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
 import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
-import Activity from "../app/pages/Activity";
-import SeoProject from "../app/pages/SeoProject";
+import UserManager from "../app/pages/User";
+import ManagerPermission from "../app/pages/Manager-Permission";
+import DepartmentManager from "../app/pages/Department";
+import Domain from "../app/pages/Domain";
+import Ticket from "../app/pages/Ticket";
+import LogManage from "../app/pages/Manager-Log";
 import Brand from "../app/pages/Brand";
 import KpiBonus from "../app/pages/KpiBonus";
+import Activity from "../app/pages/Activity";
+import SeoProject from "../app/pages/SeoProject";
 import Seo from "../app/pages/Seo";
-
 const routes = createBrowserRouter([
 	{
 		element: <AdminLayout />,
@@ -38,12 +43,48 @@ const routes = createBrowserRouter([
 				element: <Projects />,
 			},
 			{
+				path: "/permission-manage",
+				element: <ManagerPermission />,
+			},
+			{
 				path: "/kanbans/:id",
 				element: <Kanbans />,
 			},
 			{
 				path: "/profile",
 				element: <Profile />,
+			},
+			{
+				path: "/team-manage",
+				element: <Team />,
+			},
+			{
+				path: "/seo/new-manage",
+				element: <New />,
+			},
+			{
+				path: "/seo/blog-manage",
+				element: <Blog />,
+			},
+			{
+				path: "/user-manage",
+				element: <UserManager />,
+			},
+			{
+				path: "/department-manage",
+				element: <DepartmentManager />,
+			},
+			{
+				path: "/domain-manage",
+				element: <Domain />,
+			},
+			{
+				path: "/log-manage",
+				element: <LogManage />,
+			},
+			{
+				path: "/your-ticket",
+				element: <Ticket />,
 			},
 			{
 				path: "/brand-manage",

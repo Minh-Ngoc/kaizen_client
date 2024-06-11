@@ -162,7 +162,6 @@ function ModalUser({ isOpen, onClose, isAdd, userDate, onComplete }) {
     onClose();
   };
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values.team);
     if (isAdd) {
       try {
         await createUser({
@@ -225,7 +224,6 @@ function ModalUser({ isOpen, onClose, isAdd, userDate, onComplete }) {
       }
     }
   });
-  console.log(watch("team"));
   return (
     <>
       <NextUIModal

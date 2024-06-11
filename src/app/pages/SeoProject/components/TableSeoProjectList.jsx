@@ -17,11 +17,7 @@ import {FaTrash} from "react-icons/fa";
 import {GetPagingSeoProject} from "../../../../_redux/slice/seoProjectSlice";
 
 // const PAGE_SIZE = 10;
-const typeSeoProject = {
-	experience: "Kinh nghiệm",
-	tool: "Công cụ",
-	life: "Đời sống",
-};
+
 function TableSeoProjectList({
 	isOpenAddEdit,
 	onOpenAddEdit,
@@ -183,7 +179,7 @@ function TableSeoProjectList({
 							className="min-w-7 h-7 rounded-full p-0"
 							onClick={() => {
 								setIsOpenModalDelete(true);
-								setListIdSelected([item?.original?._id]);
+								setListIds([item?._id]);
 							}}
 						>
 							<Tooltip

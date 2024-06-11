@@ -180,7 +180,7 @@ const ModalKpiBonus = ({
 			/>
 
 			{fields.map((field, index) => (
-				<div className="flex items-end gap-5">
+				<div className="flex items-end gap-5" key={index}>
 					<div className="flex-1 grid grid-cols-12 gap-4">
 						{Object.keys(field)?.map((item, idex) => (
 							<>

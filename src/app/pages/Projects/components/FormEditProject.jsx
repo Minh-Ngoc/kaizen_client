@@ -388,7 +388,7 @@ const FormEditProject = ({ project }) => {
 											form[key]?.errorMessage
 										)}
 										errorMessage={form[key]?.errorMessage}
-										onFocusChange={onFocusChange}
+										onOpenChange={onFocusChange}
 									/>
 								</I18nProvider>
 								{form[key]?.errorMessage && (

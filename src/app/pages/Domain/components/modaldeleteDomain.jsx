@@ -8,19 +8,20 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { deleteUser } from "../../../../services/api.service";
+import { deleteDomainBiId } from "../../../../services/api.service";
 import NotifyMessage from "_utils/notify";
-function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
+function ModalDeleteDomain({ isOpen, onClose, onComplete, domainData }) {
   const [isLoading, setIsLoading] = useState(false);
   const handleOnDelete = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await deleteUser(userData?._id);
-      NotifyMessage("Xóa người dùng thành công", "success");
+      await deleteDomainBiId(domainData?._id);
+      NotifyMessage("Xóa domain thành công", "success");
       onComplete();
       onClose();
     } catch (error) {
+      console.log(error);
       NotifyMessage("Lỗi vui lòng thử lại sau", "error");
     } finally {
       setIsLoading(false);
@@ -69,7 +70,7 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
                 </ModalHeader>
                 <ModalBody>
                   <div className="flex flex-col justify-start items-start w-full gap-2 max-h-[90vh]">
-                    <p>Xác nhận xóa người dùng này?</p>
+                    <p>Xác nhận xóa domain này?</p>
                   </div>
                 </ModalBody>
                 <ModalFooter>
@@ -101,10 +102,10 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
     </>
   );
 }
-ModalDeleteUser.propTypes = {
+ModalDeleteDomain.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.any.isRequired,
   onComplete: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired,
+  domainData: PropTypes.object.isRequired,
 };
-export default ModalDeleteUser;
+export default ModalDeleteDomain;
