@@ -864,7 +864,7 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
                                       _hover={{
                                         bg: "green.400",
                                       }}
-                                      bg={"#47c732"}
+                                      bg={"c"}
                                       onClick={() => {
                                         setIsOpenModalReject(
                                           !isOpenModalReject

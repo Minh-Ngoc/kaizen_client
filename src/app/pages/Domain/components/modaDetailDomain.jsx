@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import {
   Modal as NextUIModal,
   ModalContent,
@@ -75,7 +76,7 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                         <p className="text-sm text-red-600">(*)</p>
                       </div>
                       <input
-                        value={domainData?.domainName}
+                        value={domainData?.domainName ?? "(Trống)"}
                         disabled
                         type="text"
                         placeholder="Nhập tên domain..."
@@ -103,7 +104,7 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                         <p className="text-sm text-red-600">(*)</p>
                       </div>
                       <input
-                        value={domainData?.team?.name}
+                        value={domainData?.team?.name ?? "(Trống)"}
                         disabled
                         type="text"
                         placeholder="Nhập link hậu đài..."
@@ -147,7 +148,7 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                               };
                             })
                             .find((e) => e.value === domainData?.statusDomain)
-                            ?.label
+                            ?.label ?? "(Trống)"
                         }
                         disabled
                         type="text"
@@ -185,35 +186,12 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                         <p className="text-sm text-red-600">(*)</p>
                       </div>
                       <input
-                        value={domainData?.brand?.name}
+                        value={domainData?.brand?.name ?? "(Trống)"}
                         disabled
                         type="text"
                         placeholder="Nhập link hậu đài..."
                         className="transition-all duration-200 shadow-none ease-in-out border-1 border-gray-300 focus:outline-none focus:border-[#3182ce] focus:shadow-input-modal w-full rounded px-2 py-2 text-sm font-normal"
                       />
-                      {/* <Select
-                        placeholder="Chọn brand..."
-                        menuPosition="fixed"
-                        className="w-full !text-sm"
-                        options={listBrands?.map((brand) => {
-                          return {
-                            value: brand?._id,
-                            label: brand?.name,
-                          };
-                        })}
-                        isSearchable={true}
-                        value={listBrands
-                          ?.map((brand) => {
-                            return {
-                              value: brand?._id,
-                              label: brand?.name,
-                            };
-                          })
-                          .find((e) => e.value === watch("brand"))}
-                        onChange={(e) => {
-                          setValue("brand", e.value);
-                        }}
-                      /> */}
                     </div>
                     <div className="flex flex-col justify-start items-start gap-1 w-full z-[9998]">
                       <div className="flex flex-row justify-center items-center gap-1">
@@ -222,8 +200,9 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                       <input
                         disabled={true}
                         value={
-                          moment(domainData?.dateOut).format("DD/MM/yyyy") ??
-                          "(Trống)"
+                          domainData?.dateOut
+                            ? moment(domainData?.dateOut).format("DD/MM/yyyy")
+                            : "(Trống)"
                         }
                         type="text"
                         placeholder="Nhập số điện thoại ..."
@@ -245,7 +224,11 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                         <p className="text-sm font-semibold">Link hậu đài</p>
                       </div>
                       <input
-                        value={domainData?.LinkBrand}
+                        value={
+                          !!domainData?.LinkBrand
+                            ? domainData?.LinkBrand
+                            : "(Trống)"
+                        }
                         disabled
                         type="text"
                         placeholder="Nhập link hậu đài..."
@@ -257,7 +240,11 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                         <p className="text-sm font-semibold">Mã hậu đài</p>
                       </div>
                       <input
-                        value={domainData?.codeBrand}
+                        value={
+                          !!domainData?.codeBrand
+                            ? domainData?.codeBrand
+                            : "(Trống)"
+                        }
                         disabled
                         type="text"
                         placeholder="Nhập mã hậu đài..."
@@ -315,7 +302,7 @@ function ModalDetailDomain({ isOpen, onClose, domainData }) {
                     </div>
 
                     <Textarea
-                      value={domainData?.note}
+                      value={!!domainData?.note ? domainData?.note : "(Trống)"}
                       disabled
                       placeholder="Nhập nhận xét..."
                       label=""

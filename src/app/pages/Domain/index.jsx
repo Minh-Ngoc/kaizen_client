@@ -77,13 +77,13 @@ function Domain() {
   };
   const handleOnDelete = () => {
     let tempPageIndex = pageIndex;
-    const checkPage = (counts - listIdSelected?.length) / pageSize;
+    const checkPage = (counts - listId?.length) / pageSize;
     if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
     if (tempPageIndex <= 0) tempPageIndex = 1;
     dispatch(
       domainAction.getAllPagingDomain({
         pageIndex: tempPageIndex,
-        pageSize,
+        pageSize: String([...pageSize][0]),
         search,
       })
     );
