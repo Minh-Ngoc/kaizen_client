@@ -248,10 +248,10 @@ export default function Ticket() {
             <div className="max-w-[220px] flex items-center gap-2">
               <Button
                 variant="solid"
-                color={"primary"}
+                color={"success"}
                 className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
-                  <BiPlus className="text-white min-w-max min-h-max" />
+                  <BiPlus className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={() => {
                   setIsOpenModalTicket(true);
@@ -370,7 +370,7 @@ export default function Ticket() {
                 color={"primary"}
                 className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
                 startContent={
-                  <IoSearchSharp className="text-white min-w-max min-h-max" />
+                  <IoSearchSharp className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={handleSearh}
               >

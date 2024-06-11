@@ -227,7 +227,7 @@ function UserManager() {
             <div className="max-w-[220px] flex items-center gap-2">
               <Button
                 variant="solid"
-                color={"primary"}
+                color={"success"}
                 className="rounded-md min-w-32 text-white font-bold text-xs"
                 startContent={
                   <BiPlug className="text-white min-w-max min-h-max" />

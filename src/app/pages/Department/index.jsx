@@ -141,7 +141,7 @@ function DepartmentManager() {
 
       default:
         return (
-          <div className="text-white text-xs text-center">{cellValue}</div>
+          <div className="text-white text-sm text-center">{cellValue}</div>
         );
     }
   }, []);
@@ -200,10 +200,10 @@ function DepartmentManager() {
             <div className="max-w-[220px] flex items-center gap-2">
               <Button
                 variant="solid"
-                color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs"
+                color={"success"}
+                className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
-                  <BiPlug className="text-white min-w-max min-h-max" />
+                  <BiPlug className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={() => {
                   setIsOpenModalDepartment(true);
@@ -216,9 +216,9 @@ function DepartmentManager() {
               <Button
                 variant="solid"
                 color={"danger"}
-                className="rounded-md min-w-32 text-white font-bold text-xs"
+                className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
-                  <BiTrash className="text-white min-w-max min-h-max" />
+                  <BiTrash className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={() => {
                   setIsOpenModalDelete(!isOpenModalDelete);
@@ -236,14 +236,22 @@ function DepartmentManager() {
                 }}
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Nhập tên phòng ban..."
+                radius="sm"
+                variant="bordered"
+                classNames={{
+                  inputWrapper:
+                    "py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
+                  label: "hidden",
+                  input: "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
+                }}
               />
 
               <Button
                 variant="solid"
                 color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
+                className="rounded-md min-w-32 text-white font-bold text-sm mr-5"
                 startContent={
-                  <IoSearchSharp className="text-white min-w-max min-h-max" />
+                  <IoSearchSharp className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={handleSearh}
               >
