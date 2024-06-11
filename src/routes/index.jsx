@@ -13,65 +13,70 @@ import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
 import UserManager from "../app/pages/User";
 import ManagerPermission from "../app/pages/Manager-Permission";
+import DepartmentManager from "../app/pages/Department";
 
 const routes = createBrowserRouter([
-	{
-		element: <AdminLayout />,
-		children: [
-			{
-				path: "/",
-				element: <Root />,
-			},
-			{
-				path: "/my-tasks",
-				element: <MyTasks />,
-			},
-			{
-				path: "/dashboard",
-				element: <DashBoard />,
-			},
-			{
-				path: "/projects",
-				element: <Projects />,
-			},
-			{
-				path: "/permission-manage",
-				element: <ManagerPermission />,
-			},
-			{
-				path: "/kanbans/:id",
-				element: <Kanbans />,
-			},
-			{
-				path: "/profile",
-				element: <Profile />,
-			},
-			{
-				path: "/team-manage",
-				element: <Team />,
-			},
-			{
-				path: "/seo/new-manage",
-				element: <New />,
-			},
-			{
-				path: "/seo/blog-manage",
-				element: <Blog />,
-			},
-			{
-				path: "/user-manage",
-				element: <UserManager />,
-			},
-		],
-	},
-	{
-		path: "/login",
-		element: <Login />,
-	},
-	{
-		path: "*",
-		element: <NotFound />,
-	},
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Root />,
+      },
+      {
+        path: "/my-tasks",
+        element: <MyTasks />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "/projects",
+        element: <Projects />,
+      },
+      {
+        path: "/permission-manage",
+        element: <ManagerPermission />,
+      },
+      {
+        path: "/kanbans/:id",
+        element: <Kanbans />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/team-manage",
+        element: <Team />,
+      },
+      {
+        path: "/seo/new-manage",
+        element: <New />,
+      },
+      {
+        path: "/seo/blog-manage",
+        element: <Blog />,
+      },
+      {
+        path: "/user-manage",
+        element: <UserManager />,
+      },
+      {
+        path: "/department-manage",
+        element: <DepartmentManager />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default routes;
