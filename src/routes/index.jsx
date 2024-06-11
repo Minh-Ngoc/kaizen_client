@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import DashBoard from "../app/pages/Dashboard";
 import AdminLayout from "../layouts/Admin";
 import Login from "../app/pages/Login";
@@ -11,6 +11,7 @@ import Root from "../app/pages/Root";
 import Team from "../app/pages/Team";
 import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
+import UserManager from "../app/pages/User";
 
 const routes = createBrowserRouter([
 	{
@@ -55,6 +56,10 @@ const routes = createBrowserRouter([
 			{
 				path: "/seo/blog-manage",
 				element: <Blog />,
+			},
+			{
+				path: "/user-manage",
+				element: <UserManager />,
 			},
 		],
 	},
