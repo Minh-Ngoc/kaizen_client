@@ -236,7 +236,7 @@ function Domain() {
 
       default:
         return (
-          <div className="text-white text-xs text-center">{cellValue}</div>
+          <div className="text-white text-xs tsmt-center">{cellValue}</div>
         );
     }
   }, []);
@@ -248,10 +248,10 @@ function Domain() {
             <div className="max-w-[220px] flex items-center gap-2">
               <Button
                 variant="solid"
-                color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs"
+                color={"success"}
+                className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
-                  <BiPlug className="text-white min-w-max min-h-max" />
+                  <BiPlug className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={() => {
                   setIsOpenModalDomain(true);
@@ -264,9 +264,9 @@ function Domain() {
               <Button
                 variant="solid"
                 color={"danger"}
-                className="rounded-md min-w-32 text-white font-bold text-xs"
+                className="rounded-md min-w-32 text-white font-bold text-sm"
                 startContent={
-                  <BiTrash className="text-white min-w-max min-h-max" />
+                  <BiTrash className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={() => {
                   setIsOpenModalDelete(!isOpenModalDelete);
@@ -296,9 +296,9 @@ function Domain() {
               <Button
                 variant="solid"
                 color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
+                className="rounded-md min-w-32 text-white font-bold text-xssmr-5"
                 startContent={
-                  <IoSearchSharp className="text-white min-w-max min-h-max" />
+                  <IoSearchSharp className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={handleSearh}
               >

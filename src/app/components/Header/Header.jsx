@@ -18,8 +18,8 @@ const Header = ({
 				<Button
 					variant="solid"
 					color={"success"}
-					className="rounded-md min-w-32 text-white font-bold text-xs tracking-wide"
-					startContent={<BiPlus className="text-white min-w-max min-h-max" />}
+					className="rounded-md min-w-32 text-white font-bold text-sm tracking-wide"
+					startContent={<BiPlus className="text-white min-w-max min-h-max text-lg" />}
 					onClick={onOpenAddEdit}
 				>
 					Thêm mới
@@ -27,8 +27,8 @@ const Header = ({
 				<Button
 					variant="solid"
 					color={"danger"}
-					className="rounded-md min-w-32 text-white font-bold text-xs tracking-wide"
-					startContent={<BiTrash className="text-white min-w-max min-h-max" />}
+					className="rounded-md min-w-32 text-white font-bold text-sm tracking-wide"
+					startContent={<BiTrash className="text-white min-w-max min-h-max text-lg" />}
 					onClick={onOpenDelete}
 					isDisabled={listIds?.length === 0}
 				>
@@ -57,7 +57,7 @@ const Header = ({
 					variant="solid"
 					radius="sm"
 					color={"primary"}
-					className="min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
+					className="min-w-32 text-white font-bold text-sm mr-5 tracking-wide"
 					startContent={
 						<IoSearchSharp className="text-white min-w-max min-h-max" />
 					}

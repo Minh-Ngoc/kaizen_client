@@ -7,13 +7,6 @@ import { userAction } from "_redux/slice/user.slice";
 import TableNextUI from "app/components/TableNextUI";
 import { Button, DateRangePicker, Select, SelectItem } from "@nextui-org/react";
 import { IoIosClose } from "react-icons/io";
-function dateToUtcTime(date) {
-  if (!date) return "";
-  const userTimeZoneOffset = date?.getTimezoneOffset();
-  const utcOffsetInHours = -userTimeZoneOffset / 60;
-  const utcTime = new Date(date.getTime() + utcOffsetInHours * 60 * 60 * 1000);
-  return utcTime;
-}
 
 export default function ManagerLog() {
   const dispatch = useDispatch();
@@ -21,8 +14,6 @@ export default function ManagerLog() {
   const counts = useSelector((state) => state.log.counts);
   const listLog = useSelector((state) => state.log.listLog);
   const isLoading = useSelector((state) => state.log.isLoadingpaging);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const listUser = useSelector((state) => state.user.listUserGetAll);
   const [userSelected, setUserSelected] = useState("all");
   useEffect(() => {
@@ -144,10 +135,10 @@ export default function ManagerLog() {
   };
   return (
     <>
-      <div className="mt-24 flex flex-col z-50">
-        <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper z-50">
-          <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full z-50">
-            <div className="flex flex-row justify-center items-center gap-2 z-50">
+      <div className="mt-24 flex flex-col">
+        <div className="mb-4 rounded-lg flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
+          <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full">
+            <div className="flex flex-row justify-center items-center gap-2">
               <DateRangePicker
                 popoverProps={{
                   className: "min-w-[300px] w-[300px]",
@@ -218,9 +209,9 @@ export default function ManagerLog() {
               <Button
                 variant="solid"
                 color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
+                className="rounded-md min-w-32 text-white font-bold text-sm mr-5"
                 startContent={
-                  <IoSearchSharp className="text-white min-w-max min-h-max" />
+                  <IoSearchSharp className="text-white min-w-max min-h-max text-lg" />
                 }
                 onClick={handleSearh}
               >
