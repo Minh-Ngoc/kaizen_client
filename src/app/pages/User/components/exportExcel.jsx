@@ -5,6 +5,7 @@ import NotifyMessage from "_utils/notify";
 import { getDataForExportExcel } from "services/api.service";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { Button } from "@nextui-org/react";
+
 function ButtonExportExcel() {
   const [isLoading, setIsLoading] = useState(false);
   const handleExportExcel = (listUser) => {
@@ -128,6 +129,7 @@ function ButtonExportExcel() {
   };
   return (
     <Button
+      radius="sm"
       className="min-w-36"
       startContent={<SiMicrosoftexcel />}
       color="success"

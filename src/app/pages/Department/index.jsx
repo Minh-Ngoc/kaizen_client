@@ -195,7 +195,7 @@ function DepartmentManager() {
   return (
     <>
       <div className="mt-24 flex flex-col">
-        <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper">
+        <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
           <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full">
             <div className="max-w-[220px] flex items-center gap-2">
               <Button

@@ -10,19 +10,15 @@ import {FaRegTrashCan} from "react-icons/fa6";
 import {LiaEditSolid} from "react-icons/lia";
 
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
-import {deletesBlog} from "../../../../services/api.service";
+import {deletesSeoProject} from "../../../../services/api.service";
 
-import {GetPagingBlog} from "../../../../_redux/slice/blogSlice";
-import ModalBlog from "./ModalBlog";
+import ModalSeoProject from "./ModalSeoProject";
 import {FaTrash} from "react-icons/fa";
+import {GetPagingSeoProject} from "../../../../_redux/slice/seoProjectSlice";
 
 // const PAGE_SIZE = 10;
-const typeBlog = {
-	experience: "Kinh nghiệm",
-	tool: "Công cụ",
-	life: "Đời sống",
-};
-function TableBlogList({
+
+function TableSeoProjectList({
 	isOpenAddEdit,
 	onOpenAddEdit,
 	onCloseAddEdit,
@@ -40,7 +36,7 @@ function TableBlogList({
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
-		(state) => state?.blog || []
+		(state) => state?.seoProject || []
 	);
 
 	useEffect(() => {
@@ -57,7 +53,7 @@ function TableBlogList({
 	}, [pageIndex, pgSize, search]);
 	const handleGetPagination = () => {
 		dispatch(
-			GetPagingBlog({
+			GetPagingSeoProject({
 				pageIndex: pageIndex || 1,
 				pageSize: pgSize || 10,
 				search: search || "",
@@ -67,7 +63,7 @@ function TableBlogList({
 	const columns = [
 		{name: "Tiêu đề", _id: "title"},
 		{name: "Ảnh", _id: "images"},
-		{name: "Loại blog", _id: "type"},
+		{name: "Loại", _id: "type"},
 		{name: "Mô tả", _id: "description"},
 		{name: "Nội dung", _id: "content"},
 		{name: "Trạng thái", _id: "status"},
@@ -91,8 +87,8 @@ function TableBlogList({
 				return (
 					<div className="flex items-center justify-center">
 						<AvatarGroup isBordered max={5}>
-							{cellValue?.map((item, index) => (
-								<Avatar key={index} src={`${URL_IMAGE}/${item}`} />
+							{cellValue?.map((avt, index) => (
+								<Avatar key={index} src={`${URL_IMAGE}/${avt}`} />
 							))}
 						</AvatarGroup>
 					</div>
@@ -100,8 +96,8 @@ function TableBlogList({
 
 			case "type":
 				return (
-					<p className="text-nowrap text-white flex items-center justify-center">
-						{typeBlog[cellValue]}
+					<p className="line-clamp-2 text-white flex items-center justify-center">
+						{cellValue}
 					</p>
 				);
 
@@ -123,7 +119,7 @@ function TableBlogList({
 
 			case "status":
 				return (
-					<p className="text-white flex items-center justify-center">
+					<div className="flex items-center justify-center">
 						<Chip
 							color={
 								cellValue === "pending"
@@ -139,7 +135,7 @@ function TableBlogList({
 								? "Đã duyệt"
 								: "Từ chối"}
 						</Chip>
-					</p>
+					</div>
 				);
 
 			case "user":
@@ -201,7 +197,6 @@ function TableBlogList({
 				);
 		}
 	}, []);
-
 	const handleEdit = (item) => {
 		setItemId(item?._id);
 		onOpenAddEdit();
@@ -220,7 +215,7 @@ function TableBlogList({
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
-			GetPagingBlog({
+			GetPagingSeoProject({
 				pageIndex: tempPageIndex,
 				pageSize: pgSize,
 				search: "",
@@ -232,7 +227,7 @@ function TableBlogList({
 	};
 	return (
 		<>
-			<div className="bg-card-project shadow-wrapper p-5 rounded-xl">
+			<div className="bg-card-project shadow-wrapper p-5 pb-10 rounded-xl">
 				<TableNextUI
 					columns={columns}
 					renderCell={renderCell}
@@ -249,7 +244,7 @@ function TableBlogList({
 				/>
 			</div>
 			{isOpenAddEdit && (
-				<ModalBlog
+				<ModalSeoProject
 					itemId={itemId}
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
@@ -268,7 +263,7 @@ function TableBlogList({
 					onComplete={handleOnDelete}
 					ids={listIds?.join("-")}
 					headerMsg={`Xác nhận`}
-					funcDelete={deletesBlog}
+					funcDelete={deletesSeoProject}
 					bodyMsg={
 						listIds?.length !== 1
 							? "Bạn có chắc chắn muốn xóa các bài viết đã chọn?"
@@ -280,4 +275,4 @@ function TableBlogList({
 	);
 }
 
-export default TableBlogList;
+export default TableSeoProjectList;

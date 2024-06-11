@@ -8,21 +8,23 @@ import {
 	Tooltip,
 	User,
 } from "@nextui-org/react";
-import {URL_IMAGE} from "_constants";
 
 import TableNextUI from "app/components/TableNextUI";
-import {GetPagingTeam} from "../../../../_redux/slice/teamSlice";
+
 import moment from "moment";
 import {FaRegTrashCan} from "react-icons/fa6";
 
 import {LiaEditSolid} from "react-icons/lia";
-import ModalTeam from "./ModalTeam";
+
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
-import {deletesTeam} from "../../../../services/api.service";
+import {deletesKpiBonus} from "../../../../services/api.service";
+
+import {GetPagingKpiBonus} from "../../../../_redux/slice/kpiBonusSlice";
+import ModalKpiBonus from "./ModalKpiBonus";
 
 // const PAGE_SIZE = 10;
 
-function TableTeamList({
+function TableKpiBonusList({
 	isOpenAddEdit,
 	onOpenAddEdit,
 	onCloseAddEdit,
@@ -40,9 +42,8 @@ function TableTeamList({
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
-		(state) => state?.team || []
+		(state) => state?.kpiBonus || []
 	);
-	console.log("data: ", data);
 
 	useEffect(() => {
 		if (typeof selectedKeys === "string") {
@@ -58,7 +59,7 @@ function TableTeamList({
 	}, [pageIndex, pgSize, search]);
 	const handleGetPagination = () => {
 		dispatch(
-			GetPagingTeam({
+			GetPagingKpiBonus({
 				pageIndex: pageIndex || 1,
 				pageSize: pgSize || 10,
 				search: search || "",
@@ -66,10 +67,9 @@ function TableTeamList({
 		);
 	};
 	const columns = [
-		{name: "Tên đội", _id: "name", className: "w-[25%]"},
-		{name: "Số lãnh đạo", _id: "leaders", className: "w-[25%]"},
-		{name: "Ngày tạo", _id: "createdAt", className: "w-[25%]"},
-		{name: "Hành động", _id: "actions", className: "w-[25%]"},
+		{name: "Tên kpi bonus", _id: "name", className: "w-1/3"},
+		{name: "Ngày tạo", _id: "createdAt", className: "w-1/3"},
+		{name: "Hành động", _id: "actions", className: "w-1/3"},
 	];
 
 	const handleEdit = (item) => {
@@ -84,29 +84,7 @@ function TableTeamList({
 				return (
 					<div className="text-white text-sm text-center">{cellValue}</div>
 				);
-			case "leaders":
-				return (
-					<div className="flex items-center justify-center">
-						<AvatarGroup isBordered max={3}>
-							{cellValue?.map((item, index) => (
-								<Tooltip
-									key={index}
-									showArrow={true}
-									content={`${item?.firstName} ${item?.lastName}`}
-									classNames={{
-										base: " text-nowrap",
-										content: "text-black ",
-									}}
-									disableAnimation={true}
-								>
-									<Avatar
-										src={item?.avatar ? `${URL_IMAGE}/${item?.avatar}` : ""}
-									/>
-								</Tooltip>
-							))}
-						</AvatarGroup>
-					</div>
-				);
+
 			case "createdAt":
 				return (
 					<div className="text-white text-sm text-center">
@@ -177,7 +155,7 @@ function TableTeamList({
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
-			GetPagingTeam({
+			GetPagingKpiBonus({
 				pageIndex: tempPageIndex,
 				pageSize: pgSize,
 				search: "",
@@ -189,7 +167,7 @@ function TableTeamList({
 	};
 	return (
 		<>
-			<div className="bg-card-project shadow-wrapper p-5 rounded-xl">
+			<div className="bg-card-project shadow-wrapper p-5 pb-10 rounded-xl">
 				<TableNextUI
 					columns={columns}
 					renderCell={renderCell}
@@ -206,7 +184,7 @@ function TableTeamList({
 				/>
 			</div>
 			{isOpenAddEdit && (
-				<ModalTeam
+				<ModalKpiBonus
 					itemId={itemId}
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
@@ -225,11 +203,11 @@ function TableTeamList({
 					onComplete={handleOnDelete}
 					ids={listIds?.join("-")}
 					headerMsg={`Xác nhận`}
-					funcDelete={deletesTeam}
+					funcDelete={deletesKpiBonus}
 					bodyMsg={
 						listIds?.length !== 1
-							? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
-							: "Bạn có chắc chắn muốn xóa nhóm này?"
+							? "Bạn có chắc chắn muốn xóa các Kpi Bonus đã chọn?"
+							: "Bạn có chắc chắn muốn xóa Kpi Bonus này?"
 					}
 				/>
 			)}
@@ -237,4 +215,4 @@ function TableTeamList({
 	);
 }
 
-export default TableTeamList;
+export default TableKpiBonusList;

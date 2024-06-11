@@ -68,6 +68,7 @@ function TableNextUI({
 							value: "text-gray-300",
 							trigger:
 								"min-h-7 h-9 border data-[focus=true]:border-[#35d1f5] data-[open=true]:border-[#35d1f5] data-[open=true]:shadow-[0rem_0rem_0rem_0.125rem_rgba(129,_227,_249,_1)] shadow-none",
+							selectorIcon: "text-white",	
 						}}
 						listboxProps={{
 							itemClasses: {
@@ -141,8 +142,8 @@ function TableNextUI({
 				base: "",
 				wrapper: "max-h-[65vh] min-h-[200px] bg-transparent shadow-wrapper",
 				table: "overflow-auto",
-				th: "uppercase text-left bg-primary text-white text-base font-medium",
-				td: "py-4 group-aria-[selected=false]:group-data-[hover=true]:before:bg-gray-500/60",
+				th: "uppercase text-center bg-primary text-white text-base font-medium",
+				td: "py-4 text-center group-aria-[selected=false]:group-data-[hover=true]:before:bg-gray-500/60",
 			}}
 			isHeaderSticky
 			bottomContentPlacement="outside"
@@ -160,7 +161,9 @@ function TableNextUI({
 				{(column) => (
 					<TableColumn
 						key={column._id}
-						className={`${column._id === "actions" && "w-36 text-center"}`}
+						className={`${column._id === "actions" && "w-36 text-center"} ${
+							column.className
+						}`}
 						allowsSorting={column.sortable}
 					>
 						{column.name}

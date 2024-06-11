@@ -39,10 +39,11 @@ const Header = ({
 				<Input
 					size="md"
 					variant="bordered"
+					radius="sm"
 					placeholder={placeholder}
 					classNames={{
 						inputWrapper:
-							"rounded-md py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
+							"py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
 						label: "hidden",
 						input: "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
 					}}
@@ -54,8 +55,9 @@ const Header = ({
 
 				<Button
 					variant="solid"
+					radius="sm"
 					color={"primary"}
-					className="rounded-md min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
+					className="min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
 					startContent={
 						<IoSearchSharp className="text-white min-w-max min-h-max" />
 					}

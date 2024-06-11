@@ -222,7 +222,7 @@ function UserManager() {
   return (
     <>
       <div className="mt-24 flex flex-col">
-        <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper">
+        <div className="mb-4 rounded-lg flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
           <div className="p-6 rounded-lg flex flex-row flex-wrap justify-between items-center gap-2 w-full">
             <div className="max-w-[220px] flex items-center gap-2">
               <Button
@@ -266,14 +266,25 @@ function UserManager() {
                 }}
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Nhập tên người dùng..."
+                variant="bordered"
+                radius="sm"
+                classNames={{
+                  inputWrapper:
+                    "py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
+                  label: "hidden",
+                  input: "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
+                }}
               />
               <div className="min-w-44">
                 <Select
                   label=""
+                  radius="sm"
+                  variant="bordered"
                   classNames={{
-                    label: "group-data-[filled=true]:-translate-y-5 rounded",
-                    base: "w-full rounded",
-                    trigger: "min-h-7 h-9 rounded",
+                    base: "max-w-44",
+                    value: "text-white",
+                    trigger:
+                      "text-white data-[open=true]:border-primary data-[hover=true]:border-primary data-[focus=true]:border-primary",
                   }}
                   listboxProps={{
                     itemClasses: {
@@ -317,10 +328,13 @@ function UserManager() {
               <div className="min-w-44">
                 <Select
                   label=""
+                  variant="bordered"
+                  radius="sm"
                   classNames={{
-                    label: "group-data-[filled=true]:-translate-y-5 rounded",
-                    base: "w-full rounded",
-                    trigger: "min-h-7 h-9 rounded",
+                    base: "max-w-44",
+                    value: "text-white",
+                    trigger:
+                      "text-white data-[open=true]:border-primary data-[hover=true]:border-primary data-[focus=true]:border-primary",
                   }}
                   listboxProps={{
                     itemClasses: {
@@ -364,8 +378,9 @@ function UserManager() {
 
               <Button
                 variant="solid"
+                radius="sm"
                 color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
+                className="min-w-32 text-white font-bold text-xs mr-5"
                 startContent={
                   <IoSearchSharp className="text-white min-w-max min-h-max" />
                 }

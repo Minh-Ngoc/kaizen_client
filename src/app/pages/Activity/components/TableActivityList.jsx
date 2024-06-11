@@ -5,24 +5,19 @@ import {Avatar, AvatarGroup, Button, Chip, Tooltip} from "@nextui-org/react";
 import TableNextUI from "app/components/TableNextUI";
 import {URL_IMAGE} from "_constants";
 import moment from "moment";
-import {FaRegTrashCan} from "react-icons/fa6";
 
 import {LiaEditSolid} from "react-icons/lia";
 
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
-import {deletesBlog} from "../../../../services/api.service";
+import {deletesActivity} from "../../../../services/api.service";
 
-import {GetPagingBlog} from "../../../../_redux/slice/blogSlice";
-import ModalBlog from "./ModalBlog";
 import {FaTrash} from "react-icons/fa";
+import ModalActivity from "./ModalActivity";
+import {GetPagingActivity} from "../../../../_redux/slice/activitySlice";
 
 // const PAGE_SIZE = 10;
-const typeBlog = {
-	experience: "Kinh nghiệm",
-	tool: "Công cụ",
-	life: "Đời sống",
-};
-function TableBlogList({
+
+function TableActivityList({
 	isOpenAddEdit,
 	onOpenAddEdit,
 	onCloseAddEdit,
@@ -40,7 +35,7 @@ function TableBlogList({
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
-		(state) => state?.blog || []
+		(state) => state?.activity || []
 	);
 
 	useEffect(() => {
@@ -57,7 +52,7 @@ function TableBlogList({
 	}, [pageIndex, pgSize, search]);
 	const handleGetPagination = () => {
 		dispatch(
-			GetPagingBlog({
+			GetPagingActivity({
 				pageIndex: pageIndex || 1,
 				pageSize: pgSize || 10,
 				search: search || "",
@@ -67,7 +62,6 @@ function TableBlogList({
 	const columns = [
 		{name: "Tiêu đề", _id: "title"},
 		{name: "Ảnh", _id: "images"},
-		{name: "Loại blog", _id: "type"},
 		{name: "Mô tả", _id: "description"},
 		{name: "Nội dung", _id: "content"},
 		{name: "Trạng thái", _id: "status"},
@@ -81,28 +75,17 @@ function TableBlogList({
 
 		switch (columnKey) {
 			case "title":
-				return (
-					<p className="line-clamp-2 text-white flex items-center justify-center">
-						{cellValue}
-					</p>
-				);
+				return <p className="line-clamp-2 text-white">{cellValue}</p>;
 
 			case "images":
 				return (
 					<div className="flex items-center justify-center">
 						<AvatarGroup isBordered max={5}>
-							{cellValue?.map((item, index) => (
-								<Avatar key={index} src={`${URL_IMAGE}/${item}`} />
+							{cellValue?.map((avt, index) => (
+								<Avatar key={index} src={`${URL_IMAGE}/${avt}`} />
 							))}
 						</AvatarGroup>
 					</div>
-				);
-
-			case "type":
-				return (
-					<p className="text-nowrap text-white flex items-center justify-center">
-						{typeBlog[cellValue]}
-					</p>
 				);
 
 			case "description":
@@ -123,7 +106,7 @@ function TableBlogList({
 
 			case "status":
 				return (
-					<p className="text-white flex items-center justify-center">
+					<div className="flex items-center justify-center">
 						<Chip
 							color={
 								cellValue === "pending"
@@ -139,7 +122,7 @@ function TableBlogList({
 								? "Đã duyệt"
 								: "Từ chối"}
 						</Chip>
-					</p>
+					</div>
 				);
 
 			case "user":
@@ -183,7 +166,7 @@ function TableBlogList({
 							className="min-w-7 h-7 rounded-full p-0"
 							onClick={() => {
 								setIsOpenModalDelete(true);
-								setListIds([item?._id]);
+								setListIdSelected([item?.original?._id]);
 							}}
 						>
 							<Tooltip
@@ -220,7 +203,7 @@ function TableBlogList({
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
-			GetPagingBlog({
+			GetPagingActivity({
 				pageIndex: tempPageIndex,
 				pageSize: pgSize,
 				search: "",
@@ -232,7 +215,7 @@ function TableBlogList({
 	};
 	return (
 		<>
-			<div className="bg-card-project shadow-wrapper p-5 rounded-xl">
+			<div className="bg-card-project shadow-wrapper p-5 pb-10 rounded-xl">
 				<TableNextUI
 					columns={columns}
 					renderCell={renderCell}
@@ -249,7 +232,7 @@ function TableBlogList({
 				/>
 			</div>
 			{isOpenAddEdit && (
-				<ModalBlog
+				<ModalActivity
 					itemId={itemId}
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
@@ -268,7 +251,7 @@ function TableBlogList({
 					onComplete={handleOnDelete}
 					ids={listIds?.join("-")}
 					headerMsg={`Xác nhận`}
-					funcDelete={deletesBlog}
+					funcDelete={deletesActivity}
 					bodyMsg={
 						listIds?.length !== 1
 							? "Bạn có chắc chắn muốn xóa các bài viết đã chọn?"
@@ -280,4 +263,4 @@ function TableBlogList({
 	);
 }
 
-export default TableBlogList;
+export default TableActivityList;
