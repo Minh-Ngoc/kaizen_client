@@ -127,6 +127,11 @@ function TableNextUI({
 		);
 	}, [total, pageSize, page, onPageChange, onPageSizeChange]);
 
+	// Handler that is called when a user performs an action on the cell.
+	// (key: react.Key) => void
+	// eslint-disable-next-line no-unused-vars
+	const onCellAction = (key) => {};
+
 	return (
 		<Table
 			color="default"
@@ -149,7 +154,7 @@ function TableNextUI({
 			selectedKeys={selectedKeys}
 			onSelectionChange={onSelectedChange}
 			isLoading={isLoading}
-			// onCellAction={onCellAction}
+			onCellAction={onCellAction}
 		>
 			<TableHeader columns={columns}>
 				{(column) => (
