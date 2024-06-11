@@ -272,7 +272,8 @@ function UserManager() {
                   inputWrapper:
                     "py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
                   label: "hidden",
-                  input: "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
+                  input:
+                    "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
                 }}
               />
               <div className="min-w-44">
@@ -408,7 +409,7 @@ function UserManager() {
             handlePageChange(e);
           }}
           onPageSizeChange={(e) => {
-            handlePageChange(pageIndex, e);
+            handlePageChange(1, e);
           }}
         />
       </div>
