@@ -7,15 +7,9 @@ import {
   Button,
 } from "@nextui-org/react";
 import PropTypes from "prop-types";
-import * as yup from "yup";
-import React, { useState, useEffect } from "react";
 import {
   getPriorityText,
   getProjectTicketText,
-  getResponseStatusText,
-  listPriority,
-  listProjectTicket,
-  listResponseStatus,
 } from "_utils";
 import TinyMCE from "app/components/TinyMCE";
 import { URL_IMAGE } from "_constants";
