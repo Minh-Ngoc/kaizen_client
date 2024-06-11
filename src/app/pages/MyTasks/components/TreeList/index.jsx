@@ -196,38 +196,38 @@ const TreeList = ({data, onOpenEdit, onOpenDelete, setSelectedTask}) => {
 					);
 				},
 			},
-			{
-				field: "dueDate",
-				headerText: "Thời gian thực hiện",
-				width: "130",
-				textAlign: "Left",
-				editType: "stringedit",
-				headerTemplate: () => {
-					return (
-						<div className="flex items-center gap-2 ">
-							<LuClock2 size={20} />
+			// {
+			// 	field: "dueDate",
+			// 	headerText: "Thời gian thực hiện",
+			// 	width: "130",
+			// 	textAlign: "Left",
+			// 	editType: "stringedit",
+			// 	headerTemplate: () => {
+			// 		return (
+			// 			<div className="flex items-center gap-2 ">
+			// 				<LuClock2 size={20} />
 
-							<b className="e-header uppercase">Thời gian thực hiện</b>
-						</div>
-					);
-				},
-				template: (args) => {
-					return (
-						<>
-							{args?.level === 1 && args?.type !== "add" && args?.taskId && (
-								<DueDate
-									dateStart={args.dateStart}
-									dateEnd={args.dateEnd}
-									index={args?.index}
-									taskId={args?.taskId}
-									project={args?.project}
-									statusId={args?.statusId}
-								/>
-							)}
-						</>
-					);
-				},
-			},
+			// 				<b className="e-header uppercase">Thời gian thực hiện</b>
+			// 			</div>
+			// 		);
+			// 	},
+			// 	template: (args) => {
+			// 		return (
+			// 			<>
+			// 				{args?.level === 1 && args?.type !== "add" && args?.taskId && (
+			// 					<DueDate
+			// 						dateStart={args.dateStart}
+			// 						dateEnd={args.dateEnd}
+			// 						index={args?.index}
+			// 						taskId={args?.taskId}
+			// 						project={args?.project}
+			// 						statusId={args?.statusId}
+			// 					/>
+			// 				)}
+			// 			</>
+			// 		);
+			// 	},
+			// },
 			// {
 			// 	field: "performers",
 			// 	headerText: "Người thực hiện",
