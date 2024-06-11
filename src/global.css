@@ -248,6 +248,10 @@ body {
 	width: 0; /* Ẩn thanh cuộn trên Chrome, Safari */
 	background-color: transparent;
 }
+.scrollbar-kanban::-webkit-scrollbar {
+	display: none;
+}
+
 .hide-sroll-bar {
 	overflow-y: scroll;
 }

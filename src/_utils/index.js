@@ -230,7 +230,7 @@ export const listPriority = [
   { label: "Khẩn cấp", value: "urgent" },
 ];
 export const listProjectTicket = [
-  { label: "Tất cả dự án", value: "normal" },
+  { label: "Tất cả dự án", value: "all" },
   { label: "Business", value: "business" },
   { label: "Entity", value: "entity" },
   {
@@ -241,7 +241,7 @@ export const listProjectTicket = [
   { label: "Cộng tác viên", value: "ctv" },
 ];
 export const listResponseStatus = [
-  { label: "Tất cả trạng thái", value: "normal" },
+  { label: "Tất cả trạng thái", value: "all" },
   { label: "Đang chờ", value: "pending" },
   { label: "Đã phản hồi", value: "reply" },
 ];

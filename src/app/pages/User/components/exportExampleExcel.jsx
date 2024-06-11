@@ -100,6 +100,7 @@ function ButtonExportExampleExcel() {
   };
   return (
     <Button
+      radius="sm"
       className="min-w-36"
       startContent={<TbPackageExport />}
       color="success"
