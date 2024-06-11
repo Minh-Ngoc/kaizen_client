@@ -15,6 +15,8 @@ import UserManager from "../app/pages/User";
 import ManagerPermission from "../app/pages/Manager-Permission";
 import DepartmentManager from "../app/pages/Department";
 import Domain from "../app/pages/Domain";
+import Ticket from "../app/pages/Ticket";
+import LogManage from "../app/pages/Manager-Log";
 const routes = createBrowserRouter([
   {
     element: <AdminLayout />,
@@ -70,6 +72,14 @@ const routes = createBrowserRouter([
       {
         path: "/domain-manage",
         element: <Domain />,
+      },
+      {
+        path: "/log-manage",
+        element: <LogManage />,
+      },
+      {
+        path: "/your-ticket",
+        element: <Ticket />,
       },
     ],
   },
