@@ -14,7 +14,7 @@ import Blog from "../app/pages/Blog";
 import UserManager from "../app/pages/User";
 import ManagerPermission from "../app/pages/Manager-Permission";
 import DepartmentManager from "../app/pages/Department";
-
+import Domain from "../app/pages/Domain";
 const routes = createBrowserRouter([
   {
     element: <AdminLayout />,
@@ -66,6 +66,10 @@ const routes = createBrowserRouter([
       {
         path: "/department-manage",
         element: <DepartmentManager />,
+      },
+      {
+        path: "/domain-manage",
+        element: <Domain />,
       },
     ],
   },
