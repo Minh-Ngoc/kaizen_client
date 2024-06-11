@@ -121,7 +121,6 @@ function ButtonExportExcel() {
       const res = await getDataForExportExcel();
       handleExportExcel(res?.data?.data);
     } catch (error) {
-      console.log(error);
       NotifyMessage("Xuất file thất bại, thử lại sau!", "error");
     } finally {
       setIsLoading(false);

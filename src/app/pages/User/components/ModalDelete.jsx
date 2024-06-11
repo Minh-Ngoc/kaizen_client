@@ -16,13 +16,11 @@ function ModalDeleteUser({ isOpen, onClose, onComplete, userData }) {
     e.preventDefault();
     try {
       setIsLoading(true);
-      console.log(userData);
       await deleteUser(userData?._id);
       NotifyMessage("Xóa người dùng thành công", "success");
       onComplete();
       onClose();
     } catch (error) {
-      console.log(error);
       NotifyMessage("Lỗi vui lòng thử lại sau", "error");
     } finally {
       setIsLoading(false);
