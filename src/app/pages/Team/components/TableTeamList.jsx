@@ -1,18 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {GetPagingProject, DeleteProject} from "_redux/slice/projectSlice";
-import {setModal, onClose} from "_redux/slice/modalSlice";
 import {
 	Avatar,
 	AvatarGroup,
 	Button,
 	Chip,
 	Tooltip,
-	useDisclosure,
 	User,
 } from "@nextui-org/react";
-import {projectStatus, URL_IMAGE} from "_constants";
+import {URL_IMAGE} from "_constants";
 
 import TableNextUI from "app/components/TableNextUI";
 import {GetPagingTeam} from "../../../../_redux/slice/teamSlice";
@@ -31,30 +27,49 @@ function TableTeamList({
 	onOpenAddEdit,
 	onCloseAddEdit,
 	onOpenChangeAddEdit,
-	onGetPaging,
 	isOpenModalDelete,
 	setIsOpenModalDelete,
 	itemId,
 	setItemId,
+	search,
+	setListIds,
+	listIds,
 }) {
 	const dispatch = useDispatch();
-	const [listIdSelected, setListIdSelected] = useState([]);
-
+	const [selectedKeys, setSelectedKeys] = useState(new Set([]));
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
 		(state) => state?.team || []
 	);
+	console.log("data: ", data);
+
+	useEffect(() => {
+		if (typeof selectedKeys === "string") {
+			const ids = data?.map((item) => item?._id);
+			setListIds([...ids]);
+		} else {
+			setListIds([...selectedKeys]);
+		}
+	}, [selectedKeys]);
 	const [pgSize] = [...pageSize];
 	useEffect(() => {
-		onGetPaging({pageIndex, pgSize});
-	}, [pageIndex, pgSize]);
-
+		handleGetPagination({pageIndex, pgSize});
+	}, [pageIndex, pgSize, search]);
+	const handleGetPagination = () => {
+		dispatch(
+			GetPagingTeam({
+				pageIndex: pageIndex || 1,
+				pageSize: pgSize || 10,
+				search: search || "",
+			})
+		);
+	};
 	const columns = [
-		{name: "Tên đội", _id: "name"},
-		{name: "Số lãnh đạo", _id: "leaders"},
-		{name: "Ngày tạo", _id: "createdAt"},
-		{name: "Hành động", _id: "actions"},
+		{name: "Tên đội", _id: "name", className: "w-[25%]"},
+		{name: "Số lãnh đạo", _id: "leaders", className: "w-[25%]"},
+		{name: "Ngày tạo", _id: "createdAt", className: "w-[25%]"},
+		{name: "Hành động", _id: "actions", className: "w-[25%]"},
 	];
 
 	const handleEdit = (item) => {
@@ -67,7 +82,7 @@ function TableTeamList({
 		switch (columnKey) {
 			case "name":
 				return (
-					<div className="text-white text-xs text-center">{cellValue}</div>
+					<div className="text-white text-sm text-center">{cellValue}</div>
 				);
 			case "leaders":
 				return (
@@ -94,13 +109,13 @@ function TableTeamList({
 				);
 			case "createdAt":
 				return (
-					<div className="text-white text-xs text-center">
+					<div className="text-white text-sm text-center">
 						{moment(cellValue).format("DD/MM/YYYY")}
 					</div>
 				);
 			case "actions":
 				return (
-					<div className="flex gap-2">
+					<div className="flex gap-2  justify-center">
 						{/* Edit */}
 						<Tooltip
 							color={"primary"}
@@ -112,7 +127,7 @@ function TableTeamList({
 								variant="solid"
 								radius="full"
 								color="primary"
-								className="min-w-0 w-8 p-1 h-auto"
+								className="min-w-0 w-8 p-1 h-auto flex-shrink-0"
 								onClick={() => handleEdit(item)}
 							>
 								<LiaEditSolid className="min-w-max text-base w-4 h-4 text-white" />
@@ -133,7 +148,7 @@ function TableTeamList({
 								className="min-w-0 w-8 p-2 h-auto"
 								onClick={() => {
 									setIsOpenModalDelete(true);
-									setListIdSelected([item?._id]);
+									setListIds([item?._id]);
 								}}
 							>
 								<FaRegTrashCan className="min-w-max w-4 h-4 text-white" />
@@ -158,7 +173,7 @@ function TableTeamList({
 	};
 	const handleOnDelete = () => {
 		let tempPageIndex = pageIndex;
-		const checkPage = (totalDoc - listIdSelected?.length) / pgSize;
+		const checkPage = (totalDoc - listIds?.length) / pgSize;
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
@@ -169,7 +184,7 @@ function TableTeamList({
 			})
 		);
 
-		setListIdSelected([]);
+		setListIds([]);
 		setPageIndex(tempPageIndex);
 	};
 	return (
@@ -185,6 +200,9 @@ function TableTeamList({
 					onPageChange={handleChangePaging} // Pass down the function
 					pageSize={pageSize}
 					onPageSizeChange={handlePageSizeChange}
+					selectionMode="multiple"
+					selectedKeys={selectedKeys}
+					onSelectedChange={setSelectedKeys}
 				/>
 			</div>
 			{isOpenAddEdit && (
@@ -193,28 +211,28 @@ function TableTeamList({
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
 					onOpenChange={onOpenChangeAddEdit}
-					onGetPaging={({pageIndex, pgSize}) => {
-						dispatch(GetPagingTeam({pageIndex, pgSize}));
-					}}
+					onGetPaging={handleGetPagination}
 				/>
 			)}
-
-			<ModalDeleteMutiOrOne
-				isOpen={isOpenModalDelete}
-				onClose={() => {
-					setIsOpenModalDelete(false);
-					setListIdSelected([]);
-				}}
-				onComplete={handleOnDelete}
-				ids={listIdSelected?.join("-")}
-				headerMsg={`Xác nhận`}
-				funcDelete={deletesTeam}
-				bodyMsg={
-					listIdSelected?.length !== 1
-						? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
-						: "Bạn có chắc chắn muốn xóa nhóm này?"
-				}
-			/>
+			{isOpenModalDelete && (
+				<ModalDeleteMutiOrOne
+					isOpen={isOpenModalDelete}
+					onClose={() => {
+						setIsOpenModalDelete(false);
+						setListIds([]);
+						setSelectedKeys(new Set([]));
+					}}
+					onComplete={handleOnDelete}
+					ids={listIds?.join("-")}
+					headerMsg={`Xác nhận`}
+					funcDelete={deletesTeam}
+					bodyMsg={
+						listIds?.length !== 1
+							? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
+							: "Bạn có chắc chắn muốn xóa nhóm này?"
+					}
+				/>
+			)}
 		</>
 	);
 }

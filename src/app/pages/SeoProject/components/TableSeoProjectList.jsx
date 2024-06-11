@@ -1,63 +1,73 @@
 import {useCallback, useEffect, useState} from "react";
-
 import {useDispatch, useSelector} from "react-redux";
-
-import {
-	Avatar,
-	AvatarGroup,
-	Button,
-	Chip,
-	Tooltip,
-	User,
-} from "@nextui-org/react";
-import {URL_IMAGE} from "_constants";
+import {Avatar, AvatarGroup, Button, Chip, Tooltip} from "@nextui-org/react";
 
 import TableNextUI from "app/components/TableNextUI";
-
+import {URL_IMAGE} from "_constants";
 import moment from "moment";
+import {FaRegTrashCan} from "react-icons/fa6";
 
 import {LiaEditSolid} from "react-icons/lia";
 
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
-
-import {FaTrash} from "react-icons/fa";
-
 import {deletesSeoProject} from "../../../../services/api.service";
 
-import {GetPagingSeoProject} from "../../../../_redux/slice/seoProjectSlice";
 import ModalSeoProject from "./ModalSeoProject";
+import {FaTrash} from "react-icons/fa";
+import {GetPagingSeoProject} from "../../../../_redux/slice/seoProjectSlice";
 
 // const PAGE_SIZE = 10;
-
+const typeSeoProject = {
+	experience: "Kinh nghiệm",
+	tool: "Công cụ",
+	life: "Đời sống",
+};
 function TableSeoProjectList({
 	isOpenAddEdit,
 	onOpenAddEdit,
 	onCloseAddEdit,
 	onOpenChangeAddEdit,
-	onGetPaging,
 	isOpenModalDelete,
 	setIsOpenModalDelete,
 	itemId,
 	setItemId,
+	search,
+	setListIds,
+	listIds,
 }) {
 	const dispatch = useDispatch();
-	const [listIdSelected, setListIdSelected] = useState([]);
-
+	const [selectedKeys, setSelectedKeys] = useState(new Set([]));
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
 		(state) => state?.seoProject || []
 	);
 
+	useEffect(() => {
+		if (typeof selectedKeys === "string") {
+			const ids = data?.map((item) => item?._id);
+			setListIds([...ids]);
+		} else {
+			setListIds([...selectedKeys]);
+		}
+	}, [selectedKeys]);
 	const [pgSize] = [...pageSize];
 	useEffect(() => {
-		onGetPaging({pageIndex, pgSize});
-	}, [pageIndex, pgSize]);
-
+		handleGetPagination({pageIndex, pgSize});
+	}, [pageIndex, pgSize, search]);
+	const handleGetPagination = () => {
+		dispatch(
+			GetPagingSeoProject({
+				pageIndex: pageIndex || 1,
+				pageSize: pgSize || 10,
+				search: search || "",
+			})
+		);
+	};
 	const columns = [
 		{name: "Tiêu đề", _id: "title"},
 		{name: "Ảnh", _id: "images"},
-		{name: "Loại SeoProject", _id: "type"},
+		{name: "Loại", _id: "type"},
 		{name: "Mô tả", _id: "description"},
 		{name: "Nội dung", _id: "content"},
 		{name: "Trạng thái", _id: "status"},
@@ -71,24 +81,34 @@ function TableSeoProjectList({
 
 		switch (columnKey) {
 			case "title":
-				return <p className="line-clamp-2 text-white">{cellValue}</p>;
+				return (
+					<p className="line-clamp-2 text-white flex items-center justify-center">
+						{cellValue}
+					</p>
+				);
 
 			case "images":
 				return (
-					<AvatarGroup isBordered max={5}>
-						{cellValue?.map((avt, index) => (
-							<Avatar key={index} src={`${URL_IMAGE}/${avt}`} />
-						))}
-					</AvatarGroup>
+					<div className="flex items-center justify-center">
+						<AvatarGroup isBordered max={5}>
+							{cellValue?.map((avt, index) => (
+								<Avatar key={index} src={`${URL_IMAGE}/${avt}`} />
+							))}
+						</AvatarGroup>
+					</div>
 				);
 
 			case "type":
-				return <p className="line-clamp-2 text-white">{cellValue}</p>;
+				return (
+					<p className="line-clamp-2 text-white flex items-center justify-center">
+						{cellValue}
+					</p>
+				);
 
 			case "description":
 				return (
 					<p
-						className="line-clamp-2 text-white"
+						className="line-clamp-2 text-white flex items-center justify-center"
 						dangerouslySetInnerHTML={{__html: cellValue}}
 					/>
 				);
@@ -96,7 +116,7 @@ function TableSeoProjectList({
 			case "content":
 				return (
 					<p
-						className="line-clamp-2 text-white"
+						className="line-clamp-2 text-white flex items-center justify-center"
 						dangerouslySetInnerHTML={{__html: cellValue}}
 					/>
 				);
@@ -123,16 +143,22 @@ function TableSeoProjectList({
 				);
 
 			case "user":
-				return <p className="text-white">{cellValue?.username}</p>;
+				return (
+					<p className="text-white flex items-center justify-center">
+						{cellValue?.username}
+					</p>
+				);
 
 			case "createdAt":
 				return (
-					<p className="text-white">{moment(cellValue).format("DD/MM/YYYY")}</p>
+					<p className="text-white flex items-center justify-center">
+						{moment(cellValue).format("DD/MM/YYYY")}
+					</p>
 				);
 
 			case "actions":
 				return (
-					<div className={"flex flex-row gap-1"}>
+					<div className={"flex flex-row gap-1 justify-center"}>
 						<Button
 							color="primary"
 							variant="solid"
@@ -175,7 +201,6 @@ function TableSeoProjectList({
 				);
 		}
 	}, []);
-
 	const handleEdit = (item) => {
 		setItemId(item?._id);
 		onOpenAddEdit();
@@ -190,7 +215,7 @@ function TableSeoProjectList({
 	};
 	const handleOnDelete = () => {
 		let tempPageIndex = pageIndex;
-		const checkPage = (totalDoc - listIdSelected?.length) / pgSize;
+		const checkPage = (totalDoc - listIds?.length) / pgSize;
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
@@ -201,7 +226,7 @@ function TableSeoProjectList({
 			})
 		);
 
-		setListIdSelected([]);
+		setListIds([]);
 		setPageIndex(tempPageIndex);
 	};
 	return (
@@ -211,12 +236,15 @@ function TableSeoProjectList({
 					columns={columns}
 					renderCell={renderCell}
 					data={data}
-					// isLoading={isLoading}
+					isLoading={loading}
 					total={totalDoc || 1}
 					page={pageIndex} // Pass down the page prop
 					onPageChange={handleChangePaging} // Pass down the function
 					pageSize={pageSize}
 					onPageSizeChange={handlePageSizeChange}
+					selectionMode="multiple"
+					selectedKeys={selectedKeys}
+					onSelectedChange={setSelectedKeys}
 				/>
 			</div>
 			{isOpenAddEdit && (
@@ -225,28 +253,28 @@ function TableSeoProjectList({
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
 					onOpenChange={onOpenChangeAddEdit}
-					onGetPaging={({pageIndex, pgSize}) => {
-						dispatch(GetPagingSeoProject({pageIndex, pgSize}));
-					}}
+					onGetPaging={handleGetPagination}
 				/>
 			)}
-
-			<ModalDeleteMutiOrOne
-				isOpen={isOpenModalDelete}
-				onClose={() => {
-					setIsOpenModalDelete(false);
-					setListIdSelected([]);
-				}}
-				onComplete={handleOnDelete}
-				ids={listIdSelected?.join("-")}
-				headerMsg={`Xác nhận`}
-				funcDelete={deletesSeoProject}
-				bodyMsg={
-					listIdSelected?.length !== 1
-						? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
-						: "Bạn có chắc chắn muốn xóa nhóm này?"
-				}
-			/>
+			{isOpenModalDelete && (
+				<ModalDeleteMutiOrOne
+					isOpen={isOpenModalDelete}
+					onClose={() => {
+						setIsOpenModalDelete(false);
+						setListIds([]);
+						setSelectedKeys(new Set([]));
+					}}
+					onComplete={handleOnDelete}
+					ids={listIds?.join("-")}
+					headerMsg={`Xác nhận`}
+					funcDelete={deletesSeoProject}
+					bodyMsg={
+						listIds?.length !== 1
+							? "Bạn có chắc chắn muốn xóa các bài viết đã chọn?"
+							: "Bạn có chắc chắn muốn xóa bài viết này?"
+					}
+				/>
+			)}
 		</>
 	);
 }

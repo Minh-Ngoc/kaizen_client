@@ -152,7 +152,9 @@ function TableNextUI({
 				{(column) => (
 					<TableColumn
 						key={column._id}
-						className={`${column._id === "actions" && "w-36 text-center"}`}
+						className={`${column._id === "actions" && "w-36 text-center"} ${
+							column.className
+						}`}
 						allowsSorting={column.sortable}
 					>
 						{column.name}

@@ -1,10 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
-
 import {useDispatch, useSelector} from "react-redux";
-
-import {Avatar, Button, Chip, Tooltip, User} from "@nextui-org/react";
+import {
+	Avatar,
+	AvatarGroup,
+	Button,
+	Chip,
+	Tooltip,
+	User,
+} from "@nextui-org/react";
 import {URL_IMAGE} from "_constants";
-
 import TableNextUI from "app/components/TableNextUI";
 
 import moment from "moment";
@@ -14,6 +18,7 @@ import {LiaEditSolid} from "react-icons/lia";
 
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
 import {deletesNew} from "../../../../services/api.service";
+
 import ModalNew from "./ModalNew";
 import {GetPagingNew} from "../../../../_redux/slice/newSlice";
 
@@ -24,41 +29,54 @@ function TableNewList({
 	onOpenAddEdit,
 	onCloseAddEdit,
 	onOpenChangeAddEdit,
-	onGetPaging,
 	isOpenModalDelete,
 	setIsOpenModalDelete,
 	itemId,
 	setItemId,
+	search,
+	setListIds,
+	listIds,
 }) {
 	const dispatch = useDispatch();
-	const [listIdSelected, setListIdSelected] = useState([]);
-
+	const [selectedKeys, setSelectedKeys] = useState(new Set([]));
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
 		(state) => state?.new || []
 	);
-	console.log("data", data, totalDoc);
+
+	useEffect(() => {
+		if (typeof selectedKeys === "string") {
+			const ids = data?.map((item) => item?._id);
+			setListIds([...ids]);
+		} else {
+			setListIds([...selectedKeys]);
+		}
+	}, [selectedKeys]);
 	const [pgSize] = [...pageSize];
 	useEffect(() => {
-		onGetPaging({pageIndex, pgSize});
-	}, [pageIndex, pgSize]);
-
+		handleGetPagination({pageIndex, pgSize});
+	}, [pageIndex, pgSize, search]);
+	const handleGetPagination = () => {
+		dispatch(
+			GetPagingNew({
+				pageIndex: pageIndex || 1,
+				pageSize: pgSize || 10,
+				search: search || "",
+			})
+		);
+	};
 	const columns = [
-		{name: "Tiêu đề", _id: "title"},
-		{name: "Ảnh đại diện", _id: "thumbnail"},
-		{name: "Mô tả", _id: "description"},
-		{name: "Nội dung", _id: "content"},
-		{name: "Trạng thái", _id: "status"},
-		{name: "Người tạo", _id: "user"},
-		{name: "Ngày tạo", _id: "createdAt"},
-		{name: "Hành động", _id: "actions"},
+		{name: "Tiêu đề", _id: "title", className: "w-1/8"},
+		{name: "Ảnh đại diện", _id: "thumbnail", className: "w-1/8"},
+		{name: "Mô tả", _id: "description", className: "w-1/8"},
+		{name: "Nội dung", _id: "content", className: "w-1/8"},
+		{name: "Trạng thái", _id: "status", className: "w-1/8"},
+		{name: "Người tạo", _id: "user", className: "w-1/8"},
+		{name: "Ngày tạo", _id: "createdAt", className: "w-1/8"},
+		{name: "Hành động", _id: "actions", className: "w-1/8"},
 	];
 
-	const handleEdit = (item) => {
-		setItemId(item?._id);
-		onOpenAddEdit();
-	};
 	const renderCell = useCallback((item, columnKey) => {
 		const cellValue = item[columnKey];
 
@@ -170,6 +188,11 @@ function TableNewList({
 		}
 	}, []);
 
+	const handleEdit = (item) => {
+		setItemId(item?._id);
+		onOpenAddEdit();
+	};
+
 	const handleChangePaging = (value) => {
 		setPageIndex(value);
 	};
@@ -179,7 +202,7 @@ function TableNewList({
 	};
 	const handleOnDelete = () => {
 		let tempPageIndex = pageIndex;
-		const checkPage = (totalDoc - listIdSelected?.length) / pgSize;
+		const checkPage = (totalDoc - listIds?.length) / pgSize;
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
@@ -190,7 +213,7 @@ function TableNewList({
 			})
 		);
 
-		setListIdSelected([]);
+		setListIds([]);
 		setPageIndex(tempPageIndex);
 	};
 	return (
@@ -206,6 +229,9 @@ function TableNewList({
 					onPageChange={handleChangePaging} // Pass down the function
 					pageSize={pageSize}
 					onPageSizeChange={handlePageSizeChange}
+					selectionMode="multiple"
+					selectedKeys={selectedKeys}
+					onSelectedChange={setSelectedKeys}
 				/>
 			</div>
 			{isOpenAddEdit && (
@@ -214,28 +240,28 @@ function TableNewList({
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
 					onOpenChange={onOpenChangeAddEdit}
-					onGetPaging={({pageIndex, pgSize}) => {
-						dispatch(GetPagingNew({pageIndex, pgSize}));
-					}}
+					onGetPaging={handleGetPagination}
 				/>
 			)}
-
-			<ModalDeleteMutiOrOne
-				isOpen={isOpenModalDelete}
-				onClose={() => {
-					setIsOpenModalDelete(false);
-					setListIdSelected([]);
-				}}
-				onComplete={handleOnDelete}
-				ids={listIdSelected?.join("-")}
-				headerMsg={`Xác nhận`}
-				funcDelete={deletesNew}
-				bodyMsg={
-					listIdSelected?.length !== 1
-						? "Bạn có chắc chắn muốn xóa các nhóm đã chọn?"
-						: "Bạn có chắc chắn muốn xóa nhóm này?"
-				}
-			/>
+			{isOpenModalDelete && (
+				<ModalDeleteMutiOrOne
+					isOpen={isOpenModalDelete}
+					onClose={() => {
+						setIsOpenModalDelete(false);
+						setListIds([]);
+						setSelectedKeys(new Set([]));
+					}}
+					onComplete={handleOnDelete}
+					ids={listIds?.join("-")}
+					headerMsg={`Xác nhận`}
+					funcDelete={deletesNew}
+					bodyMsg={
+						listIds?.length !== 1
+							? "Bạn có chắc chắn muốn xóa các bài viết đã chọn?"
+							: "Bạn có chắc chắn muốn xóa bài viết này?"
+					}
+				/>
+			)}
 		</>
 	);
 }

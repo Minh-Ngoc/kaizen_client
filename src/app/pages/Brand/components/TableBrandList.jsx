@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Chip, Tooltip} from "@nextui-org/react";
+import {Button, Tooltip} from "@nextui-org/react";
 
 import TableNextUI from "app/components/TableNextUI";
 
@@ -10,15 +10,13 @@ import {FaRegTrashCan} from "react-icons/fa6";
 import {LiaEditSolid} from "react-icons/lia";
 
 import ModalDeleteMutiOrOne from "../../../components/Modal/ModalDelete";
-import {deletesSeo} from "../../../../services/api.service";
-
-import ModalSeo from "./ModalSeo";
-import {FaTrash} from "react-icons/fa";
-import {GetPagingSeo} from "../../../../_redux/slice/seoSlice";
+import {deletesBrand} from "../../../../services/api.service";
+import {GetPagingBrand} from "../../../../_redux/slice/brandSlice";
+import ModalBrand from "./ModalBrand";
 
 // const PAGE_SIZE = 10;
 
-function TableSeoList({
+function TableBrandList({
 	isOpenAddEdit,
 	onOpenAddEdit,
 	onCloseAddEdit,
@@ -36,9 +34,8 @@ function TableSeoList({
 	const [pageIndex, setPageIndex] = useState(1);
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
 	const {data, loading, totalDoc, totalPage} = useSelector(
-		(state) => state?.seo || []
+		(state) => state?.brand || []
 	);
-	console.log("seo", data);
 
 	useEffect(() => {
 		if (typeof selectedKeys === "string") {
@@ -54,7 +51,7 @@ function TableSeoList({
 	}, [pageIndex, pgSize, search]);
 	const handleGetPagination = () => {
 		dispatch(
-			GetPagingSeo({
+			GetPagingBrand({
 				pageIndex: pageIndex || 1,
 				pageSize: pgSize || 10,
 				search: search || "",
@@ -62,86 +59,80 @@ function TableSeoList({
 		);
 	};
 	const columns = [
-		{name: "Link", _id: "link", className: "w-1/4"},
-		{name: "thẻ", _id: "tags", className: "w-1/4"},
-		{name: "Ngày tạo", _id: "createdAt", className: "w-1/4"},
-		{name: "Hành động", _id: "actions", className: "w-1/4"},
+		{name: "Tên đội", _id: "name", className: "w-1/3"},
+		{name: "Ngày tạo", _id: "createdAt", className: "w-1/3"},
+		{name: "Hành động", _id: "actions", className: "w-1/3"},
 	];
-
-	const renderCell = useCallback((item, columnKey) => {
-		const cellValue = item[columnKey];
-
-		switch (columnKey) {
-			case "link":
-				return (
-					<p className="line-clamp-2 text-white flex items-center justify-center">
-						{cellValue}
-					</p>
-				);
-			case "tags":
-				return (
-					<p className="line-clamp-2 text-white   flex items-center justify-center">
-						{cellValue?.length}
-					</p>
-				);
-
-			case "createdAt":
-				return (
-					<p className="text-white  flex items-center justify-center">
-						{moment(cellValue).format("DD/MM/YYYY")}
-					</p>
-				);
-
-			case "actions":
-				return (
-					<div className={"flex flex-row gap-1 justify-center"}>
-						<Button
-							color="primary"
-							variant="solid"
-							className="min-w-7 h-7 rounded-full p-0"
-							onClick={() => handleEdit(item)}
-						>
-							<Tooltip
-								color={"primary"}
-								content={"Chỉnh sửa"}
-								className="capitalize"
-								disableAnimation={true}
-							>
-								<p>
-									<LiaEditSolid />
-								</p>
-							</Tooltip>
-						</Button>
-
-						<Button
-							color="danger"
-							variant="solid"
-							className="min-w-7 h-7 rounded-full p-0"
-							onClick={() => {
-								setIsOpenModalDelete(true);
-								setListIdSelected([item?.original?._id]);
-							}}
-						>
-							<Tooltip
-								color={"danger"}
-								content={"Xóa"}
-								className="capitalize"
-								disableAnimation={true}
-							>
-								<p>
-									<FaTrash />
-								</p>
-							</Tooltip>
-						</Button>
-					</div>
-				);
-		}
-	}, []);
 
 	const handleEdit = (item) => {
 		setItemId(item?._id);
 		onOpenAddEdit();
 	};
+	const renderCell = useCallback((item, columnKey) => {
+		const cellValue = item[columnKey];
+
+		switch (columnKey) {
+			case "name":
+				return (
+					<div className="text-white text-sm text-center">{cellValue}</div>
+				);
+
+			case "createdAt":
+				return (
+					<div className="text-white text-sm text-center">
+						{moment(cellValue).format("DD/MM/YYYY")}
+					</div>
+				);
+			case "actions":
+				return (
+					<div className="flex gap-2  justify-center">
+						{/* Edit */}
+						<Tooltip
+							color={"primary"}
+							content={"Chỉnh sửa"}
+							className="capitalize"
+							disableAnimation={true}
+						>
+							<Button
+								variant="solid"
+								radius="full"
+								color="primary"
+								className="min-w-0 w-8 p-1 h-auto flex-shrink-0"
+								onClick={() => handleEdit(item)}
+							>
+								<LiaEditSolid className="min-w-max text-base w-4 h-4 text-white" />
+							</Button>
+						</Tooltip>
+
+						{/* Delete */}
+						<Tooltip
+							color={"danger"}
+							content={"Xóa"}
+							className="capitalize"
+							disableAnimation={true}
+						>
+							<Button
+								variant="solid"
+								radius="full"
+								color="danger"
+								className="min-w-0 w-8 p-2 h-auto"
+								onClick={() => {
+									setIsOpenModalDelete(true);
+									setListIds([item?._id]);
+								}}
+							>
+								<FaRegTrashCan className="min-w-max w-4 h-4 text-white" />
+							</Button>
+						</Tooltip>
+					</div>
+				);
+
+			// default:
+			// 	return (
+			// 		<div className="text-white text-xs text-center">{cellValue}</div>
+			// 	);
+		}
+	}, []);
 
 	const handleChangePaging = (value) => {
 		setPageIndex(value);
@@ -156,7 +147,7 @@ function TableSeoList({
 		if (checkPage <= tempPageIndex - 1) tempPageIndex -= 1;
 		if (tempPageIndex <= 0) tempPageIndex = 1;
 		dispatch(
-			GetPagingSeo({
+			GetPagingBrand({
 				pageIndex: tempPageIndex,
 				pageSize: pgSize,
 				search: "",
@@ -173,7 +164,7 @@ function TableSeoList({
 					columns={columns}
 					renderCell={renderCell}
 					data={data}
-					isLoading={loading}
+					// isLoading={isLoading}
 					total={totalDoc || 1}
 					page={pageIndex} // Pass down the page prop
 					onPageChange={handleChangePaging} // Pass down the function
@@ -185,7 +176,7 @@ function TableSeoList({
 				/>
 			</div>
 			{isOpenAddEdit && (
-				<ModalSeo
+				<ModalBrand
 					itemId={itemId}
 					isOpen={isOpenAddEdit}
 					onClose={onCloseAddEdit}
@@ -204,11 +195,11 @@ function TableSeoList({
 					onComplete={handleOnDelete}
 					ids={listIds?.join("-")}
 					headerMsg={`Xác nhận`}
-					funcDelete={deletesSeo}
+					funcDelete={deletesBrand}
 					bodyMsg={
 						listIds?.length !== 1
-							? "Bạn có chắc chắn muốn xóa các bài viết đã chọn?"
-							: "Bạn có chắc chắn muốn xóa bài viết này?"
+							? "Bạn có chắc chắn muốn xóa các hậu đài đã chọn?"
+							: "Bạn có chắc chắn muốn xóa hậu đài này?"
 					}
 				/>
 			)}
@@ -216,4 +207,4 @@ function TableSeoList({
 	);
 }
 
-export default TableSeoList;
+export default TableBrandList;

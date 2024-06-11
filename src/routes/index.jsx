@@ -13,6 +13,9 @@ import New from "../app/pages/New";
 import Blog from "../app/pages/Blog";
 import Activity from "../app/pages/Activity";
 import SeoProject from "../app/pages/SeoProject";
+import Brand from "../app/pages/Brand";
+import KpiBonus from "../app/pages/KpiBonus";
+import Seo from "../app/pages/Seo";
 
 const routes = createBrowserRouter([
 	{
@@ -43,6 +46,14 @@ const routes = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
+				path: "/brand-manage",
+				element: <Brand />,
+			},
+			{
+				path: "/kpi-bonus-manage",
+				element: <KpiBonus />,
+			},
+			{
 				path: "/team-manage",
 				element: <Team />,
 			},
@@ -64,7 +75,7 @@ const routes = createBrowserRouter([
 			},
 			{
 				path: "/seo/seo-manage",
-				element: <SeoProject />,
+				element: <Seo />,
 			},
 		],
 	},

@@ -9,7 +9,7 @@ function New() {
 	const dispatch = useDispatch();
 	const [search, setSearch] = useState("");
 	const [itemId, setItemId] = useState("");
-
+	const [listIds, setListIds] = useState([]);
 	const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
 	const {
 		isOpen: isOpenAddEdit,
@@ -33,7 +33,7 @@ function New() {
 
 	return (
 		<>
-			<div className="flex flex-col pt-[120px] md:pt-[75px]">
+			<div className="flex flex-col mt-24">
 				<Header
 					onOpenAddEdit={handleOpenAddEdit}
 					onOpenDelete={() => {
@@ -53,6 +53,9 @@ function New() {
 					setIsOpenModalDelete={setIsOpenModalDelete}
 					itemId={itemId}
 					setItemId={setItemId}
+					search={search}
+					setListIds={setListIds}
+					listIds={listIds}
 				/>
 			</div>
 		</>
