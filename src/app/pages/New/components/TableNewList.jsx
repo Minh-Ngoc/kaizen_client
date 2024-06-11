@@ -172,7 +172,7 @@ function TableNewList({
 								className="min-w-0 w-8 p-2 h-auto"
 								onClick={() => {
 									setIsOpenModalDelete(true);
-									setListIdSelected([item?._id]);
+									setListIds([item?._id]);
 								}}
 							>
 								<FaRegTrashCan className="min-w-max w-4 h-4 text-white" />
@@ -223,7 +223,7 @@ function TableNewList({
 					columns={columns}
 					renderCell={renderCell}
 					data={data}
-					// isLoading={isLoading}
+					isLoading={loading}
 					total={totalDoc || 1}
 					page={pageIndex} // Pass down the page prop
 					onPageChange={handleChangePaging} // Pass down the function

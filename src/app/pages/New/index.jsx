@@ -39,7 +39,7 @@ function New() {
 					onOpenDelete={() => {
 						setIsOpenModalDelete(!isOpenModalDelete);
 					}}
-					listIds={[]}
+					listIds={listIds}
 					onSearch={setSearch}
 					placeholder="Tìm kiếm tên ..."
 				/>
