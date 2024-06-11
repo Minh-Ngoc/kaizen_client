@@ -12,10 +12,10 @@ import { deletePermissionByRole } from "../../../../services/api.service";
 import NotifyMessage from "_utils/notify";
 import { useDispatch } from "react-redux";
 import { removeRoleById } from "_redux/slice/roleSlice";
+
 function ModalDeletePermission({
   isOpen,
   onClose,
-  onComplete,
   permissionData,
 }) {
   const dispatch = useDispatch();
@@ -63,9 +63,9 @@ function ModalDeletePermission({
         classNames={{
           backdrop: "z-[51]",
           wrapper: "z-[52] w-full",
-          base: `] !shadow-card-project min-w-[40%] `,
+          base: `!shadow-card-project min-w-[40%] `,
           closeButton: "right-5 z-10 text-lg",
-          body: "overflow-auto",
+          body: "overflow-auto max-h-[80vh]",
         }}
       >
         <ModalContent>

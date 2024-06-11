@@ -182,11 +182,11 @@ function ModalEditPermission({
           },
         }}
         classNames={{
-          backdrop: "z-[51]",
+          backdrop: "z-[51] overflow-hidden",
           wrapper: "z-[52] w-full",
           base: `!shadow-card-project min-w-[40%] `,
           closeButton: "right-5 z-10 text-lg",
-          body: "overflow-auto",
+          body: "overflow-y-auto max-h-[80vh]",
         }}
       >
         <ModalContent>

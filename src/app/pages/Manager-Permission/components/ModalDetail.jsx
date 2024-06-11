@@ -8,16 +8,15 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { deleteDepartmentById } from "../../../../services/api.service";
 import NotifyMessage from "_utils/notify";
 import { GoShieldCheck } from "react-icons/go";
 import { GoShieldX } from "react-icons/go";
 import { getDetailPermissionByRoleId } from "../../../../services/api.service";
 import { titleRole, defaultRole } from "_utils/variable";
+
 function ModalDetailPermission({
   isOpen,
   onClose,
-  onComplete,
   permissionData,
 }) {
   const [roles, setRoles] = useState(JSON.parse(JSON.stringify(defaultRole)));
@@ -67,7 +66,9 @@ function ModalDetailPermission({
   useEffect(() => {
     handleGetDetail();
   }, [isOpen]);
+  
   const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
       <NextUIModal
@@ -97,9 +98,9 @@ function ModalDetailPermission({
         classNames={{
           backdrop: "z-[51]",
           wrapper: "z-[52] w-full",
-          base: `] !shadow-card-project min-w-[40%] `,
+          base: `!shadow-card-project min-w-[40%] `,
           closeButton: "right-5 z-10 text-lg",
-          body: "overflow-auto",
+          body: "overflow-auto max-h-[80vh]",
         }}
       >
         <ModalContent>

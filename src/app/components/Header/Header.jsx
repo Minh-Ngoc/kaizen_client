@@ -13,7 +13,7 @@ const Header = ({
 	const [search, setSearch] = useState("");
 
 	return (
-		<div className="mb-16 flex flex-row justify-between items-center p-6 rounded-lg shadow-wrapper">
+		<div className="mb-16 flex flex-row justify-between items-center p-6 rounded-lg shadow-wrapper bg-table">
 			<div className="max-w-[220px] flex items-center gap-2">
 				<Button
 					variant="solid"
