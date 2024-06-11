@@ -361,7 +361,7 @@ export default function Ticket() {
 
   return (
     <div className="flex flex-col mt-24">
-      <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper">
+      <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
         <div className="max-w-[220px] flex items-center gap-2">
           <Button
             variant="solid"
@@ -472,7 +472,7 @@ export default function Ticket() {
         </div>
       </div>
 
-      <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper">
+      <div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
         <Table variant="simple" color="gray.500" mb="24px">
           <Thead className="bg-[#758beb]">
             {table.getHeaderGroups().map((headerGroup, index) => (

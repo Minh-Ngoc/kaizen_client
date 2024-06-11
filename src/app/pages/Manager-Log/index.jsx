@@ -251,11 +251,10 @@ export default function ManagerLog() {
 							{user?.firstName || user?.lastName
 								? `${user?.firstName || ""} ${
 										user?.lastName || ""
-                }`
+								  }`
 								: user?.name
 								? `${user?.name}`
-								: ""
-              }
+								: ""}
 						</option>
 					)
 				)}
@@ -263,307 +262,291 @@ export default function ManagerLog() {
 		);
 	}, [listUser]);
 
-  return (
-    <div className="flex flex-col mt-24">
-				<div className="mb-4 rounded-md px-0 flex flex-col justify-center items-center overflow-y-auto shadow-wrapper">
-          <div className="flex flex-row justify-end items-center gap-2">
-            <DateRangerPicker
-              startDate={startDate}
-              endDate={endDate}
-              setStartDate={(day) => {
-                setStartDate(day);
-              }}
-              setEndDate={(day) => {
-                setEndDate(day);
-              }}
-            />
-            {listUserSelect}
-            <div className="flex flex-row justify-center items-center gap-2">
-              <Button
-                variant="solid"
-                color={"primary"}
-                className="rounded-md min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
-                startContent={
-                  <IoSearchSharp className="text-white min-w-max min-h-max" />
-                }
-                onClick={handleSearh}
-              >
-                Tìm kiếm
-              </Button>
-            </div>
-          </div>
-        </div>
+	return (
+		<div className="flex flex-col mt-24">
+			<div className="mb-4 rounded-md px-0 flex flex-col justify-center items-center overflow-y-auto shadow-wrapper">
+				<div className="flex flex-row justify-end items-center gap-2">
+					<DateRangerPicker
+						startDate={startDate}
+						endDate={endDate}
+						setStartDate={(day) => {
+							setStartDate(day);
+						}}
+						setEndDate={(day) => {
+							setEndDate(day);
+						}}
+					/>
+					{listUserSelect}
+					<div className="flex flex-row justify-center items-center gap-2">
+						<Button
+							variant="solid"
+							color={"primary"}
+							className="rounded-md min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
+							startContent={
+								<IoSearchSharp className="text-white min-w-max min-h-max" />
+							}
+							onClick={handleSearh}
+						>
+							Tìm kiếm
+						</Button>
+					</div>
+				</div>
+			</div>
 
-				<div className="mb-4 rounded-md px-0 flex flex-col justify-center items-center overflow-y-auto shadow-wrapper">
-        <Table variant="simple" color="gray.500" mb="24px">
-							<Thead className="bg-[#758beb]">
-								{table
-									.getHeaderGroups()
-									.map((headerGroup, index) => (
-										<Tr key={index}>
-											{headerGroup.headers.map(
-												(header) => {
-													return (
-														<Th
-															key={header.id}
-															padding={""}
-														>
-															<Flex
-																justify="space-between"
-																align="center"
-																fontSize={{
-																	sm: "10px",
-																	lg: "12px",
-																}}
-																color="gray.400"
-																className="!text-white font-bold"
-															>
-																{header.isPlaceholder
-																	? null
-																	: flexRender(
-																			header
-																				.column
-																				.columnDef
-																				.header,
-																			header.getContext()
-                                  )}
-															</Flex>
-														</Th>
-													);
-												}
-											)}
-										</Tr>
-									))}
-							</Thead>
-
-							<Tbody>
-								{!isLoading &&
-								table.getRowModel().rows?.length ? (
-									table.getRowModel().rows.map((row) => (
-										<Tr
-											key={row.id}
-											data-state={
-												row.getIsSelected() &&
-												"selected"
-											}
-										>
-											{row
-												.getVisibleCells()
-												.map((cell) => (
-													<Td
-														key={cell.id}
-														fontSize={{
-															sm: "14px",
-														}}
-														color="black"
-													>
-														{flexRender(
-															cell.column
-																.columnDef.cell,
-															cell.getContext()
-														)}
-													</Td>
-												))}
-										</Tr>
-									))
-								) : isLoading ? (
-									Array.from(Array(pageSize)).map((e, index) => (
-										<Tr key={index} className="w-full">
-											{Array.from(
-												Array(columns.length)
-											).map((cell) => (
-												<Td
-													key={cell}
-													color="black"
-													className={`${
-														cell === 3 && "w-36"
-													}`}
-												>
-													<p className="text-white text-sm">
-														Đang tải...
-													</p>
-												</Td>
-											))}
-										</Tr>
-									))
-								) : (
-									<Tr>
-										<Td
-											colSpan={columns.length}
-											className="h-96 !text-center max-sm:!text-start max-sm:!px-32"
-											color="white"
-										>
-											Không có dữ liệu
-										</Td>
-									</Tr>
-								)}
-							</Tbody>
-						</Table>
-						{listLog.length !== 0 ? (
-							<Flex
-								justify="space-between"
-								alignItems={{ sm: "start", md: "center" }}
-								className="flex-row max-sm:flex-col max-sm:justify-start max-sm:items-start"
-								align="center"
-								w="100%"
-								px={{ md: "22px" }}
-							>
-								<Text
-									fontSize="sm"
-									color="white"
-									fontWeight="normal"
-									className="text-center"
-									p={1}
-									mt={{ sm: "5px", md: "0px" }}
-									mb={{ sm: "5px", md: "0px" }}
-								>
-									Có tất cả {counts} log
-								</Text>
-								<div className="flex flex-row justify-center items-center max-sm:flex-col  max-sm:items-end max-sm:w-full ">
-									<Pagination
-										pagesCount={pagesCount}
-										currentPage={currentPage}
-										onPageChange={handlePageChange}
-									>
-										<PaginationContainer
-											className="w-full max-sm:!px-1 max-sm:!py-3 gap-2 max-sm:gap-0"
-											align="center"
-											justify="space-between"
-											ms="auto"
-											p={4}
-										>
-											<PaginationPrevious
-												transition="all .5s ease"
-												w="40px"
-												h="40px"
-												borderRadius="8px"
-												bg="#fff"
-												border="1px solid lightgray"
-												_hover={{
-													bg: "gray.200",
-													opacity: "0.7",
-													borderColor: "gray.500",
-												}}
-											>
-												<Icon
-													as={GrFormPrevious}
-													w="16px"
-													h="16px"
-													color="gray.400"
-												/>
-											</PaginationPrevious>
-											<PaginationPageGroup
+			<div className="mb-4 rounded-md px-0 flex flex-col justify-center items-center overflow-y-auto shadow-wrapper">
+				<Table variant="simple" color="gray.500" mb="24px">
+					<Thead className="bg-[#758beb]">
+						{table.getHeaderGroups().map((headerGroup, index) => (
+							<Tr key={index}>
+								{headerGroup.headers.map((header) => {
+									return (
+										<Th key={header.id} padding={""}>
+											<Flex
+												justify="space-between"
 												align="center"
-												separator={
-													<PaginationSeparator
-														onClick={() =>
-															console.log(
-																"Im executing my own function along with Separator component functionality"
-															)
-														}
-														bg="gray.300"
-														fontSize="sm"
-														w={7}
-														jumpSize={5}
-													/>
-												}
+												fontSize={{
+													sm: "10px",
+													lg: "12px",
+												}}
+												color="gray.400"
+												className="!text-white font-bold"
 											>
-												{pages.map((page) => (
-													<PaginationPage
-														page={page}
-														key={page}
-														className="!text-[13px]"
-														variant="no-effects"
-														transition="all .5s ease"
-														w="40px"
-														h="40px"
-														borderRadius="8px"
-														bg={"#fff"}
-														border={
-															"1px solid lightgray"
-														}
-														_hover={{
-															opacity: "0.7",
-															borderColor:
-																"gray.500",
-														}}
-														_current={{
-															border: "none",
-															bg: "blue.500",
-															color: "white",
-														}}
-													/>
-												))}
-											</PaginationPageGroup>
-											<PaginationNext
+												{header.isPlaceholder
+													? null
+													: flexRender(
+															header.column
+																.columnDef
+																.header,
+															header.getContext()
+													  )}
+											</Flex>
+										</Th>
+									);
+								})}
+							</Tr>
+						))}
+					</Thead>
+
+					<Tbody>
+						{!isLoading && table.getRowModel().rows?.length ? (
+							table.getRowModel().rows.map((row) => (
+								<Tr
+									key={row.id}
+									data-state={
+										row.getIsSelected() && "selected"
+									}
+								>
+									{row.getVisibleCells().map((cell) => (
+										<Td
+											key={cell.id}
+											fontSize={{
+												sm: "14px",
+											}}
+											color="black"
+										>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext()
+											)}
+										</Td>
+									))}
+								</Tr>
+							))
+						) : isLoading ? (
+							Array.from(Array(pageSize)).map((e, index) => (
+								<Tr key={index} className="w-full">
+									{Array.from(Array(columns.length)).map(
+										(cell) => (
+											<Td
+												key={cell}
+												color="black"
+												className={`${
+													cell === 3 && "w-36"
+												}`}
+											>
+												<p className="text-white text-sm">
+													Đang tải...
+												</p>
+											</Td>
+										)
+									)}
+								</Tr>
+							))
+						) : (
+							<Tr>
+								<Td
+									colSpan={columns.length}
+									className="h-96 !text-center max-sm:!text-start max-sm:!px-32"
+									color="white"
+								>
+									Không có dữ liệu
+								</Td>
+							</Tr>
+						)}
+					</Tbody>
+				</Table>
+				{listLog.length !== 0 ? (
+					<Flex
+						justify="space-between"
+						alignItems={{ sm: "start", md: "center" }}
+						className="flex-row max-sm:flex-col max-sm:justify-start max-sm:items-start"
+						align="center"
+						w="100%"
+						px={{ md: "22px" }}
+					>
+						<Text
+							fontSize="sm"
+							color="white"
+							fontWeight="normal"
+							className="text-center"
+							p={1}
+							mt={{ sm: "5px", md: "0px" }}
+							mb={{ sm: "5px", md: "0px" }}
+						>
+							Có tất cả {counts} log
+						</Text>
+						<div className="flex flex-row justify-center items-center max-sm:flex-col  max-sm:items-end max-sm:w-full ">
+							<Pagination
+								pagesCount={pagesCount}
+								currentPage={currentPage}
+								onPageChange={handlePageChange}
+							>
+								<PaginationContainer
+									className="w-full max-sm:!px-1 max-sm:!py-3 gap-2 max-sm:gap-0"
+									align="center"
+									justify="space-between"
+									ms="auto"
+									p={4}
+								>
+									<PaginationPrevious
+										transition="all .5s ease"
+										w="40px"
+										h="40px"
+										borderRadius="8px"
+										bg="#fff"
+										border="1px solid lightgray"
+										_hover={{
+											bg: "gray.200",
+											opacity: "0.7",
+											borderColor: "gray.500",
+										}}
+									>
+										<Icon
+											as={GrFormPrevious}
+											w="16px"
+											h="16px"
+											color="gray.400"
+										/>
+									</PaginationPrevious>
+									<PaginationPageGroup
+										align="center"
+										separator={
+											<PaginationSeparator
+												onClick={() =>
+													console.log(
+														"Im executing my own function along with Separator component functionality"
+													)
+												}
+												bg="gray.300"
+												fontSize="sm"
+												w={7}
+												jumpSize={5}
+											/>
+										}
+									>
+										{pages.map((page) => (
+											<PaginationPage
+												page={page}
+												key={page}
+												className="!text-[13px]"
+												variant="no-effects"
 												transition="all .5s ease"
 												w="40px"
 												h="40px"
 												borderRadius="8px"
-												bg="#fff"
-												border="1px solid lightgray"
+												bg={"#fff"}
+												border={"1px solid lightgray"}
 												_hover={{
-													bg: "gray.200",
 													opacity: "0.7",
 													borderColor: "gray.500",
 												}}
-											>
-												<Icon
-													as={GrFormNext}
-													w="16px"
-													h="16px"
-													color="gray.400"
-												/>
-											</PaginationNext>
-										</PaginationContainer>
-									</Pagination>
-									<Stack
-										direction={{ sm: "column", md: "row" }}
-										spacing={{ sm: "4px", md: "12px" }}
-										align="center"
-										ms={3}
-									>
-										<div className="min-w-32">
-											<Select
-												variant="outline"
-												value={pageSize}
-												onChange={(e) => {
-													handlePageChange(
-														1,
-														Number(e.target.value)
-													);
+												_current={{
+													border: "none",
+													bg: "blue.500",
+													color: "white",
 												}}
-												color="white"
-												size="sm"
-												borderRadius="12px"
-												cursor="pointer"
-											>
-												<option className="!text-black">
-													10
-												</option>
-												<option className="!text-black">
-													20
-												</option>
-												<option className="!text-black">
-													30
-												</option>
-												<option className="!text-black">
-													50
-												</option>
-												<option className="!text-black">
-													100
-												</option>
-											</Select>
-										</div>
-									</Stack>
+											/>
+										))}
+									</PaginationPageGroup>
+									<PaginationNext
+										transition="all .5s ease"
+										w="40px"
+										h="40px"
+										borderRadius="8px"
+										bg="#fff"
+										border="1px solid lightgray"
+										_hover={{
+											bg: "gray.200",
+											opacity: "0.7",
+											borderColor: "gray.500",
+										}}
+									>
+										<Icon
+											as={GrFormNext}
+											w="16px"
+											h="16px"
+											color="gray.400"
+										/>
+									</PaginationNext>
+								</PaginationContainer>
+							</Pagination>
+							<Stack
+								direction={{ sm: "column", md: "row" }}
+								spacing={{ sm: "4px", md: "12px" }}
+								align="center"
+								ms={3}
+							>
+								<div className="min-w-32">
+									<Select
+										variant="outline"
+										value={pageSize}
+										onChange={(e) => {
+											handlePageChange(
+												1,
+												Number(e.target.value)
+											);
+										}}
+										color="white"
+										size="sm"
+										borderRadius="12px"
+										cursor="pointer"
+									>
+										<option className="!text-black">
+											10
+										</option>
+										<option className="!text-black">
+											20
+										</option>
+										<option className="!text-black">
+											30
+										</option>
+										<option className="!text-black">
+											50
+										</option>
+										<option className="!text-black">
+											100
+										</option>
+									</Select>
 								</div>
-							</Flex>
-						) : null}
-        </div>
-    </div>
-  )
+							</Stack>
+						</div>
+					</Flex>
+				) : null}
+			</div>
+		</div>
+	);
 
-  /*
+	/*
 	return (
 		<>
 			<Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>

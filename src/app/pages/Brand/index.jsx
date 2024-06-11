@@ -274,7 +274,7 @@ function Brand() {
 				onSearch={setSearch}
 				placeholder="Tìm kiếm hậu đài..."
 			/>
-			<div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper">
+			<div className="mb-4 rounded-sm flex flex-col justify-center items-center overflow-y-hidden shadow-wrapper bg-table">
 				<div className="p-6 rounded-lg">
 					{loading ? (
 						<div className="flex items-center justify-center h-96">
