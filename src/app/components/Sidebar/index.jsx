@@ -7,7 +7,15 @@ import { URL_IMAGE } from "_constants";
 import { calculateRankScore } from "_utils";
 
 const Sidebar = () => {
-	const userData = useSelector((state) => state.auth.userData);
+	const { userData, permissions } = useSelector((state) => state.auth);
+
+	const roles = useMemo(
+		() => permissions?.map(item => ({ subject: item.subject, action: item.action })),
+		[permissions]
+	);
+
+	console.log('roles: ', roles);
+
 	const location = useLocation();
 	const [openedMenu, setOpenedMenu] = useState({});
 	const [activeName, setActiveName] = useState("");
@@ -70,117 +78,122 @@ const Sidebar = () => {
 	};
 
 	const generateMenu = useCallback((item, index, recursive = 0) => {
-		const isActive = activeName === item.name;
-		const isParentActive = activeName.split(".")[0] === item.name;
+		const isAccessRole = roles?.find(it => it.subject === item.auth || it.subject === 'all');
 
-		const isAnyChildActive = item.child?.some(
-			(child) => activeName === child.name
-		);
-
-		const Navigate = item?.child && item?.child?.length ? 'div' : Link;
-
-		const [key] = Object.keys(openedMenu);
-
-		return (
-			<li key={index}>
-				<Navigate
-					to={item.link}
-					role="button"
-					tabIndex={0}
-					id={item.id}
-					onClick={() => {
-						if ("child" in item) {
-							handleToggle(item.name);
-						} else if ("link" in item) {
-							handleNavigate(item.name);
-						}
-					}}
-					onKeyDown={(event) => {
-						if (event.code === "Space") {
+		if (isAccessRole || isAccessRole?.action?.includes('read') || isAccessRole?.action?.includes('manage')) {
+			const isActive = activeName === item.name;
+			const isParentActive = activeName.split(".")[0] === item.name;
+	
+			const isAnyChildActive = item.child?.some(
+				(child) => activeName === child.name
+			);
+	
+			const Navigate = item?.child && item?.child?.length ? 'div' : Link;
+	
+			const [key] = Object.keys(openedMenu);
+	
+			return (
+				<li key={index}>
+					<Navigate
+						to={item.link}
+						role="button"
+						tabIndex={0}
+						id={item.id}
+						onClick={() => {
 							if ("child" in item) {
 								handleToggle(item.name);
 							} else if ("link" in item) {
 								handleNavigate(item.name);
 							}
-						}
-					}}
-					className={[
-						"select-none group m-0 flex cursor-pointer rounded-lg items-center justify-between h-12 py-0 pr-3 mb-1 focus:outline-none pl-4",
-						isActive || isParentActive || isAnyChildActive
-							? "text-white font-semibold bg-[#0389e9]"
-							: "text-slate-400",
-						"hover:bg-slate-300/20",
-					].join(" ")}
-				>
-					<div className="flex items-center gap-3">
-						{item.icon &&
-							(item.icon === "dot" ? (
-								<div className="h-3 w-3 flex items-center justify-center">
-									<div
-										className={`${
-											isActive ||
-											isParentActive ||
-											isAnyChildActive
-												? "h-2 w-2"
-												: "h-1 w-1"
-										} bg-current rounded-full duration-200`}
-									></div>
-								</div>
-							) : (
-								<Avatar
-									icon={item?.icon}
-									classNames={{
-										base: `${
-											isActive ||
-											isParentActive ||
-											isAnyChildActive
-												? "bg-white"
-												: "bg-[#0389e9]"
-										} h-8 w-8`,
-										icon: `${
-											isActive ||
-											isParentActive ||
-											isAnyChildActive
-												? "text-[#0389e9]"
-												: "text-white"
-										}`,
-									}}
-								/>
-							))}
-						<div className="truncate">{item.title}</div>
-					</div>
-					{"child" in item && (
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className={`h-5 w-5 translate-transform duration-100 ease-linear ${key === item.name ? 'rotate-90' : 'rotate-0'}`}
-							viewBox="0 0 20 20"
-							fill="currentColor"
-						>
-							<path
-								fillRule="evenodd"
-								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-								clipRule="evenodd"
-							/>
-						</svg>
-					)}
-				</Navigate>
-				{"child" in item && (
-					<ul
-						ref={(el) => (listRef.current[item.name] = el)}
-						className="overflow-hidden duration-300 ease-in-out pl-9"
-						style={{
-							maxHeight: `${
-								openedMenu[item.name]?.height || "0px"
-							}`,
 						}}
+						onKeyDown={(event) => {
+							if (event.code === "Space") {
+								if ("child" in item) {
+									handleToggle(item.name);
+								} else if ("link" in item) {
+									handleNavigate(item.name);
+								}
+							}
+						}}
+						className={[
+							"select-none group m-0 flex cursor-pointer rounded-lg items-center justify-between h-12 py-0 pr-3 mb-1 focus:outline-none pl-4",
+							isActive || isParentActive || isAnyChildActive
+								? "text-white font-semibold bg-[#0389e9]"
+								: "text-slate-400",
+							"hover:bg-slate-300/20",
+						].join(" ")}
 					>
-						{item.child.map((child, idx) =>
-							generateMenu(child, idx, recursive + 1)
+						<div className="flex items-center gap-3">
+							{item.icon &&
+								(item.icon === "dot" ? (
+									<div className="h-3 w-3 flex items-center justify-center">
+										<div
+											className={`${
+												isActive ||
+												isParentActive ||
+												isAnyChildActive
+													? "h-2 w-2"
+													: "h-1 w-1"
+											} bg-current rounded-full duration-200`}
+										></div>
+									</div>
+								) : (
+									<Avatar
+										icon={item?.icon}
+										classNames={{
+											base: `${
+												isActive ||
+												isParentActive ||
+												isAnyChildActive
+													? "bg-white"
+													: "bg-[#0389e9]"
+											} h-8 w-8`,
+											icon: `${
+												isActive ||
+												isParentActive ||
+												isAnyChildActive
+													? "text-[#0389e9]"
+													: "text-white"
+											}`,
+										}}
+									/>
+								))}
+							<div className="truncate">{item.title}</div>
+						</div>
+						{"child" in item && (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className={`h-5 w-5 translate-transform duration-100 ease-linear ${key === item.name ? 'rotate-90' : 'rotate-0'}`}
+								viewBox="0 0 20 20"
+								fill="currentColor"
+							>
+								<path
+									fillRule="evenodd"
+									d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+									clipRule="evenodd"
+								/>
+							</svg>
 						)}
-					</ul>
-				)}
-			</li>
-		);
+					</Navigate>
+					{"child" in item && (
+						<ul
+							ref={(el) => (listRef.current[item.name] = el)}
+							className="overflow-hidden duration-300 ease-in-out pl-9"
+							style={{
+								maxHeight: `${
+									openedMenu[item.name]?.height || "0px"
+								}`,
+							}}
+						>
+							{item.child.map((child, idx) =>
+								generateMenu(child, idx, recursive + 1)
+							)}
+						</ul>
+					)}
+				</li>
+			);
+		}
+
 	}, [activeName, openedMenu]);
 
 	const renderNameProfile = useMemo(() => {

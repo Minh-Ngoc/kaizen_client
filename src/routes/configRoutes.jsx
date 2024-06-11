@@ -1,5 +1,5 @@
 import {GoTasklist} from "react-icons/go";
-// import { FaRegRectangleList } from "react-icons/fa6";
+import { FaRegRectangleList } from "react-icons/fa6";
 import {MdDashboard, MdOutlineSecurity} from "react-icons/md";
 import {GrUserManager} from "react-icons/gr";
 import {GiFlatPlatform} from "react-icons/gi";
@@ -7,9 +7,9 @@ import {TbBrandAsana} from "react-icons/tb";
 import {MdOutlineStackedLineChart} from "react-icons/md";
 import {RiTeamLine} from "react-icons/ri";
 import {TbLocationSearch} from "react-icons/tb";
-// import { GrDomain } from "react-icons/gr";
-// import { GrAssistListening } from "react-icons/gr";
-// import { PiTicketLight } from "react-icons/pi";
+import { GrDomain } from "react-icons/gr";
+import { GrAssistListening } from "react-icons/gr";
+import { PiTicketLight } from "react-icons/pi";
 
 const configRoutes = [
 	{
@@ -40,12 +40,26 @@ const configRoutes = [
 		name: "project",
 		parent: true,
 		icon: (
-			<MdOutlineSecurity
+			<FaRegRectangleList
 				color="inherit"
 				className="min-w-max min-h-max text-lg"
 			/>
 		),
 		link: "/projects",
+	},
+	{
+		id: "role",
+		auth: "role",
+		title: "Quản lý quyền hạn",
+		name: "role",
+		parent: true,
+		icon: (
+			<MdOutlineSecurity
+				color="inherit"
+				className="min-w-max min-h-max text-lg"
+			/>
+		),
+		link: "/permission-manage",
 	},
 	{
 		id: "user",
@@ -154,6 +168,39 @@ const configRoutes = [
 				icon: "dot",
 			},
 		],
+	},
+	{
+		id: "domain",
+		auth: "domain",
+		title: "Quản lý Domain",
+		name: "domain",
+		parent: true,
+		icon: (
+			<GrDomain color="inherit" className="min-w-max min-h-max text-lg" />
+		),
+		link: "/domain-manage",
+	},
+	{
+		id: "log",
+		auth: "log",
+		title: "Quản lý Log",
+		name: "log",
+		parent: true,
+		icon: (
+			<GrAssistListening color="inherit" className="min-w-max min-h-max text-lg" />
+		),
+		link: "/log-manage",
+	},
+	{
+		id: "your-ticket",
+		auth: "your-ticket",
+		title: "Ticket của bạn",
+		name: "your-ticket",
+		parent: true,
+		icon: (
+			<PiTicketLight color="inherit" className="min-w-max min-h-max text-lg" />
+		),
+		link: "/your-ticket",
 	},
 ];
 

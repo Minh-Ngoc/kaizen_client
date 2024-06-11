@@ -214,7 +214,7 @@ function PopupAddTimeChecklistItem({ checklist, item }) {
 						className="max-w-xs"
 						value={time}
 						onChange={setTime}
-						onFocusChange={onFocusChange}
+						onOpenChange={onFocusChange}
 					/>
 
 					<Button

@@ -33,6 +33,10 @@ const routes = createBrowserRouter([
 				element: <Projects />,
 			},
 			{
+				path: "/permission-manage",
+				element: <Projects />,
+			},
+			{
 				path: "/kanbans/:id",
 				element: <Kanbans />,
 			},

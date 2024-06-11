@@ -119,7 +119,7 @@ function Dates() {
 				}}
 				value={value}
 				onChange={setValue}
-				onFocusChange={onFocusChange}
+				onOpenChange={onFocusChange}
 			/>
 			<Button
 				fullWidth

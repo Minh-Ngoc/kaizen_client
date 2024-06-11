@@ -24,6 +24,7 @@ function TableProjectsList() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [pageSize, setPageSize] = useState(new Set(["10"]));
+	// const [selectedKey, setSelectedKey] = useState(new Set([]));
 
 	const {
 		projects: projectList,
@@ -66,7 +67,7 @@ function TableProjectsList() {
 							}}
 							content={
 								<span
-									className={`rounded-md py-1 px-2 text-wrap text-left text-xs max-w-56 bg-slate-600 text-white font-normal overflow-hidden align-middle`}
+									className={`rounded-md py-1 px-2 text-wrap text-left text-sm max-w-56 bg-slate-600 text-white font-normal overflow-hidden align-middle`}
 								>
 									{user?.name || user?.username}
 								</span>
@@ -91,7 +92,7 @@ function TableProjectsList() {
 				</AvatarGroup>
 			);
 
-		return "(Trống)";
+		return <p className="text-white text-sm text-left">(Trống)</p>;
 	};
 
 	const navigateToProjectDetail = (id) => {
@@ -153,7 +154,7 @@ function TableProjectsList() {
 		switch (columnKey) {
 			case "team":
 				return (
-					<div className="text-white text-xs text-center">
+					<div className="text-white text-sm text-center">
 						{cellValue?.map((item) => item?.name).join(", ")}
 					</div>
 				);
@@ -174,14 +175,14 @@ function TableProjectsList() {
 
 			case "dateStart":
 				return (
-					<div className="text-white text-xs text-center">
+					<div className="text-white text-sm text-center">
 						{formatDate(cellValue)}
 					</div>
 				);
 
 			case "dateEnd":
 				return (
-					<div className="text-white text-xs text-center">
+					<div className="text-white text-sm text-center">
 						{formatDate(cellValue)}
 					</div>
 				);
@@ -247,7 +248,7 @@ function TableProjectsList() {
 
 			default:
 				return (
-					<div className="text-white text-xs text-center">
+					<div className="text-white text-sm text-center">
 						{cellValue}
 					</div>
 				);
@@ -288,6 +289,9 @@ function TableProjectsList() {
 				onPageChange={handleChangePaging} // Pass down the function
 				pageSize={pageSize}
 				onPageSizeChange={handlePageSizeChange}
+				// selectionMode="multiple"
+				// selectedKeys={selectedKey}
+				// onSelectedChange={setSelectedKey}
 			/>
 		</div>
 	);

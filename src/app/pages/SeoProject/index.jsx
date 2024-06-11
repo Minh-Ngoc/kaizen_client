@@ -5,13 +5,19 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LiaEditSolid } from "react-icons/lia";
 import { FaTrash } from "react-icons/fa";
-import IndeterminateCheckbox from "app/components/IndeterminateCheckbox/IndeterminateCheckbox";
 import { GetPagingSeoProject } from "_redux/slice/seoProjectSlice";
-import { Avatar, AvatarGroup, Button, Chip, Spinner, Tooltip } from "@nextui-org/react";
+import {
+	Avatar,
+	AvatarGroup,
+	Button,
+	Chip,
+	Spinner,
+	Tooltip,
+} from "@nextui-org/react";
 import TempTable from "app/components/TempTable";
 import ModalSeoProject from "./components/modal/ModalSeoProject";
 import ModalDelete from "app/components/Modal/ModalDelete";
@@ -65,13 +71,9 @@ function SeoProject() {
 	const renderCell = useCallback((item, columnKey) => {
 		const cellValue = item[columnKey];
 
-		switch(columnKey) {
+		switch (columnKey) {
 			case "title":
-				return (
-					<p className="line-clamp-2 text-white">
-						{cellValue}
-					</p>
-				);
+				return <p className="line-clamp-2 text-white">{cellValue}</p>;
 
 			case "images":
 				return (
@@ -82,12 +84,8 @@ function SeoProject() {
 					</AvatarGroup>
 				);
 
-			case "type": 
-				return (
-					<p className="line-clamp-2 text-white">
-						{cellValue}
-					</p>
-				);
+			case "type":
+				return <p className="line-clamp-2 text-white">{cellValue}</p>;
 
 			case "description":
 				return (
@@ -96,7 +94,7 @@ function SeoProject() {
 						dangerouslySetInnerHTML={{ __html: cellValue }}
 					/>
 				);
-			
+
 			case "content":
 				return (
 					<p
@@ -121,17 +119,14 @@ function SeoProject() {
 								? "Chờ duyệt"
 								: cellValue === "approved"
 								? "Đã duyệt"
-								: "Từ chối"
-							}
+								: "Từ chối"}
 						</Chip>
 					</div>
 				);
 
 			case "user":
-				return (
-					<p className="text-white">{cellValue}</p>
-				);
-			
+				return <p className="text-white">{cellValue}</p>;
+
 			case "createdAt":
 				return (
 					<p className="text-white">
@@ -408,6 +403,7 @@ function SeoProject() {
 	useEffect(() => {
 		handleGetPagination();
 	}, [currentPage, pageSize]);
+
 	const handleGetPagination = (search) => {
 		dispatch(
 			GetPagingSeoProject({
@@ -424,6 +420,7 @@ function SeoProject() {
 			.flatRows.map((row) => row.original._id);
 		setListIdSelected(listPostIds);
 	}, [rowSelection]);
+
 	const handlePageChange = (nextPage, nextPageSize) => {
 		nextPageSize && setPageSize(nextPageSize);
 		setCurrentPage(nextPage);

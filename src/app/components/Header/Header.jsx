@@ -18,7 +18,7 @@ const Header = ({
 				<Button
 					variant="solid"
 					color={"success"}
-					className="rounded-md min-w-32 text-white font-bold text-xs"
+					className="rounded-md min-w-32 text-white font-bold text-xs tracking-wide"
 					startContent={<BiPlus className="text-white min-w-max min-h-max" />}
 					onClick={onOpenAddEdit}
 				>
@@ -27,7 +27,7 @@ const Header = ({
 				<Button
 					variant="solid"
 					color={"danger"}
-					className="rounded-md min-w-32 text-white font-bold text-xs"
+					className="rounded-md min-w-32 text-white font-bold text-xs tracking-wide"
 					startContent={<BiTrash className="text-white min-w-max min-h-max" />}
 					onClick={onOpenDelete}
 					isDisabled={listIds?.length === 0}
@@ -44,7 +44,7 @@ const Header = ({
 						inputWrapper:
 							"rounded-md py-2 data-[hover=true]:border-primary-400 group-data-[focus=true]:border-primary-400 group-data-[focus=true]:border-2 group-data-[focus=true]:border-primary-400",
 						label: "hidden",
-						input: "text-sm text-task-title placeholder:text-default-300/70",
+						input: "text-sm text-task-title placeholder:text-default-300/70 tracking-wide",
 					}}
 					onValueChange={setSearch}
 					onKeyDown={(e) => {
@@ -55,7 +55,7 @@ const Header = ({
 				<Button
 					variant="solid"
 					color={"primary"}
-					className="rounded-md min-w-32 text-white font-bold text-xs mr-5"
+					className="rounded-md min-w-32 text-white font-bold text-xs mr-5 tracking-wide"
 					startContent={
 						<IoSearchSharp className="text-white min-w-max min-h-max" />
 					}
