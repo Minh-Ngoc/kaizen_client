@@ -3,7 +3,13 @@ import { IoSearchSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { yourticketAction } from "_redux/slice/yourTicketSlice";
 import moment from "moment";
-import { Button, Chip, DateRangePicker, Select, SelectItem } from "@nextui-org/react";
+import {
+  Button,
+  Chip,
+  DateRangePicker,
+  Select,
+  SelectItem,
+} from "@nextui-org/react";
 import TableNextUI from "app/components/TableNextUI";
 import {
   getPriorityText,
@@ -32,7 +38,7 @@ export default function Ticket() {
   const [isOpenModalTicket, setIsOpenModalTicket] = useState(false);
   const [isOpenModalDetailTicket, setIsOpenModalDetailTicket] = useState(false);
   const [ticket, setTicket] = useState({});
-	const [time, setTime] = useState(null);
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
     dispatch(yourticketAction.getAllYourTicketPaging({}));
@@ -132,10 +138,8 @@ export default function Ticket() {
     const startDate = moment(time?.start?.toDate())
       ?.endOf("day")
       ?.toISOString();
-      
-    const endDate = moment(time?.end?.toDate())
-      ?.endOf("day")
-      ?.toISOString();
+
+    const endDate = moment(time?.end?.toDate())?.endOf("day")?.toISOString();
 
     dispatch(
       yourticketAction.getAllYourTicketPaging({
@@ -151,19 +155,15 @@ export default function Ticket() {
       })
     );
   };
-  
+
   const handleonComplete = () => {
     let startDate = null;
     let endDate = null;
 
-    if(time) {
-      startDate = moment(time?.start?.toDate())
-        ?.endOf("day")
-        ?.toISOString();
-  
-      endDate = moment(time?.end?.toDate())
-        ?.endOf("day")
-        ?.toISOString();
+    if (time) {
+      startDate = moment(time?.start?.toDate())?.endOf("day")?.toISOString();
+
+      endDate = moment(time?.end?.toDate())?.endOf("day")?.toISOString();
     }
 
     dispatch(
@@ -182,14 +182,10 @@ export default function Ticket() {
     let startDate = null;
     let endDate = null;
 
-    if(time) {
-      startDate = moment(time?.start?.toDate())
-        ?.endOf("day")
-        ?.toISOString();
-  
-      endDate = moment(time?.end?.toDate())
-        ?.endOf("day")
-        ?.toISOString();
+    if (time) {
+      startDate = moment(time?.start?.toDate())?.endOf("day")?.toISOString();
+
+      endDate = moment(time?.end?.toDate())?.endOf("day")?.toISOString();
     }
 
     setPageIndex(1);
@@ -237,8 +233,8 @@ export default function Ticket() {
   };
 
   const handleRemoveDate = () => {
-		setTime(null);
-	};
+    setTime(null);
+  };
 
   return (
     <>
@@ -394,7 +390,7 @@ export default function Ticket() {
             handlePageChange(e);
           }}
           onPageSizeChange={(e) => {
-            handlePageChange(pageIndex, e);
+            handlePageChange(1, e);
           }}
         />
       </div>

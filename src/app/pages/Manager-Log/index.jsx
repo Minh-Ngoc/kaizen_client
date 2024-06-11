@@ -234,7 +234,7 @@ export default function ManagerLog() {
             handlePageChange(e);
           }}
           onPageSizeChange={(e) => {
-            handlePageChange(pageIndex, e);
+            handlePageChange(1, e);
           }}
         />
       </div>
