@@ -4,7 +4,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button as ButtonNextUi,
   Button,
 } from "@nextui-org/react";
 import { MdOutlineDone, MdOutlineClear } from "react-icons/md";
@@ -29,6 +28,7 @@ import ModalRejectKpi from "./modalReject";
 import { dateToUtcTimestamp } from "_constants";
 import { Textarea } from "@nextui-org/react";
 import Select from "react-select";
+
 function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
   const [isOpenModalReject, setIsOpenModalReject] = useState(false);
   const [indexKpi, setIndexKpi] = useState("");
@@ -416,7 +416,7 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
         classNames={{
           backdrop: "z-[51]",
           wrapper: "z-[52] w-full",
-          base: `] !shadow-card-project !min-w-[90vw]`,
+          base: `!shadow-card-project !min-w-[90vw]`,
           closeButton: "right-5 z-10 text-lg",
           body: "overflow-auto ",
         }}
@@ -853,42 +853,37 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
                                     Hành động
                                   </p>
                                 </div>
-                                <div className="flex flex-row justify-center items-center gap-2">
-                                  <div className="flex flex-row justify-start items-center">
-                                    <Button
-                                      p={0}
-                                      minW={"30px"}
-                                      h={"30px"}
-                                      borderRadius={"full"}
-                                      color={"white"}
-                                      _hover={{
-                                        bg: "green.400",
-                                      }}
-                                      bg={"c"}
-                                      onClick={() => {
-                                        setIsOpenModalReject(
-                                          !isOpenModalReject
-                                        );
-                                        setIsApprove(true);
-                                        setIndexKpi(index);
-                                        setStatusKpiOnComplete("approved");
-                                      }}
-                                    >
-                                      <MdOutlineDone />
-                                    </Button>
-                                    <Button
-                                      onClick={() => {
-                                        setIsOpenModalReject(
-                                          !isOpenModalReject
-                                        );
-                                        setIsApprove(false);
-                                        setIndexKpi(index);
-                                        setStatusKpiOnComplete("rejected");
-                                      }}
-                                    >
-                                      <MdOutlineClear />
-                                    </Button>
-                                  </div>
+                                <div className="flex flex-row justify-start items-center gap-2">
+                                  <Button
+                                    variant="solid"
+                                    color="success"
+                                    className="p-0 min-w-7 h-7 rounded-full text-white"
+                                    onClick={() => {
+                                      setIsOpenModalReject(
+                                        !isOpenModalReject
+                                      );
+                                      setIsApprove(true);
+                                      setIndexKpi(index);
+                                      setStatusKpiOnComplete("approved");
+                                    }}
+                                  >
+                                    <MdOutlineDone />
+                                  </Button>
+                                  <Button
+                                    variant="solid"
+                                    color="danger"
+                                    className="p-0 min-w-7 h-7 rounded-full"
+                                    onClick={() => {
+                                      setIsOpenModalReject(
+                                        !isOpenModalReject
+                                      );
+                                      setIsApprove(false);
+                                      setIndexKpi(index);
+                                      setStatusKpiOnComplete("rejected");
+                                    }}
+                                  >
+                                    <MdOutlineClear />
+                                  </Button>
                                 </div>
                               </div>
                             </>
@@ -972,7 +967,7 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <ButtonNextUi
+                  <Button
                     type="submit"
                     radius="sm"
                     color="primary"
@@ -983,8 +978,8 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
                     }}
                   >
                     Xác nhận
-                  </ButtonNextUi>
-                  <ButtonNextUi
+                  </Button>
+                  <Button
                     radius="sm"
                     color="danger"
                     variant="solid"
@@ -993,7 +988,7 @@ function ModalAddKpiBonus({ isOpen, onClose, domainData, onComplete }) {
                     isDisabled={isLoading}
                   >
                     Hủy
-                  </ButtonNextUi>
+                  </Button>
                 </ModalFooter>
               </form>
             </>
